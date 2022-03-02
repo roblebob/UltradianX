@@ -1,14 +1,16 @@
 # UltradianX
 
-The Ultradian eXplorer, an app aiming to serve as a tool, by which one can explore ones ___ultradian___ rhythm, usefully.
+The _Ultradian eXplorer_, an app aiming to serve as a tool, by which one can explore ones ultradian rhythm, usefully.
 
 
 ## Background
 
 The basis is the belief that if you want to acquire certain skills, you have to work on them every day,
-even if touched only briefly  ( < 10 min).
+even if touched only briefly  (< 10 min).
 This idea is juxtaposed to that of ultradian rhythms, those 90 min partitions of the circadian cycle.
 It shall be noted here, that it doesn't claim to be a scientific endeavor.
+
+
 
 
 
