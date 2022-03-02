@@ -1,5 +1,13 @@
-# UltradianX - The Ultradian Explorer
+# UltradianX
 
-This app is aimed to serve as a tool, by which one can explore ones ___ultradian___ rhythm.
+The Ultradian eXplorer, an app aiming to serve as a tool, by which one can explore ones ___ultradian___ rhythm, usefully.
 
-The idea is to pursue a set of tasks, one wants develop,   
+
+## Background
+
+The foundation is the belief that if one wants to gain certain skills, they have to be pursued daily,
+even if they are only touched. 
+
+
+
+
