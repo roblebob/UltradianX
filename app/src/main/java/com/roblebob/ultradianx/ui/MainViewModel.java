@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.ui.main;
+package com.roblebob.ultradianx.ui;
 
 import androidx.lifecycle.ViewModel;
 

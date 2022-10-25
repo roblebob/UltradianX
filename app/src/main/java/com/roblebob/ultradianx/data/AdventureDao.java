@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx;
+package com.roblebob.ultradianx.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

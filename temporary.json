@@ -1,0 +1,170 @@
+[
+    {
+        "name": "QiGong",
+        "tags": ["health"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Cycling",
+        "tags": ["health"],
+        "details": ["20 - 70 km"],
+        "links": []
+    },
+    {
+        "name": "Hiking",
+        "tags": ["health"],
+        "details": ["min. 10_000 steps"],
+        "links": []
+    },
+    {
+        "name": "Push-Ups",
+        "tags": ["health"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "RL",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": [
+            {
+                "name": "2021 DeepMind x UCL RL Lecture Series",
+                "url": "https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm"
+            },
+            {
+                "name": "book",
+                "url": "http://incompleteideas.net/book/RLbook2020trimmed.pdf"
+            }
+        ]
+    },
+    {
+        "name": "GFlowNets (Yoshua Bengio)",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": [
+            {
+                "name": "arxiv",
+                "url": "https://arxiv.org/pdf/2111.09266.pdf"
+            }
+        ]
+    },
+    {
+        "name": "Free energy principle (Karl Friston)",
+        "tags": ["theory"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Interpretable ML",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": [
+            {
+                "name": "book",
+                "url": "https://christophm.github.io/interpretable-ml-book/bike-data.html"
+            }
+        ]
+    },
+    {
+        "name": "Lena Voita's Blog",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": [
+            {
+                "name": "website",
+                "url": "https://lena-voita.github.io/posts.html"
+            }
+        ]
+    },
+    {
+        "name": "Yannic Kilchner's YT",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Machine Learning StreetTalk",
+        "tags": ["theory", "ml"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "bass",
+        "tags": ["music"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "recording",
+        "tags": ["music"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "drehen",
+        "tags": ["music"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "3Blue1Brown",
+        "tags": ["theory", "math"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Category Theory",
+        "tags": ["theory", "math"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Algebraic Geometry",
+        "tags": ["theory", "math"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Geometric Algebra",
+        "tags": ["theory", "math"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Android",
+        "tags": ["coding"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Rust",
+        "tags": ["coding"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "C++",
+        "tags": ["coding"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Container - Docker",
+        "tags": ["coding"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "Container - Kubernetes",
+        "tags": ["coding"],
+        "details": [],
+        "links": []
+    },
+    {
+        "name": "aladdinpersson",
+        "tags": ["coding"],
+        "details": ["Machine-Learning-Collection"],
+        "links": []
+    }
+]
