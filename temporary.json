@@ -1,168 +1,147 @@
 [
     {
-        "name": "QiGong",
+        "title": "QiGong",
         "tags": ["health"],
         "details": [],
         "links": []
     },
     {
-        "name": "Cycling",
+        "title": "Cycling",
         "tags": ["health"],
         "details": ["20 - 70 km"],
         "links": []
     },
     {
-        "name": "Hiking",
+        "title": "Hiking",
         "tags": ["health"],
         "details": ["min. 10_000 steps"],
         "links": []
     },
     {
-        "name": "Push-Ups",
+        "title": "Push-Ups",
         "tags": ["health"],
         "details": [],
         "links": []
     },
     {
-        "name": "RL",
+        "title": "RL",
         "tags": ["theory", "ml"],
         "details": [],
         "links": [
-            {
-                "name": "2021 DeepMind x UCL RL Lecture Series",
-                "url": "https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm"
-            },
-            {
-                "name": "book",
-                "url": "http://incompleteideas.net/book/RLbook2020trimmed.pdf"
-            }
+            "[2021 DeepMind x UCL RL Lecture Series](https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm)",
+            "[book](http://incompleteideas.net/book/RLbook2020trimmed.pdf)"
         ]
     },
     {
-        "name": "GFlowNets (Yoshua Bengio)",
+        "title": "GFlowNets (Yoshua Bengio)",
         "tags": ["theory", "ml"],
         "details": [],
-        "links": [
-            {
-                "name": "arxiv",
-                "url": "https://arxiv.org/pdf/2111.09266.pdf"
-            }
-        ]
+        "links": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
     },
     {
-        "name": "Free energy principle (Karl Friston)",
+        "title": "Free energy principle (Karl Friston)",
         "tags": ["theory"],
         "details": [],
         "links": []
     },
     {
-        "name": "Interpretable ML",
+        "title": "Interpretable ML",
         "tags": ["theory", "ml"],
         "details": [],
-        "links": [
-            {
-                "name": "book",
-                "url": "https://christophm.github.io/interpretable-ml-book/bike-data.html"
-            }
-        ]
+        "links": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
     },
     {
-        "name": "Lena Voita's Blog",
+        "title": "Lena Voita's Blog",
         "tags": ["theory", "ml"],
         "details": [],
-        "links": [
-            {
-                "name": "website",
-                "url": "https://lena-voita.github.io/posts.html"
-            }
-        ]
+        "links": ["<https://lena-voita.github.io/posts.html>"]
     },
     {
-        "name": "Yannic Kilchner's YT",
+        "title": "Yannic Kilchner's YT",
         "tags": ["theory", "ml"],
         "details": [],
         "links": []
     },
     {
-        "name": "Machine Learning StreetTalk",
+        "title": "Machine Learning StreetTalk",
         "tags": ["theory", "ml"],
         "details": [],
         "links": []
     },
     {
-        "name": "bass",
+        "title": "bass",
         "tags": ["music"],
         "details": [],
         "links": []
     },
     {
-        "name": "recording",
+        "title": "recording",
         "tags": ["music"],
         "details": [],
         "links": []
     },
     {
-        "name": "drehen",
+        "title": "drehen",
         "tags": ["music"],
         "details": [],
         "links": []
     },
     {
-        "name": "3Blue1Brown",
+        "title": "3Blue1Brown",
         "tags": ["theory", "math"],
         "details": [],
         "links": []
     },
     {
-        "name": "Category Theory",
+        "title": "Category Theory",
         "tags": ["theory", "math"],
         "details": [],
         "links": []
     },
     {
-        "name": "Algebraic Geometry",
+        "title": "Algebraic Geometry",
         "tags": ["theory", "math"],
         "details": [],
         "links": []
     },
     {
-        "name": "Geometric Algebra",
+        "title": "Geometric Algebra",
         "tags": ["theory", "math"],
         "details": [],
         "links": []
     },
     {
-        "name": "Android",
+        "title": "Android",
         "tags": ["coding"],
         "details": [],
         "links": []
     },
     {
-        "name": "Rust",
+        "title": "Rust",
         "tags": ["coding"],
         "details": [],
         "links": []
     },
     {
-        "name": "C++",
+        "title": "C++",
         "tags": ["coding"],
         "details": [],
         "links": []
     },
     {
-        "name": "Container - Docker",
+        "title": "Container - Docker",
         "tags": ["coding"],
         "details": [],
         "links": []
     },
     {
-        "name": "Container - Kubernetes",
+        "title": "Container - Kubernetes",
         "tags": ["coding"],
         "details": [],
         "links": []
     },
     {
-        "name": "aladdinpersson",
+        "title": "aladdinpersson",
         "tags": ["coding"],
         "details": ["Machine-Learning-Collection"],
         "links": []
