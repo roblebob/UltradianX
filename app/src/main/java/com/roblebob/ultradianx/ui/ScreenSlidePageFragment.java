@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.roblebob.ultradianx.R;
+import com.roblebob.ultradianx.model.Adventure;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +19,8 @@ import com.roblebob.ultradianx.R;
  * create an instance of this fragment.
  */
 public class ScreenSlidePageFragment extends Fragment {
+
+    public static final String TAG = ScreenSlidePageFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +66,25 @@ public class ScreenSlidePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+
+        mTextView = rootView.findViewById(R.id.fragment_screen_slide_textview);
+
+        Log.e(TAG, "onCreateView(...)");
+        return rootView;
+    }
+
+
+    private TextView mTextView;
+    private Adventure mAdventure;
+
+    public void setAdventure(Adventure adventure) {
+
+        mAdventure = adventure;
+        if (mAdventure != null && mTextView != null) {
+            mTextView.setText(mAdventure.getTitle());
+        } else {
+            Log.e(TAG, "not able to place Adventure");
+        }
     }
 }

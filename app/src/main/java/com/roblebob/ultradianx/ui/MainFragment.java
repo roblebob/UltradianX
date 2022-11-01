@@ -53,7 +53,7 @@ public class MainFragment extends Fragment {
         mViewModel.start();
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             if (adventureList.size() > 0) {
-                pagerAdapter.setAdventureList();
+                mAdventureList = new ArrayList<>(adventureList);
             } else {
                 Log.e(TAG, "adventureList is empty");
             }
@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
-
+    public List<Adventure> mAdventureList = new ArrayList<>();
 
 
     @Override
@@ -77,29 +77,28 @@ public class MainFragment extends Fragment {
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
      */
-    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+    class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        public ScreenSlidePagerAdapter(Fragment f) {
+        MainFragment mFragment;
+
+        public ScreenSlidePagerAdapter(MainFragment f) {
             super(f);
+            mFragment = f;
         }
 
-        List<Adventure> adventureList = new ArrayList<>();
 
-        public void setAdventureList(List<Adventure> adventureList) {
-            this.adventureList = adventureList;
-        }
 
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            ScreenSlidePageFragment screenSlidePageFragment = new ScreenSlidePageFragment();
-
-            return ;
+            ScreenSlidePageFragment screenSlidePageFragment = ScreenSlidePageFragment.newInstance("", "");
+            screenSlidePageFragment.setAdventure(mFragment.mAdventureList.get(position));
+            return screenSlidePageFragment;
         }
 
         @Override
         public int getItemCount() {
-            return adventureList.size();
+            return mFragment.mAdventureList.size();
         }
     }
 
