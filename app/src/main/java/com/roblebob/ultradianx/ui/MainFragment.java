@@ -91,8 +91,7 @@ public class MainFragment extends Fragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            ScreenSlidePageFragment screenSlidePageFragment = ScreenSlidePageFragment.newInstance("", "");
-            screenSlidePageFragment.setAdventure(mFragment.mAdventureList.get(position));
+            ScreenSlidePageFragment screenSlidePageFragment = ScreenSlidePageFragment.newInstance(mAdventureList.get(position).toBundle());
             return screenSlidePageFragment;
         }
 

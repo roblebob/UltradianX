@@ -1,5 +1,7 @@
 package com.roblebob.ultradianx.model;
 
+import android.os.Bundle;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -57,5 +59,16 @@ public class Adventure {
     }
     public void setLinks(String links) {
         this.links = links;
+    }
+
+
+    public Bundle toBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", this.id);
+        bundle.putString("title", this.title);
+        bundle.putString("tags", this.tags);
+        bundle.putString("details", this.details);
+        bundle.putString("links", this.links);
+        return bundle;
     }
 }
