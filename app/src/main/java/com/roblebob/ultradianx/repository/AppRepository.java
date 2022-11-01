@@ -63,10 +63,9 @@ public class AppRepository {
             }
             catch (IOException e) {
                 e.printStackTrace();
-                Log.e(TAG,  "   Error, while gathering response" , e);
+                Log.e(TAG,  "Error, while gathering response" , e);
             }
 
-            Log.e(TAG, result);
 
             try {
                 JSONArray jsonArray = new JSONArray(result);
@@ -74,50 +73,18 @@ public class AppRepository {
                 for (int i=0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    Log.e(TAG, jsonObject.getString("title"));
-
                     insert(new Adventure(
-                                    i + 1,
                                     jsonObject.getString("title"),
                                     jsonObject.getJSONArray("tags").toString(),
-                                    jsonObject.getJSONArray("descriptions").toString(),
+                                    jsonObject.getJSONArray("details").toString(),
                                     jsonObject.getJSONArray("links").toString()
                             )
                     );
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.e(TAG, "Error, while gathering json data");
+                Log.e(TAG, "Error, while gathering json data", e);
             }
         });
     }
-
-
-
-
-
-
-
-    /**
-     * This method returns the entire result from the HTTP response, using the third party library
-     * OkHttp (part of the integration process)
-     *
-     * @param urlString The URL to fetch the HTTP response from (as a String and NOT as URL).
-     * @return The contents of the HTTP response.
-     * @throws IOException ...
-     */
-
-    public static String getResponseFromHttpUrl_OkHttp(String urlString)  throws IOException {
-
-        final OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(urlString)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-    }
-
 }

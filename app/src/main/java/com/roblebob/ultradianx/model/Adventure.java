@@ -6,22 +6,21 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "Adventure" /*, indices = @Index(value = {"description"}, unique = true)*/)
+@Entity(tableName = "Adventure" , indices = @Index(value = {"title"}, unique = true))
 public class Adventure {
 
-    @PrimaryKey(autoGenerate = false )       private int     id;
+    @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "title")             private String  title;
     @ColumnInfo(name = "tags"       )       private String  tags;
-    @ColumnInfo(name = "descriptions")      private String  descriptions;
+    @ColumnInfo(name = "details")           private String  details;
     @ColumnInfo(name = "links")             private String  links;
 
 
 
-    public Adventure(int id, String title, String tags, String descriptions, String links ) {
-        this.id = id;
+    public Adventure( String title, String tags, String details, String links ) {
         this.title = title;
         this.tags = tags;
-        this.descriptions = descriptions;
+        this.details = details;
         this.links = links;
     }
 
@@ -39,18 +38,18 @@ public class Adventure {
         this.title = title;
     }
 
-    public String getDescriptions() {
-        return descriptions;
-    }
-    public void setDescriptions(String description) {
-        this.descriptions = description;
-    }
-
     public String getTags() {
         return tags;
     }
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getLinks() {
