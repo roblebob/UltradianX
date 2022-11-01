@@ -61,7 +61,6 @@ public class ScreenSlidePageFragment extends Fragment {
     }
 
 
-    private TextView mTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,15 +68,8 @@ public class ScreenSlidePageFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
 
-        mTextView = rootView.findViewById(R.id.fragment_screen_slide_textview);
+        ((TextView) rootView.findViewById(R.id.fragment_screen_slide_textview)) .setText(mBundle.getString("title"));
 
-        mTextView.setText(mBundle.getString("title"));
-
-        Log.e(TAG, "onCreateView(...)");
         return rootView;
     }
-
-
-
-
 }
