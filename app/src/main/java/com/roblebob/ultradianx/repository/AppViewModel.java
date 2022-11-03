@@ -1,9 +1,13 @@
 package com.roblebob.ultradianx.repository;
 
+import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.roblebob.ultradianx.model.Adventure;
 
@@ -11,18 +15,31 @@ import java.util.List;
 
 public class AppViewModel extends ViewModel {
 
-    private final AppRepository appRepository;
+    // private final AppRepository appRepository;
+    private WorkManager mWorkManager;
+    AdventureDao adventureDao;
 
-    public AppViewModel(Context context) {
-        appRepository = new AppRepository(context);
+
+    public AppViewModel(@NonNull Application application) {
+        super();
+        // appRepository = new AppRepository(application.getApplicationContext());
+
+        adventureDao = AppDatabase.getInstance(application.getApplicationContext()).adventureDao();
+        mWorkManager = WorkManager.getInstance(application);
     }
 
     public LiveData<List<Adventure>> getAdventureListLive() {
-        return appRepository.getAdventureListLive();
+        return adventureDao.loadAdventureListLive();
     }
 
+
+
     public void start() {
-        appRepository.integrate();
+
+        //appRepository.integrate();
+
+
+        mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker.class));
     }
 
 

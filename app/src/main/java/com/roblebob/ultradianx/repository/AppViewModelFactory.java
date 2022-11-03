@@ -1,5 +1,6 @@
 package com.roblebob.ultradianx.repository;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -8,16 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
 
-    private final Context mContext;
+    private final Application mApplication;
 
-    public AppViewModelFactory(Context context) {
-        mContext = context;
+    public AppViewModelFactory(Application application) {
+        mApplication = application;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create (@NonNull Class<T> modelClass) {
         //noinspection unchecked
-        return (T) new AppViewModel(mContext);
+        return (T) new AppViewModel(mApplication);
     }
 }

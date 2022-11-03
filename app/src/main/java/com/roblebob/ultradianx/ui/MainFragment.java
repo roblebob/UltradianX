@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
@@ -48,7 +47,7 @@ public class MainFragment extends Fragment {
         binding.pager.setAdapter(pagerAdapter);
 
 
-        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(getContext());
+        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.start();
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
