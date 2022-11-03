@@ -86,8 +86,6 @@ public class MainFragment extends Fragment {
             mFragment = f;
         }
 
-
-
         @NonNull
         @Override
         public Fragment createFragment(int position) {
@@ -100,8 +98,4 @@ public class MainFragment extends Fragment {
             return mFragment.mAdventureList.size();
         }
     }
-
-
-
-
 }

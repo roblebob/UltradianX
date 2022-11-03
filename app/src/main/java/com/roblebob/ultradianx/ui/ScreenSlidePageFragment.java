@@ -4,16 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.model.Adventure;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +27,7 @@ public class ScreenSlidePageFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Bundle mBundle;
 
+    private View mRootView;
 
     public ScreenSlidePageFragment() {
         // Required empty public constructor
@@ -60,16 +57,22 @@ public class ScreenSlidePageFragment extends Fragment {
         }
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+        refresh();
+        return mRootView;
+    }
 
-        ((TextView) rootView.findViewById(R.id.fragment_screen_slide_textview)) .setText(mBundle.getString("title"));
 
-        return rootView;
+    public void refresh(Bundle bundle) {
+        mBundle = bundle;
+        refresh();
+    }
+
+    public void refresh() {
+        ((TextView) mRootView.findViewById(R.id.fragment_screen_slide_title_tv)) .setText(mBundle.getString("title"));
     }
 }
