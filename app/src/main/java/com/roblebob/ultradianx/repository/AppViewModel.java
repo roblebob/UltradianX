@@ -1,7 +1,6 @@
 package com.roblebob.ultradianx.repository;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -10,6 +9,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.roblebob.ultradianx.model.Adventure;
+import com.roblebob.ultradianx.worker.UpdateWorker;
 
 import java.util.List;
 

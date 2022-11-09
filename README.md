@@ -25,4 +25,15 @@ It shall be noted here,
 
 
 
+## Paid vs. Free version
+
+In the Free version, in addition to every suggestion page popping up periodically, 
+there is a google advertising frame showing at the bottom of the page, 
+until the user touches the screen.
+
+
+
+
+
+
 
