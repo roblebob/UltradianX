@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.repository;
+package com.roblebob.ultradianx.viewmodel;
 
 import android.app.Application;
 
@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.roblebob.ultradianx.model.Adventure;
-import com.roblebob.ultradianx.worker.UpdateWorker;
+import com.roblebob.ultradianx.repository.model.Adventure;
+import com.roblebob.ultradianx.repository.model.AdventureDao;
+import com.roblebob.ultradianx.repository.model.AppDatabase;
+import com.roblebob.ultradianx.repository.worker.UpdateWorker;
 
 import java.util.List;
 

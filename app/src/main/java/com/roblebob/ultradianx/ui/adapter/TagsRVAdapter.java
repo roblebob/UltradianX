@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.adapter;
+package com.roblebob.ultradianx.ui.adapter;
 
 
 import android.view.View;

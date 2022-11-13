@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.model;
+package com.roblebob.ultradianx.repository.model;
 
 import android.os.Bundle;
 

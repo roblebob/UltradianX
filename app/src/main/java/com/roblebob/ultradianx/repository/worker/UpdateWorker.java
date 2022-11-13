@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.worker;
+package com.roblebob.ultradianx.repository.worker;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,9 +8,9 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.model.Adventure;
-import com.roblebob.ultradianx.repository.AdventureDao;
-import com.roblebob.ultradianx.repository.AppDatabase;
+import com.roblebob.ultradianx.repository.model.Adventure;
+import com.roblebob.ultradianx.repository.model.AdventureDao;
+import com.roblebob.ultradianx.repository.model.AppDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;

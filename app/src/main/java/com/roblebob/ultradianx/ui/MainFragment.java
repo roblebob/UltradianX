@@ -15,11 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
-import com.roblebob.ultradianx.model.Adventure;
-import com.roblebob.ultradianx.repository.AppViewModel;
-import com.roblebob.ultradianx.repository.AppViewModelFactory;
+import com.roblebob.ultradianx.repository.model.Adventure;
+import com.roblebob.ultradianx.viewmodel.AppViewModel;
+import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;

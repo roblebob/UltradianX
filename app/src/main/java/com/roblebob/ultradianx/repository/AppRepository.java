@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.model.Adventure;
+import com.roblebob.ultradianx.repository.model.Adventure;
+import com.roblebob.ultradianx.repository.model.AdventureDao;
+import com.roblebob.ultradianx.repository.model.AppDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;

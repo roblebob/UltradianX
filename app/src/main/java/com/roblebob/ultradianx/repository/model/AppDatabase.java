@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.repository;
+package com.roblebob.ultradianx.repository.model;
 
 
 import android.content.Context;
@@ -6,8 +6,6 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
-import com.roblebob.ultradianx.model.Adventure;
 
 
 @Database( entities = { Adventure.class},   version = 1,   exportSchema = false)
