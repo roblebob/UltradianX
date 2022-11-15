@@ -2,32 +2,27 @@
     {
         "title": "QiGong",
         "tags": ["health"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Cycling",
         "tags": ["health"],
-        "details": ["20 - 70 km"],
-        "links": []
+        "details": ["20 - 70 km"]
     },
     {
         "title": "Hiking",
         "tags": ["health"],
-        "details": ["min. 10_000 steps"],
-        "links": []
+        "details": ["min. 10_000 steps"]
     },
     {
         "title": "Push-Ups",
         "tags": ["health"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "RL",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": [
+        "details": [
             "[2021 DeepMind x UCL RL Lecture Series](https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm)",
             "[book](http://incompleteideas.net/book/RLbook2020trimmed.pdf)"
         ]
@@ -35,115 +30,96 @@
     {
         "title": "GFlowNets (Yoshua Bengio)",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
+        "details": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
     },
     {
-        "title": "Free energy principle (Karl Friston)",
+        "title": "Free energy principle <i>(Karl Friston)</i>",
         "tags": ["theory"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Interpretable ML",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
+        "details": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
     },
     {
         "title": "Lena Voita's Blog",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": ["<https://lena-voita.github.io/posts.html>"]
+        "details": ["<https://lena-voita.github.io/posts.html>"]
     },
     {
         "title": "Yannic Kilchner's YT",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Machine Learning StreetTalk",
         "tags": ["theory", "ml"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "bass",
         "tags": ["music"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "recording",
         "tags": ["music"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "drehen",
         "tags": ["music"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "3Blue1Brown",
         "tags": ["theory", "math"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Category Theory",
         "tags": ["theory", "math"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Algebraic Geometry",
         "tags": ["theory", "math"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Geometric Algebra",
         "tags": ["theory", "math"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Android",
         "tags": ["coding"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Rust",
         "tags": ["coding"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "C++",
         "tags": ["coding"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Container - Docker",
         "tags": ["coding"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "Container - Kubernetes",
         "tags": ["coding"],
-        "details": [],
-        "links": []
+        "details": []
     },
     {
         "title": "aladdinpersson",
         "tags": ["coding"],
-        "details": ["Machine-Learning-Collection"],
-        "links": []
+        "details": ["Machine-Learning-Collection"]
     }
 ]
