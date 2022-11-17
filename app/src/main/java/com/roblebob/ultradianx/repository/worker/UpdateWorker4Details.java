@@ -63,7 +63,7 @@ public class UpdateWorker4Details extends Worker {
 
 
         try {
-            Log.e(TAG, "---->");
+            Log.e(TAG, "---->" + result);
             JSONArray jsonArray = new JSONArray(result);
 
             Log.e(TAG, "<----");
