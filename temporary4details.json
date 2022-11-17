@@ -54,7 +54,6 @@
         "subject": "detail",
         "content": "<a href=\"https://arxiv.org/pdf/2111.09266.pdf\">arxiv</a>]"
     },
-
     {
         "adventure": "Free energy principle (Karl Friston)",
         "subject": "tag",
@@ -70,13 +69,11 @@
         "subject": "tag",
         "content": "theory ml"
     },
-
     {
         "adventure": "Interpretable ML",
         "subject": "detail",
         "content": "[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"
     },
-
     {
         "adventure": "Lena Voita's Blog",
         "subject": "tag",
