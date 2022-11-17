@@ -1,0 +1,129 @@
+[
+    {
+        "adventure": "QiGong",
+        "tags": "health",
+        "details": []
+    },
+    {
+        "adventure": "Cycling",
+        "tags": "health",
+        "details": ["20 - 70 km"]
+    },
+    {
+        "adventure": "Hiking",
+        "tags": "health",
+        "details": ["min. 10_000 steps"]
+    },
+    {
+        "adventure": "Push-Ups",
+        "tags": "health",
+        "details": []
+    },
+    {
+        "adventure": "RL",
+        "tags": "theory ml",
+        "details": [
+            "[2021 DeepMind x UCL RL Lecture Series](https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm)",
+            "[book](http://incompleteideas.net/book/RLbook2020trimmed.pdf)"
+        ]
+    },
+    {
+        "adventure": "GFlowNets (Yoshua Bengio)",
+        "tags": "theory ml",
+        "details": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
+    },
+    {
+        "adventure": "Free energy principle <i>(Karl Friston)</i>",
+        "tags": "theory",
+        "details": [
+            "<a href=\"https://arxiv.org/pdf/2201.06387.pdf\">The free energy principle simplified</a>"
+        ]
+    },
+    {
+        "adventure": "Interpretable ML",
+        "tags": "theory ml",
+        "details": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
+    },
+    {
+        "adventure": "Lena Voita's Blog",
+        "tags": "theory ml",
+        "details": ["<https://lena-voita.github.io/posts.html>"]
+    },
+    {
+        "adventure": "Yannic Kilchner's YT",
+        "tags": "theory ml",
+        "details": []
+    },
+    {
+        "adventure": "Machine Learning StreetTalk",
+        "tags": "theory ml",
+        "details": []
+    },
+    {
+        "adventure": "bass",
+        "tags": "music",
+        "details": []
+    },
+    {
+        "adventure": "recording",
+        "tags": "music",
+        "details": []
+    },
+    {
+        "adventure": "drehen",
+        "tags": "music",
+        "details": []
+    },
+    {
+        "adventure": "3Blue1Brown",
+        "tags": "theory math",
+        "details": [
+            "<a href=\"https://www.youtube.com/@3blue1brown\">YTChannel</a>"
+        ]
+    },
+    {
+        "adventure": "Category Theory",
+        "tags": "theory math",
+        "details": []
+    },
+    {
+        "adventure": "Algebraic Geometry",
+        "tags": "theory math",
+        "details": []
+    },
+    {
+        "adventure": "Geometric Algebra",
+        "tags": "theory math",
+        "details": []
+    },
+    {
+        "adventure": "Android",
+        "tags": "coding",
+        "details": []
+    },
+    {
+        "adventure": "Rust",
+        "tags": "coding",
+        "details": []
+    },
+    {
+        "adventure": "C++",
+        "tags": "coding",
+        "details": []
+    },
+    {
+        "adventure": "Container - Docker",
+        "tags": "coding",
+        "details": []
+    },
+    {
+        "adventure": "Container - Kubernetes",
+        "tags": "coding",
+        "details": []
+    },
+    {
+        "adventure": "aladdinpersson",
+        "tags": "coding",
+        "details": ["Machine-Learning-Collection"]
+    }
+]

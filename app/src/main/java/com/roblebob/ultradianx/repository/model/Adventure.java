@@ -15,15 +15,12 @@ public class Adventure {
     @ColumnInfo(name = "title")             private String  title;
     @ColumnInfo(name = "tags"       )       private String  tags;
     @ColumnInfo(name = "details")           private String  details;
-    @ColumnInfo(name = "links")             private String  links;
 
 
-
-    public Adventure( String title, String tags, String details, String links ) {
+    public Adventure( String title, String tags, String details) {
         this.title = title;
         this.tags = tags;
         this.details = details;
-        this.links = links;
     }
 
     public int getId() {
@@ -54,13 +51,6 @@ public class Adventure {
         this.details = details;
     }
 
-    public String getLinks() {
-        return links;
-    }
-    public void setLinks(String links) {
-        this.links = links;
-    }
-
 
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
@@ -68,7 +58,6 @@ public class Adventure {
         bundle.putString("title", this.title);
         bundle.putString("tags", this.tags);
         bundle.putString("details", this.details);
-        bundle.putString("links", this.links);
         return bundle;
     }
 }

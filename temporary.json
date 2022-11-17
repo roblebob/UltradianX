@@ -35,7 +35,9 @@
     {
         "title": "Free energy principle <i>(Karl Friston)</i>",
         "tags": ["theory"],
-        "details": []
+        "details": [
+            "<a href=\"https://arxiv.org/pdf/2201.06387.pdf\">The free energy principle simplified</a>"
+        ]
     },
     {
         "title": "Interpretable ML",
@@ -75,7 +77,9 @@
     {
         "title": "3Blue1Brown",
         "tags": ["theory", "math"],
-        "details": []
+        "details": [
+            "<a href=\"https://www.youtube.com/@3blue1brown\">YTChannel</a>"
+        ]
     },
     {
         "title": "Category Theory",

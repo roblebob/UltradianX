@@ -1,56 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/fragment_screen_slide_title_tv"
-        style="?android:textAppearanceMedium"
+        style="?android:textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:lineSpacingMultiplier="1.2"
         android:padding="16dp"
         android:text="default"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_tags_rv"
+
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_screen_slide_tags_rv"
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        app:trackColor="#00000000"
+        android:progress="50"
+        app:indicatorColor="#50F00000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_screen_slide_title_tv" />
+
+
+
+    <!--ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:indeterminateTint="#50F00000"
+        android:max="100"
+        android:progress="60"
+        android:progressTint="#334A43"
+        android:secondaryProgressTint="#50F00000"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_screen_slide_title_tv"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_details_rv"
-        />
+
+        /-->
+
+    <TextView
+        android:id="@+id/fragment_screen_slide_tags_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:text="default tag\ndefault tag 2"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_screen_slide_title_tv" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_screen_slide_details_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/fragment_screen_slide_links_rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_screen_slide_tags_rv"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_screen_slide_links_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide_details_rv"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="1.0" />
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="173dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

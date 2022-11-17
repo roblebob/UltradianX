@@ -78,8 +78,7 @@ public class AppRepository {
                     insert(new Adventure(
                                     jsonObject.getString("title"),
                                     jsonObject.getJSONArray("tags").toString(),
-                                    jsonObject.getJSONArray("details").toString(),
-                                    jsonObject.getJSONArray("links").toString()
+                                    jsonObject.getJSONArray("details").toString()
                             )
                     );
                 }

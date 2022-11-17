@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +64,11 @@ public class ScreenSlidePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+
+        ((TextView) mRootView.findViewById(R.id.fragment_screen_slide_title_tv)).setMovementMethod( new ScrollingMovementMethod());
+
         refresh();
+
         return mRootView;
     }
 
@@ -73,6 +79,9 @@ public class ScreenSlidePageFragment extends Fragment {
     }
 
     public void refresh() {
-        ((TextView) mRootView.findViewById(R.id.fragment_screen_slide_title_tv)) .setText(mBundle.getString("title"));
+        ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_title_tv)) .setText(
+                //mBundle.getString("title")
+                Html.fromHtml( mBundle.getString("title"))
+        );
     }
 }
