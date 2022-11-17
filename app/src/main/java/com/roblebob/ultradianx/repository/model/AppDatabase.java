@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 
-@Database( entities = { Adventure.class},   version = 1,   exportSchema = false)
+@Database( entities = { Adventure.class, Detail.class},   version = 1,   exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase { /*singleton-pattern*/
     private static final String DATABASE_NAME  = "UltradianXAppDatabase";
     private static AppDatabase  sInstance;
@@ -21,4 +21,6 @@ public abstract class AppDatabase extends RoomDatabase { /*singleton-pattern*/
         return sInstance;
     }
     public abstract AdventureDao adventureDao();
+    public abstract DetailDao detailDao();
+
 }

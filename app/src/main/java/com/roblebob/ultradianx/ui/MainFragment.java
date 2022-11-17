@@ -31,6 +31,10 @@ public class MainFragment extends Fragment {
 
     private FragmentStateAdapter pagerAdapter;
 
+    public List<Adventure> mAdventureList = new ArrayList<>();
+
+
+
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -58,10 +62,13 @@ public class MainFragment extends Fragment {
         });
 
 
+        mViewModel.getAdventures().observe( getViewLifecycleOwner(), list -> {
+            list.forEach( (adventure) -> {Log.e(TAG + "----->  ", adventure);} );
+        });
+
+
         return rootView;
     }
-
-    public List<Adventure> mAdventureList = new ArrayList<>();
 
 
     @Override

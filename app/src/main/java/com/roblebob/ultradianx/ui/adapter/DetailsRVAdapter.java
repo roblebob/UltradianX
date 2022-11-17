@@ -7,7 +7,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TagsRVAdapter extends RecyclerView.Adapter<TagsRVAdapter.TagsRVViewHolder> {
+import com.roblebob.ultradianx.repository.model.Detail;
+
+import java.util.List;
+
+public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.TagsRVViewHolder> {
+
+    List<Detail> mDetails;
 
 
 

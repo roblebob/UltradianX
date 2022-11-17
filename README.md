@@ -23,6 +23,17 @@ It shall be noted here,
 
 
 
+## Data Structure
+
+### Adventures 
+
+    Every Adventure is an emmergent structure 
+    which is build out of all Details 
+    dedicated to it.   
+
+
+
+
 
 
 ## Paid vs. Free version

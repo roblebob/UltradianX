@@ -13,8 +13,11 @@ import androidx.work.WorkRequest;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
+import com.roblebob.ultradianx.repository.model.Detail;
+import com.roblebob.ultradianx.repository.model.DetailDao;
 import com.roblebob.ultradianx.repository.worker.ReminderWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateWorker;
+import com.roblebob.ultradianx.repository.worker.UpdateWorker4Details;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -24,15 +27,17 @@ public class AppViewModel extends ViewModel {
     // private final AppRepository appRepository;
     private WorkManager mWorkManager;
     AdventureDao adventureDao;
+    DetailDao detailDao;
 
 
     public AppViewModel(@NonNull Application application) {
         super();
         // appRepository = new AppRepository(application.getApplicationContext());
-
         adventureDao = AppDatabase.getInstance(application.getApplicationContext()).adventureDao();
+        detailDao = AppDatabase.getInstance(application.getApplicationContext()).detailDao();
         mWorkManager = WorkManager.getInstance(application);
     }
+
 
     public LiveData<List<Adventure>> getAdventureListLive() {
         return adventureDao.loadAdventureListLive();
@@ -40,21 +45,16 @@ public class AppViewModel extends ViewModel {
 
 
 
-    public void start() {
+    public LiveData<List<Detail>> getDetailsOfAdventure(String adventure) {
+        return detailDao.loadDetailsForAdventure( adventure);
+    }
 
-        //appRepository.integrate();
+    public LiveData<List<Detail>> getTagsOfAdventure(String adventure) {
+        return detailDao.loadTagsForAdventure( adventure);
+    }
 
-
-        mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker.class));
-
-
-        WorkRequest wakeUpRequest =
-                new PeriodicWorkRequest.Builder(ReminderWorker.class,
-                        15, TimeUnit.MINUTES,
-                        1, TimeUnit.MINUTES)
-                        .build();
-
-        mWorkManager.enqueue(wakeUpRequest);
+    public LiveData<List<String>> getAdventures() {
+        return detailDao.loadAdventures();
     }
 
 
@@ -62,6 +62,17 @@ public class AppViewModel extends ViewModel {
 
 
 
+    public void start() {
+        //appRepository.integrate();
 
+        mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker.class));
+        mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker4Details.class));
 
+        mWorkManager.enqueue(
+                new PeriodicWorkRequest.Builder(ReminderWorker.class,
+                        15, TimeUnit.MINUTES,
+                        1, TimeUnit.MINUTES)
+                        .build()
+        );
+    }
 }
