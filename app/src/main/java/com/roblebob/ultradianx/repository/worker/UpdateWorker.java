@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -66,12 +67,28 @@ public class UpdateWorker extends Worker {
             for (int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                mAdventureDao.insert(new Adventure(
-                                jsonObject.getString("title"),
-                                jsonObject.getJSONArray("tags").toString(),
-                                jsonObject.getJSONArray("details").toString()
-                        )
-                );
+                // title
+                String title = jsonObject.getString("title");
+
+                // tags
+                String tags = jsonObject.getString("tags");
+
+
+
+
+
+                ArrayList<String> details = new ArrayList<>();
+
+                JSONArray jsonArrayTags = jsonObject.getJSONArray("details");
+
+                for (int ii = 0; ii < jsonArrayTags.length(); ii++) {
+                    details.add(jsonArrayTags.getString(ii));
+                }
+
+
+
+
+                mAdventureDao.insert(new Adventure( title, tags, details));
             }
         } catch (JSONException e) {
             e.printStackTrace();

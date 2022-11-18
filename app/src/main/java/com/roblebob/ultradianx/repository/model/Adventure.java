@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 
 @Entity(tableName = "Adventure" , indices = @Index(value = {"title"}, unique = true))
 public class Adventure {
@@ -14,10 +16,10 @@ public class Adventure {
     @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "title")             private String  title;
     @ColumnInfo(name = "tags"       )       private String  tags;
-    @ColumnInfo(name = "details")           private String  details;
+    @ColumnInfo(name = "details")           private ArrayList<String>  details;
 
 
-    public Adventure( String title, String tags, String details) {
+    public Adventure( String title, String tags, ArrayList<String> details) {
         this.title = title;
         this.tags = tags;
         this.details = details;
@@ -44,10 +46,10 @@ public class Adventure {
         this.tags = tags;
     }
 
-    public String getDetails() {
+    public ArrayList<String> getDetails() {
         return details;
     }
-    public void setDetails(String details) {
+    public void setDetails(ArrayList<String> details) {
         this.details = details;
     }
 
@@ -57,7 +59,7 @@ public class Adventure {
         bundle.putInt("id", this.id);
         bundle.putString("title", this.title);
         bundle.putString("tags", this.tags);
-        bundle.putString("details", this.details);
+        bundle.putStringArrayList("details", this.details);
         return bundle;
     }
 }

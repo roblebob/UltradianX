@@ -25,7 +25,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class UpdateWorker4Details extends Worker {
-    public static final String TAG = UpdateWorker.class.getSimpleName();
+    public static final String TAG = UpdateWorker4Details.class.getSimpleName();
 
     private final DetailDao mDetailDao;
     private final String mSrcUrl;
@@ -63,18 +63,14 @@ public class UpdateWorker4Details extends Worker {
 
 
         try {
-            Log.e(TAG, "---->" + result);
             JSONArray jsonArray = new JSONArray(result);
 
-            Log.e(TAG, "<----");
             for (int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 String adventure = jsonObject.getString("adventure");
                 String subject = jsonObject.getString("subject");
                 String content = jsonObject.getString("content");
-
-                Log.e(TAG, adventure + "  " + subject + "  " + content );
 
                 mDetailDao.insert(new Detail( adventure, subject, content));
             }

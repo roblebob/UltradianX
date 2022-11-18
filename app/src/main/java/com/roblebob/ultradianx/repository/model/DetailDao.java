@@ -20,6 +20,6 @@ public interface DetailDao {
     @Query("SELECT * FROM Detail WHERE adventure = :adventure AND subject = 'tag'"  )
     LiveData<List<Detail>> loadTagsForAdventure(String adventure);
 
-    @Query("SELECT adventure FROM Detail")
+    @Query("SELECT DISTINCT adventure FROM Detail")
     LiveData<List<String>> loadAdventures();
 }

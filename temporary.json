@@ -1,27 +1,27 @@
 [
     {
         "title": "QiGong",
-        "tags": ["health"],
+        "tags": "health",
         "details": []
     },
     {
         "title": "Cycling",
-        "tags": ["health"],
+        "tags": "health",
         "details": ["20 - 70 km"]
     },
     {
         "title": "Hiking",
-        "tags": ["health"],
+        "tags": "health",
         "details": ["min. 10_000 steps"]
     },
     {
         "title": "Push-Ups",
-        "tags": ["health"],
+        "tags": "health",
         "details": []
     },
     {
         "title": "RL",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": [
             "[2021 DeepMind x UCL RL Lecture Series](https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm)",
             "[book](http://incompleteideas.net/book/RLbook2020trimmed.pdf)"
@@ -29,101 +29,101 @@
     },
     {
         "title": "GFlowNets (Yoshua Bengio)",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
     },
     {
         "title": "Free energy principle <i>(Karl Friston)</i>",
-        "tags": ["theory"],
+        "tags": "theory",
         "details": [
             "<a href=\"https://arxiv.org/pdf/2201.06387.pdf\">The free energy principle simplified</a>"
         ]
     },
     {
         "title": "Interpretable ML",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
     },
     {
         "title": "Lena Voita's Blog",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": ["<https://lena-voita.github.io/posts.html>"]
     },
     {
         "title": "Yannic Kilchner's YT",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": []
     },
     {
         "title": "Machine Learning StreetTalk",
-        "tags": ["theory", "ml"],
+        "tags": "theory ml",
         "details": []
     },
     {
         "title": "bass",
-        "tags": ["music"],
+        "tags": "music",
         "details": []
     },
     {
         "title": "recording",
-        "tags": ["music"],
+        "tags": "music",
         "details": []
     },
     {
         "title": "drehen",
-        "tags": ["music"],
+        "tags": "music",
         "details": []
     },
     {
         "title": "3Blue1Brown",
-        "tags": ["theory", "math"],
+        "tags": "theory math",
         "details": [
             "<a href=\"https://www.youtube.com/@3blue1brown\">YTChannel</a>"
         ]
     },
     {
         "title": "Category Theory",
-        "tags": ["theory", "math"],
+        "tags": "theory math",
         "details": []
     },
     {
         "title": "Algebraic Geometry",
-        "tags": ["theory", "math"],
+        "tags": "theory math",
         "details": []
     },
     {
         "title": "Geometric Algebra",
-        "tags": ["theory", "math"],
+        "tags": "theory math",
         "details": []
     },
     {
         "title": "Android",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": []
     },
     {
         "title": "Rust",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": []
     },
     {
         "title": "C++",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": []
     },
     {
         "title": "Container - Docker",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": []
     },
     {
         "title": "Container - Kubernetes",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": []
     },
     {
         "title": "aladdinpersson",
-        "tags": ["coding"],
+        "tags": "coding",
         "details": ["Machine-Learning-Collection"]
     }
 ]

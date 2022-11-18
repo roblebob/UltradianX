@@ -69,23 +69,23 @@ public class AppRepository {
             }
 
 
-            try {
-                JSONArray jsonArray = new JSONArray(result);
-
-                for (int i=0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    insert(new Adventure(
-                                    jsonObject.getString("title"),
-                                    jsonObject.getJSONArray("tags").toString(),
-                                    jsonObject.getJSONArray("details").toString()
-                            )
-                    );
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.e(TAG, "Error, while gathering json data", e);
-            }
+//            try {
+//                JSONArray jsonArray = new JSONArray(result);
+//
+//                for (int i=0; i < jsonArray.length(); i++) {
+//                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+//
+//                    insert(new Adventure(
+//                                    jsonObject.getString("title"),
+//                                    jsonObject.getJSONArray("tags").toString(),
+//                                    jsonObject.getJSONArray("details").toString()
+//                            )
+//                    );
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                Log.e(TAG, "Error, while gathering json data", e);
+//            }
         });
     }
 }

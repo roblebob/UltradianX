@@ -60,10 +60,12 @@ public class MainFragment extends Fragment {
             } else {
                 Log.e(TAG, "adventureList is empty");
             }
+            pagerAdapter.notifyDataSetChanged();
         });
 
 
         mViewModel.getAdventures().observe( getViewLifecycleOwner(), list -> {
+
             Log.e(TAG, new Util().list2String(list));
         });
 
