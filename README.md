@@ -20,6 +20,9 @@ It shall be noted here,
     that it doesn't claim to be a scientific endeavor at all.
 
 
+Its target is to weaken that wall that appears when something worth pursuing
+    has not been pursued for a while 
+
 
 
 

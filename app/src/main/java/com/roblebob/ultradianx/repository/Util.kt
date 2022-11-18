@@ -1,3 +1,5 @@
+@file:JvmMultifileClass
+
 package com.roblebob.ultradianx.repository
 
 class Util {

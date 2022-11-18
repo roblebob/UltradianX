@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
+import com.roblebob.ultradianx.repository.Util;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
@@ -63,7 +64,7 @@ public class MainFragment extends Fragment {
 
 
         mViewModel.getAdventures().observe( getViewLifecycleOwner(), list -> {
-            list.forEach( (adventure) -> {Log.e(TAG + "----->  ", adventure);} );
+            Log.e(TAG, new Util().list2String(list));
         });
 
 
