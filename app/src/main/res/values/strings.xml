@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">UltradianX</string>
-    <string name="src_url">https://raw.githubusercontent.com/roblebob/UltradianX/master/temporary.json</string>
+    <string name="src_url">https://raw.githubusercontent.com/roblebob/UltradianX/develop_worker/temporary.json</string>
     <string name="src_url4details">https://raw.githubusercontent.com/roblebob/UltradianX/develop_worker/temporary4details.json</string>
 
     <!-- TODO: Remove or change this placeholder text -->
