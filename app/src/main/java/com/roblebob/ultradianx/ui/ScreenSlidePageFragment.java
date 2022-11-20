@@ -3,6 +3,8 @@ package com.roblebob.ultradianx.ui;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.roblebob.ultradianx.R;
+import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +33,8 @@ public class ScreenSlidePageFragment extends Fragment {
     private Bundle mBundle;
 
     private View mRootView;
+
+
 
     public ScreenSlidePageFragment() {
         // Required empty public constructor
@@ -59,6 +64,9 @@ public class ScreenSlidePageFragment extends Fragment {
         }
     }
 
+
+    DetailsRVAdapter mDetailsRVAdapter = new DetailsRVAdapter();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,6 +75,10 @@ public class ScreenSlidePageFragment extends Fragment {
 
         ((TextView) mRootView.findViewById(R.id.fragment_screen_slide_title_tv)).setMovementMethod( new ScrollingMovementMethod());
 
+        RecyclerView detailsRV = mRootView.findViewById(R.id.fragment_screen_slide_details_rv);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
+        detailsRV.setLayoutManager(layoutManager);
+        detailsRV.setAdapter(mDetailsRVAdapter);
         refresh();
 
         return mRootView;
@@ -83,5 +95,9 @@ public class ScreenSlidePageFragment extends Fragment {
                 //mBundle.getString("title")
                 Html.fromHtml( mBundle.getString("title"))
         );
+
+        ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_tags_tv)) .setText(mBundle.getString("tags").replace(' ', '\n'));
+
+        mDetailsRVAdapter.submit(mBundle.getStringArrayList("details"));
     }
 }

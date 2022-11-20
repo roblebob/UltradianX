@@ -1,44 +1,62 @@
 package com.roblebob.ultradianx.ui.adapter;
 
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.roblebob.ultradianx.repository.model.Detail;
+import com.roblebob.ultradianx.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.TagsRVViewHolder> {
+public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.DetailsRVViewHolder> {
 
-    List<Detail> mDetails;
+    List<String> mDetails;
 
+    public void submit(List<String> details) {
+        mDetails = new ArrayList<>(details);
+        notifyDataSetChanged();
+    }
 
 
     @NonNull
     @Override
-    public TagsRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public DetailsRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_details, parent, false);
+        return new DetailsRVViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TagsRVViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull DetailsRVViewHolder holder, int position) {
+        holder.textView.setText(Html.fromHtml( mDetails.get(position), Html.FROM_HTML_MODE_COMPACT));
     }
 
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mDetails.size();
     }
 
-    public static class TagsRVViewHolder extends RecyclerView.ViewHolder {
 
-        public TagsRVViewHolder(@NonNull View itemView) {
+
+
+
+    public static class DetailsRVViewHolder extends RecyclerView.ViewHolder {
+
+        TextView textView;
+
+        public DetailsRVViewHolder(@NonNull View itemView) {
             super(itemView);
+            textView = itemView.findViewById(R.id.single_item_details_textviev);
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 }
