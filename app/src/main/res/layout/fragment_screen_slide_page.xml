@@ -31,7 +31,8 @@
         app:indicatorColor="#50F00000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_screen_slide_title_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_screen_slide_title_tv"
+        />
 
 
 
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:text="default tag\ndefault tag 2"
+        android:layout_margin="32dp"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_title_tv"
         app:layout_constraintEnd_toEndOf="parent"

@@ -64,12 +64,6 @@ public class MainFragment extends Fragment {
         });
 
 
-        mViewModel.getAdventures().observe( getViewLifecycleOwner(), list -> {
-
-            Log.e(TAG, new Util().list2String(list));
-        });
-
-
         return rootView;
     }
 

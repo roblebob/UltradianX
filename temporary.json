@@ -31,7 +31,7 @@
     {
         "title": "GFlowNets (Yoshua Bengio)",
         "tags": "theory ml",
-        "details": ["[arxiv](https://arxiv.org/pdf/2111.09266.pdf)"]
+        "details": ["<a href=\"https://arxiv.org/pdf/2111.09266.pdf\">paper</a>"]
     },
     {
         "title": "Free energy principle <i>(Karl Friston)</i>",
@@ -43,7 +43,7 @@
     {
         "title": "Interpretable ML",
         "tags": "theory ml",
-        "details": ["[book](https://christophm.github.io/interpretable-ml-book/bike-data.html)"]
+        "details": ["<a href=\"https://christophm.github.io/interpretable-ml-book/bike-data.html>book</a>"]
     },
     {
         "title": "Lena Voita's Blog",
