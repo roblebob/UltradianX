@@ -48,7 +48,7 @@
     {
         "title": "Lena Voita's Blog",
         "tags": "theory ml",
-        "details": ["<https://lena-voita.github.io/posts.html>"]
+        "details": ["<a href=\"https://lena-voita.github.io/posts.html\">blog</a>"]
     },
     {
         "title": "Yannic Kilchner's YT",
