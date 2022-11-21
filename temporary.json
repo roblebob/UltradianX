@@ -51,9 +51,9 @@
         "details": ["<a href=\"https://lena-voita.github.io/posts.html\">blog</a>"]
     },
     {
-        "title": "Yannic Kilchner's YT",
+        "title": "Yannic Kilcher's YT",
         "tags": "theory ml",
-        "details": []
+        "details": ["<a href=\"https://www.youtube.com/@YannicKilcher\">youtube channel</a>"]
     },
     {
         "title": "Machine Learning StreetTalk",

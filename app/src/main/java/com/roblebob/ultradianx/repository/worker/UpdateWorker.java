@@ -73,20 +73,12 @@ public class UpdateWorker extends Worker {
                 // tags
                 String tags = jsonObject.getString("tags");
 
-
-
-
-
+                // details
                 ArrayList<String> details = new ArrayList<>();
-
-                JSONArray jsonArrayTags = jsonObject.getJSONArray("details");
-
-                for (int ii = 0; ii < jsonArrayTags.length(); ii++) {
-                    details.add(jsonArrayTags.getString(ii));
+                JSONArray jsonArrayDetails = jsonObject.getJSONArray("details");
+                for (int ii = 0; ii < jsonArrayDetails.length(); ii++) {
+                    details.add(jsonArrayDetails.getString(ii));
                 }
-
-
-
 
                 mAdventureDao.insert(new Adventure( title, tags, details));
             }
@@ -95,7 +87,6 @@ public class UpdateWorker extends Worker {
             Log.e(TAG, "Error, while gathering json data", e);
             return Result.failure();
         }
-
 
         return Result.success();
     }
