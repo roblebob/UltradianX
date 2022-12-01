@@ -1,32 +1,23 @@
 
 [
     {
-        "title": "QiGong",
-        "tags": "health",
-        "details": []
-    },
-    {
-        "title": "Cycling",
-        "tags": "health",
-        "details": ["20 - 70 km"]
-    },
-    {
-        "title": "Hiking",
-        "tags": "health",
-        "details": ["min. 10_000 steps"]
-    },
-    {
-        "title": "Push-Ups",
-        "tags": "health",
-        "details": []
+        "title": "Transformers",
+        "tags": "ml ",
+        "details": ["<a href=\"https://coggle.it/diagram/Y4YpE2qS3BdYKxu-/t/-\">coggle</a>"]
     },
     {
         "title": "RL",
         "tags": "theory ml",
         "details": [
             "<a href=\"https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm\">2021 DeepMind x UCL RL Lecture Series</a>",
-            "<a href=\"http://incompleteideas.net/book/RLbook2020trimmed.pdf\">book</a>"
+            "<a href=\"http://incompleteideas.net/book/RLbook2020trimmed.pdf\">book</a>",
+            "<a href=\"https://coggle.it/diagram/XW4s6Wn5-zKZbJRB/t/reinforcement-learning\">coggle</a>"
         ]
+    },
+    {
+        "title": "Magenta",
+        "tags": "ml tensorflow",
+        "details": []
     },
     {
         "title": "GFlowNets (Yoshua Bengio)",
@@ -126,5 +117,30 @@
         "title": "aladdinpersson",
         "tags": "coding",
         "details": ["Machine-Learning-Collection"]
+    },
+    {
+        "title": "Strogatz's Nonlinear Dynamical Systems",
+        "tags": "math theory",
+        "details": []
+    },
+    {
+        "title": "QiGong",
+        "tags": "health",
+        "details": []
+    },
+    {
+        "title": "Cycling",
+        "tags": "health",
+        "details": ["20 - 70 km"]
+    },
+    {
+        "title": "Hiking",
+        "tags": "health",
+        "details": ["min. 10_000 steps"]
+    },
+    {
+        "title": "Push-Ups",
+        "tags": "health",
+        "details": []
     }
 ]
