@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.roblebob.ultradianx.ui.MainFragment;
+import com.roblebob.ultradianx.ui.OverviewFragment;
+import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    //.replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, OverviewFragment.newInstance("",""))
                     .commitNow();
         }
     }
