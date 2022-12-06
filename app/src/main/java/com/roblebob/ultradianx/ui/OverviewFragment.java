@@ -1,10 +1,13 @@
 package com.roblebob.ultradianx.ui;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +33,7 @@ import java.util.List;
  * Use the {@link OverviewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment implements OverviewRVAdapter.ItemClickListener {
     public static final String TAG = OverviewFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -71,15 +74,14 @@ public class OverviewFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getActivity().getWindow();
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+
     }
 
     private FragmentOverviewBinding binding;
     public List<Adventure> mAdventureList = new ArrayList<>();
     private AppViewModel mViewModel;
+
+    private GridLayoutManager overviewRVLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,16 +89,16 @@ public class OverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater, container, false);
 
-        OverviewRVAdapter overviewRVAdapter = new OverviewRVAdapter();
-        binding.fragmentOverviewRv.setAdapter( overviewRVAdapter);
-        binding.fragmentOverviewRv.setLayoutManager(
-                new GridLayoutManager(
-                        this.getContext(),
-                        1,
-                        RecyclerView.VERTICAL,
-                        false
-                )
+
+        overviewRVLayoutManager = new GridLayoutManager(
+                this.getContext(),
+                1,
+                RecyclerView.VERTICAL,
+                false
         );
+        OverviewRVAdapter overviewRVAdapter = new OverviewRVAdapter(this);
+        binding.fragmentOverviewRv.setAdapter( overviewRVAdapter);
+        binding.fragmentOverviewRv.setLayoutManager( overviewRVLayoutManager);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
@@ -112,6 +114,15 @@ public class OverviewFragment extends Fragment {
 
 
 
+        int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
+        binding.fragmentOverviewRv.postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        overviewRVLayoutManager.scrollToPosition(position);
+                    }
+                }, 100
+        );
 
 
 
@@ -122,5 +133,17 @@ public class OverviewFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onItemClickListener(Adventure adventure, Integer position) {
+
+        OverviewFragmentDirections.ActionOverviewFragmentToMainFragment action =
+                OverviewFragmentDirections.actionOverviewFragmentToMainFragment();
+
+
+        action.setPosition(position);
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(action);
     }
 }

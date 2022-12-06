@@ -27,6 +27,16 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
         notifyDataSetChanged();
     }
 
+
+    public interface ItemClickListener {
+        void onItemClickListener(Adventure adventure, Integer integer);
+    }
+    ItemClickListener mItemClickListener;
+    public OverviewRVAdapter(ItemClickListener itemClickListener) {
+        mItemClickListener = itemClickListener;
+    }
+
+
     @NonNull
     @Override
     public OverviewRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,6 +50,9 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
     @Override
     public void onBindViewHolder(@NonNull OverviewRVViewHolder holder, int position) {
         holder.textView.setText( Html.fromHtml( mAdventures.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
+
+        holder.itemView.setOnClickListener( v -> mItemClickListener.onItemClickListener( mAdventures.get(position), position));
+
     }
 
     @Override
@@ -56,5 +69,7 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
             super(itemView);
             textView = itemView.findViewById(R.id.single_item_adventures_tv);
         }
+
+
     }
 }

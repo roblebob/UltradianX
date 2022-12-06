@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
@@ -62,6 +64,28 @@ public class MainFragment extends Fragment {
             }
             pagerAdapter.notifyDataSetChanged();
         });
+
+
+        binding.toOverviewButton.setOnClickListener(v -> {
+
+            MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
+                    MainFragmentDirections.actionMainFragmentToOverviewFragment();
+
+            action.setPosition(binding.pager.getCurrentItem());
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(action);
+        });
+
+
+        int position = MainFragmentArgs.fromBundle( getArguments())  .getPosition();
+        binding.pager.postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.pager.setCurrentItem(position, false);
+                    }
+                }, 100
+        );
 
 
         return rootView;
