@@ -114,11 +114,11 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Item
 
 
 
-        int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
         binding.fragmentOverviewRv.postDelayed(
                 new Runnable() {
                     @Override
                     public void run() {
+                        int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
                         overviewRVLayoutManager.scrollToPosition(position);
                     }
                 }, 100

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,20 @@ public class ScreenSlidePageFragment extends Fragment {
 
     private View mRootView;
 
+    private boolean active = false;
+    public void pressActiveSwitch() {
+        active = !active;
+        refreshActive();
+        Log.e(TAG, "------> " + active);
+    }
+    public void refreshActive() {
+        if (active) {
+            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_active);
+
+        } else {
+            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_passive);
+        }
+    }
 
 
     public ScreenSlidePageFragment() {
@@ -80,6 +95,10 @@ public class ScreenSlidePageFragment extends Fragment {
         detailsRV.setLayoutManager(layoutManager);
         detailsRV.setAdapter(mDetailsRVAdapter);
         refresh();
+
+        mRootView.findViewById(R.id.active_switch).setOnClickListener(v -> {
+            pressActiveSwitch();
+        });
 
         return mRootView;
     }
