@@ -2,6 +2,9 @@ package com.roblebob.ultradianx.ui;
 
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +15,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
 import com.roblebob.ultradianx.repository.Util;
 import com.roblebob.ultradianx.repository.model.Adventure;
@@ -31,16 +37,14 @@ public class MainFragment extends Fragment {
 
     private AppViewModel mViewModel;
     private FragmentMainBinding binding;
-
     private FragmentStateAdapter pagerAdapter;
-
     public List<Adventure> mAdventureList = new ArrayList<>();
-
-
-
     public static MainFragment newInstance() {
         return new MainFragment();
     }
+
+
+
 
     @Nullable
     @Override
@@ -66,6 +70,13 @@ public class MainFragment extends Fragment {
         });
 
 
+
+        ViewGroup.LayoutParams params = binding.toOverviewButton.getLayoutParams();
+        Log.e(TAG, "-----> " + params.width + "  " + params.height);
+        Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
+                BitmapFactory.decodeResource(getResources(), R.drawable.bcn_04),
+                params.width, params.height);
+        binding.toOverviewButton.setImageBitmap( thumbImage);
         binding.toOverviewButton.setOnClickListener(v -> {
 
             MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
@@ -88,8 +99,36 @@ public class MainFragment extends Fragment {
         );
 
 
+        binding.activeSwitch.setOnClickListener(v -> {
+            active = !active;
+            refreshActive();
+            Log.e(TAG, "------> " + active);
+        });
+
         return rootView;
     }
+
+    private boolean active = false;
+
+    public void refreshActive() {
+        if (active) {
+            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_active);
+            binding.toOverviewButton.setVisibility(View.GONE);
+            binding.activeSwitch.setBackgroundColor(getResources().getColor(R.color.active));
+
+
+        } else {
+            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_passive);
+            binding.toOverviewButton.setVisibility(View.VISIBLE);
+            binding.activeSwitch.setBackgroundColor(getResources().getColor(R.color.transparent));
+        }
+    }
+
+
+
+
+
+
 
 
     @Override

@@ -35,20 +35,7 @@ public class ScreenSlidePageFragment extends Fragment {
 
     private View mRootView;
 
-    private boolean active = false;
-    public void pressActiveSwitch() {
-        active = !active;
-        refreshActive();
-        Log.e(TAG, "------> " + active);
-    }
-    public void refreshActive() {
-        if (active) {
-            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_active);
 
-        } else {
-            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_passive);
-        }
-    }
 
 
     public ScreenSlidePageFragment() {
@@ -96,9 +83,7 @@ public class ScreenSlidePageFragment extends Fragment {
         detailsRV.setAdapter(mDetailsRVAdapter);
         refresh();
 
-        mRootView.findViewById(R.id.active_switch).setOnClickListener(v -> {
-            pressActiveSwitch();
-        });
+
 
         return mRootView;
     }

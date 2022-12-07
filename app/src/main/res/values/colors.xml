@@ -8,4 +8,7 @@
     <color name="color_7">#4F5559</color>
     <color name="color_8">#303840</color>
     <color name="color_1">#2C3740</color>
+
+    <color name="active">#10900000</color>
+    <color name="transparent">#00000000</color>
 </resources>

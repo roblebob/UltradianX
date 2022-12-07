@@ -9,16 +9,7 @@
     tools:context=".ui.ScreenSlidePageFragment"
     >
 
-    <Button
-        android:id="@+id/active_switch"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="#10000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+
 
 
 
@@ -67,7 +58,7 @@
         app:trackThickness="4dp"
         app:indicatorColor="#50F00000"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_screen_slide_title_tv"
-        app:layout_constraintTop_toTopOf="@+id/active_switch"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:trackColor="#00000000"
         tools:layout_editor_absoluteX="16dp" />
@@ -100,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="173dp" />
+        app:layout_constraintGuide_begin="@dimen/head_height" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
