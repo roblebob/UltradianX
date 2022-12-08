@@ -103,8 +103,8 @@ public class MainFragment extends Fragment {
 
 
 
-        Activity activity = requireActivity();
-        SharedPreferences sharedPreferences =
+        final Activity activity = requireActivity();
+        final SharedPreferences sharedPreferences =
                 activity.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
         final boolean active = sharedPreferences.getBoolean("active", false);
         binding.activeSwitch.setBackgroundColor(
