@@ -2,6 +2,10 @@ package com.roblebob.ultradianx.ui;
 
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -57,6 +61,7 @@ public class MainFragment extends Fragment {
         binding.pager.setAdapter(pagerAdapter);
 
 
+
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.start();
@@ -77,14 +82,13 @@ public class MainFragment extends Fragment {
                 params.width, params.height);
         binding.toOverviewButton.setImageBitmap( thumbImage);
         binding.toOverviewButton.setOnClickListener(v -> {
-
             MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
                     MainFragmentDirections.actionMainFragmentToOverviewFragment();
-
             action.setPosition(binding.pager.getCurrentItem());
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(action);
         });
+
 
 
         int position = MainFragmentArgs.fromBundle( getArguments())  .getPosition();
@@ -98,30 +102,27 @@ public class MainFragment extends Fragment {
         );
 
 
+
+        Activity activity = requireActivity();
+        SharedPreferences sharedPreferences =
+                activity.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+        final boolean active = sharedPreferences.getBoolean("active", false);
+        binding.activeSwitch.setBackgroundColor(
+                active ? getResources().getColor(R.color.active)
+                        : getResources().getColor(R.color.transparent)
+        );
+        binding.toOverviewButton.setVisibility( active ? View.GONE : View.VISIBLE);
+        binding.pager.setUserInputEnabled( !active);
         binding.activeSwitch.setOnClickListener(v -> {
-            active = !active;
-            refreshActive();
-            Log.e(TAG, "------> " + active);
+            sharedPreferences.edit().putBoolean("active", !active).apply();
+            activity.recreate();
         });
+
+
 
         return rootView;
     }
 
-    private boolean active = false;
-
-    public void refreshActive() {
-        if (active) {
-            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_active);
-            binding.toOverviewButton.setVisibility(View.GONE);
-            binding.activeSwitch.setBackgroundColor(getResources().getColor(R.color.active));
-
-
-        } else {
-            requireActivity().getApplication().setTheme(R.style.Theme_UltradianX_passive);
-            binding.toOverviewButton.setVisibility(View.VISIBLE);
-            binding.activeSwitch.setBackgroundColor(getResources().getColor(R.color.transparent));
-        }
-    }
 
 
 
