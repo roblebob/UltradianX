@@ -83,8 +83,6 @@ public class ScreenSlidePageFragment extends Fragment {
         detailsRV.setAdapter(mDetailsRVAdapter);
         refresh();
 
-
-
         return mRootView;
     }
 

@@ -72,7 +72,6 @@ public class MainFragment extends Fragment {
 
 
         ViewGroup.LayoutParams params = binding.toOverviewButton.getLayoutParams();
-        Log.e(TAG, "-----> " + params.width + "  " + params.height);
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
                 BitmapFactory.decodeResource(getResources(), R.drawable.bcn_04),
                 params.width, params.height);
