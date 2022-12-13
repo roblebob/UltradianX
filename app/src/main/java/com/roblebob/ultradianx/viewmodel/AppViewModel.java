@@ -11,6 +11,7 @@ import androidx.work.WorkManager;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
+import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateWorker;
 
 import java.util.List;
@@ -39,8 +40,6 @@ public class AppViewModel extends ViewModel {
 
 
     public void start() {
-        //appRepository.integrate();
-
         mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker.class));
 
 //        mWorkManager.enqueue(
@@ -50,4 +49,13 @@ public class AppViewModel extends ViewModel {
 //                        .build()
 //        );
     }
+
+
+    public void remoteClockify( ) {
+        mWorkManager.enqueue(OneTimeWorkRequest.from(ClockifyWorker.class));
+    }
+
+
+
+
 }

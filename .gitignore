@@ -1,3 +1,4 @@
+no_git.xml
 *.iml
 .gradle
 /local.properties

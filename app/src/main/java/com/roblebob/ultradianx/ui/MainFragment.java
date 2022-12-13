@@ -49,6 +49,7 @@ public class MainFragment extends Fragment {
 
 
 
+    SharedPreferences mSharedPreferences;
 
     @Nullable
     @Override
@@ -66,12 +67,17 @@ public class MainFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.start();
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
-            if (adventureList.size() > 0) {
-                mAdventureList = new ArrayList<>(adventureList);
-            } else {
-                Log.e(TAG, "adventureList is empty");
-            }
+
+            mAdventureList = new ArrayList<>(adventureList);
+
             pagerAdapter.notifyDataSetChanged();
+
+            int pos = mSharedPreferences.getInt("pos", 0);
+            if (pos < mAdventureList.size()) {
+                Log.e(TAG, "setting pager to pos: " + pos);
+                binding.pager.setCurrentItem(pos, false);
+            }
+
         });
 
 
@@ -98,15 +104,14 @@ public class MainFragment extends Fragment {
                     public void run() {
                         binding.pager.setCurrentItem(position, false);
                     }
-                }, 100
+                }, 1000
         );
 
 
 
-        final Activity activity = requireActivity();
-        final SharedPreferences sharedPreferences =
-                activity.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
-        final boolean active = sharedPreferences.getBoolean("active", false);
+
+        mSharedPreferences = requireActivity().getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+        final boolean active = mSharedPreferences.getBoolean("active", false);
         binding.activeSwitch.setBackgroundColor(
                 active ? getResources().getColor(R.color.active)
                         : getResources().getColor(R.color.transparent)
@@ -114,9 +119,14 @@ public class MainFragment extends Fragment {
         binding.toOverviewButton.setVisibility( active ? View.GONE : View.VISIBLE);
         binding.pager.setUserInputEnabled( !active);
         binding.activeSwitch.setOnClickListener(v -> {
-            sharedPreferences.edit().putBoolean("active", !active).apply();
-            activity.recreate();
+
+            mViewModel.remoteClockify( );
+            mSharedPreferences.edit().putBoolean("active", !active).apply();
+            mSharedPreferences.edit().putInt("pos", binding.pager.getCurrentItem()).apply();
+            requireActivity().recreate();
         });
+
+
 
 
 
@@ -128,14 +138,31 @@ public class MainFragment extends Fragment {
 
 
 
-
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        saveState();
         binding = null;
+        Log.e(TAG, "---> onDestroyView:");
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveState();
+        Log.e(TAG, "---> onStop");
+    }
+
+    private void saveState() {
+        int pos = binding.pager.getCurrentItem();
+        mSharedPreferences.edit().putInt("pos", pos).apply();
+
+        Log.e(TAG, "---> saveState:  pos = " + pos);
+    }
+
+
+
+
 
 
     /**
