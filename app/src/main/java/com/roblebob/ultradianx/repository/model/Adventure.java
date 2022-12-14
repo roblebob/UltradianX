@@ -15,12 +15,15 @@ public class Adventure {
 
     @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "title")             private String  title;
+
+    @ColumnInfo(name = "priority")          private Float   priority;
     @ColumnInfo(name = "tags"       )       private String  tags;
     @ColumnInfo(name = "details")           private ArrayList<String> details;
 
 
-    public Adventure( String title, String tags, ArrayList<String> details) {
+    public Adventure( String title, Float priority, String tags, ArrayList<String> details) {
         this.title = title;
+        this.priority = priority;
         this.tags = tags;
         this.details = details;
     }
@@ -37,6 +40,13 @@ public class Adventure {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Float getPriority() {
+        return priority;
+    }
+    public void setPriority(Float priority) {
+        this.priority = priority;
     }
 
     public String getTags() {
@@ -58,6 +68,7 @@ public class Adventure {
         Bundle bundle = new Bundle();
         bundle.putInt("id", this.id);
         bundle.putString("title", this.title);
+        bundle.putFloat("priority", this.priority);
         bundle.putString("tags", this.tags);
         bundle.putStringArrayList("details", this.details);
         return bundle;

@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -51,8 +52,15 @@ public class AppViewModel extends ViewModel {
     }
 
 
-    public void remoteClockify( ) {
-        mWorkManager.enqueue(OneTimeWorkRequest.from(ClockifyWorker.class));
+    public void remoteClockify( String title) {
+        Data.Builder builder = new Data.Builder();
+        builder.putString("title", title);
+        Data data = builder.build();
+
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( ClockifyWorker.class);
+        requestBuilder.setInputData(data);
+
+        mWorkManager.enqueue(requestBuilder.build());
     }
 
 

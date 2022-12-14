@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 
@@ -99,6 +100,8 @@ public class ScreenSlidePageFragment extends Fragment {
         );
 
         ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_tags_tv)) .setText(mBundle.getString("tags").replace(' ', '\n'));
+
+        ((LinearProgressIndicator) mRootView.findViewById(R.id.progressBar)).setProgressCompat( (int) mBundle.getFloat("priority"), false);
 
         mDetailsRVAdapter.submit(mBundle.getStringArrayList("details"));
     }

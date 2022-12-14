@@ -58,6 +58,8 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
 
+        mSharedPreferences = requireActivity().getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         binding.pager.setAdapter(pagerAdapter);
 
@@ -67,17 +69,8 @@ public class MainFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.start();
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
-
             mAdventureList = new ArrayList<>(adventureList);
-
             pagerAdapter.notifyDataSetChanged();
-
-            int pos = mSharedPreferences.getInt("pos", 0);
-            if (pos < mAdventureList.size()) {
-                Log.e(TAG, "setting pager to pos: " + pos);
-                binding.pager.setCurrentItem(pos, false);
-            }
-
         });
 
 
@@ -97,21 +90,22 @@ public class MainFragment extends Fragment {
 
 
 
-        int position = MainFragmentArgs.fromBundle( getArguments())  .getPosition();
-        binding.pager.postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.pager.setCurrentItem(position, false);
-                    }
-                }, 1000
-        );
-
-
-
-
-        mSharedPreferences = requireActivity().getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+        int position;
+        if (false/* mSharedPreferences.getBoolean("active", false) */) {
+            position = mSharedPreferences.getInt("pos", 0);
+        } else {
+            position = MainFragmentArgs.fromBundle(getArguments()).getPosition();
+        }
         final boolean active = mSharedPreferences.getBoolean("active", false);
+
+        Log.e(TAG, "=====> active=" + active + "   " + "pos=" + position);
+
+
+
+
+        binding.pager.postDelayed(
+                () -> binding.pager.setCurrentItem(position, false), 100);
+
         binding.activeSwitch.setBackgroundColor(
                 active ? getResources().getColor(R.color.active)
                         : getResources().getColor(R.color.transparent)
@@ -120,7 +114,7 @@ public class MainFragment extends Fragment {
         binding.pager.setUserInputEnabled( !active);
         binding.activeSwitch.setOnClickListener(v -> {
 
-            mViewModel.remoteClockify( );
+            mViewModel.remoteClockify( mAdventureList.get(binding.pager.getCurrentItem()).getTitle());
             mSharedPreferences.edit().putBoolean("active", !active).apply();
             mSharedPreferences.edit().putInt("pos", binding.pager.getCurrentItem()).apply();
             requireActivity().recreate();

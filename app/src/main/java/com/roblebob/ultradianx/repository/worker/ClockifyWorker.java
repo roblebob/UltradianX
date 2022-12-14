@@ -22,11 +22,10 @@ public class ClockifyWorker extends Worker {
     public static final String API_BASE_ENDPOINT = "https://api.clockify.me/api/v1";
     public static final String API_BASE_ENDPOINT_FOR_REPORTS = "https://reports.api.clockify.me/v1";
     public static final String API_BASE_ENDPOINT_FOR_TIME_OFF = "https://pto.api.clockify.me/v1";
-    private String api_key;
+
 
     ClockifyWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
         super(appContext, workerParameters);
-        api_key = appContext.getResources().getString(R.string.clockify_api_key);
     }
 
     @NonNull
@@ -34,6 +33,9 @@ public class ClockifyWorker extends Worker {
     public Result doWork() {
 
         String result;
+
+        String title = getInputData().getString("title");
+        //Log.e(TAG, " --> title: " + title);
 
         try {
             final OkHttpClient client = new OkHttpClient();
@@ -55,7 +57,7 @@ public class ClockifyWorker extends Worker {
                     ;
 
             Request request = new Request.Builder()
-                    .addHeader("X-Api-Key", api_key)
+                    .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
                     .url(API_BASE_ENDPOINT + GET)
                     .build();
 
@@ -71,7 +73,7 @@ public class ClockifyWorker extends Worker {
         }
 
 
-        Log.e(TAG, "---->\n " + result);
+        //Log.e(TAG, "---->\n " + result);
 
 
         return Result.success();

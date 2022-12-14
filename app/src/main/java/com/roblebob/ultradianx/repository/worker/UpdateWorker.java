@@ -80,7 +80,7 @@ public class UpdateWorker extends Worker {
                     details.add(jsonArrayDetails.getString(ii));
                 }
 
-                mAdventureDao.insert(new Adventure( title, tags, details));
+                mAdventureDao.insert(new Adventure( title, 17.0f, tags, details));
             }
         } catch (JSONException e) {
             e.printStackTrace();
