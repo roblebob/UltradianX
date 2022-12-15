@@ -18,16 +18,18 @@
         android:elevation="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_active_adventure_guideline"
+        />
 
     <TextView
         android:id="@+id/fragment_active_adventure_title_tv"
         android:textSize="22sp"
-        android:layout_marginStart="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:lineSpacingMultiplier="1.2"
+        android:padding="16dp"
         android:scrollbars="vertical"
         android:text="@string/default_msg"
         app:layout_constraintBottom_toTopOf="@+id/fragment_active_adventure_guideline"
@@ -48,7 +50,6 @@
         app:trackThickness="4dp"
         app:indicatorColor="#50F00000"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_active_adventure_title_tv"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:trackColor="#00000000"
         tools:layout_editor_absoluteX="16dp"
@@ -58,7 +59,6 @@
         android:id="@+id/fragment_active_adventure_tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
         android:text="@string/default_msg"
         android:layout_margin="32dp"
         android:textAlignment="textEnd"
@@ -80,8 +80,8 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_active_adventure_guideline"
-        android:layout_width="12dp"
-        android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/head_height" />
 

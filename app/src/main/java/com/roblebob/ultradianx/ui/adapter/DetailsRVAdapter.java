@@ -55,7 +55,7 @@ public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.Deta
 
         public DetailsRVViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.single_item_details_textviev);
+            textView = itemView.findViewById(R.id.single_item_details_tv);
             textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
