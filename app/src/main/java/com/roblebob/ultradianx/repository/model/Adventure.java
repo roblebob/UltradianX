@@ -28,6 +28,14 @@ public class Adventure {
         this.details = details;
     }
 
+    public Adventure( Adventure adventure) {
+        this.id = getId();
+        this.title = adventure.getTitle();
+        this.priority = adventure.getPriority();
+        this.tags = adventure.getTags();
+        this.details = adventure.getDetails();
+    }
+
     public int getId() {
         return id;
     }

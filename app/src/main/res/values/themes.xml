@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.UltradianX.passive" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.UltradianX" parent="Theme.MaterialComponents.NoActionBar">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/color_3</item>
@@ -21,30 +21,28 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+
     </style>
 
 
-    <style name="Theme.UltradianX.active" parent="Theme.MaterialComponents.Light.NoActionBar">
-
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_3</item>
-        <item name="colorPrimaryVariant">@color/color_5</item>
-        <item name="colorOnPrimary">@color/color_6</item>
 
 
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color_7</item>
-        <item name="colorSecondaryVariant">@color/color_8</item>
-        <item name="colorOnSecondary">@color/color_6</item>
 
 
-        <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="Theme.UltradianX.active" parent="Theme.UltradianX">
+        <item name="android:background">@color/design_default_color_background</item>
+        <item name="android:textColor">#000000</item>
     </style>
+
+    <style name="Theme.UltradianX.passive" parent="Theme.UltradianX">
+        <item name="android:background">#000000</item>
+    </style>
+
+
+
+
+
+
 
 </resources>

@@ -17,4 +17,8 @@ public interface AdventureDao {
 
     @Query("SELECT * FROM Adventure")
     LiveData<List<Adventure>> loadAdventureListLive();
+
+    @Query("SELECT * FROM Adventure WHERE :title = title")
+    LiveData<Adventure> loadAdventureLive( String title);
+
 }

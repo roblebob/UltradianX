@@ -36,6 +36,9 @@ public class AppViewModel extends ViewModel {
     }
 
 
+    public LiveData<Adventure> getAdventureLive( String title) {
+        return adventureDao.loadAdventureLive( title);
+    }
 
 
 

@@ -49,7 +49,6 @@ public class MainFragment extends Fragment {
 
 
 
-    SharedPreferences mSharedPreferences;
 
     @Nullable
     @Override
@@ -58,7 +57,6 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
 
-        mSharedPreferences = requireActivity().getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
 
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         binding.pager.setAdapter(pagerAdapter);
@@ -90,34 +88,20 @@ public class MainFragment extends Fragment {
 
 
 
-        int position;
-        if (false/* mSharedPreferences.getBoolean("active", false) */) {
-            position = mSharedPreferences.getInt("pos", 0);
-        } else {
-            position = MainFragmentArgs.fromBundle(getArguments()).getPosition();
-        }
-        final boolean active = mSharedPreferences.getBoolean("active", false);
-
-        Log.e(TAG, "=====> active=" + active + "   " + "pos=" + position);
-
-
-
-
+        int position  = MainFragmentArgs.fromBundle(getArguments()).getPosition();;
         binding.pager.postDelayed(
                 () -> binding.pager.setCurrentItem(position, false), 100);
 
-        binding.activeSwitch.setBackgroundColor(
-                active ? getResources().getColor(R.color.active)
-                        : getResources().getColor(R.color.transparent)
-        );
-        binding.toOverviewButton.setVisibility( active ? View.GONE : View.VISIBLE);
-        binding.pager.setUserInputEnabled( !active);
         binding.activeSwitch.setOnClickListener(v -> {
 
             mViewModel.remoteClockify( mAdventureList.get(binding.pager.getCurrentItem()).getTitle());
-            mSharedPreferences.edit().putBoolean("active", !active).apply();
-            mSharedPreferences.edit().putInt("pos", binding.pager.getCurrentItem()).apply();
-            requireActivity().recreate();
+
+            MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
+                    MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
+            action.setPosition( binding.pager.getCurrentItem());
+            action.setAdventureTitle( mAdventureList.get(binding.pager.getCurrentItem()).getTitle());
+            NavController navController = NavHostFragment.findNavController( this);
+            navController.navigate(action);
         });
 
 
@@ -135,25 +119,9 @@ public class MainFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        saveState();
         binding = null;
         Log.e(TAG, "---> onDestroyView:");
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        saveState();
-        Log.e(TAG, "---> onStop");
-    }
-
-    private void saveState() {
-        int pos = binding.pager.getCurrentItem();
-        mSharedPreferences.edit().putInt("pos", pos).apply();
-
-        Log.e(TAG, "---> saveState:  pos = " + pos);
-    }
-
 
 
 
