@@ -27,7 +27,6 @@ import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
 public class ActiveAdventureFragment extends Fragment {
     public static final String TAG = ActiveAdventureFragment.class.getSimpleName();
     public ActiveAdventureFragment() { /* Required empty public constructor */ }
-    private AppViewModel mViewModel;
     private FragmentActiveAdventureBinding binding;
     private Adventure mAdventure;
     private final ActiveAdventureDetailsRVAdapter mAdapter = new ActiveAdventureDetailsRVAdapter();
@@ -37,7 +36,7 @@ public class ActiveAdventureFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentActiveAdventureBinding.inflate(inflater, container, false);
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        AppViewModel mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
 
 
         binding.fragmentActiveAdventureDetailsRv.setLayoutManager(
@@ -68,7 +67,7 @@ public class ActiveAdventureFragment extends Fragment {
 
 
     public void refresh() {
-        binding.fragmentActiveAdventureTitleTv .setText( Html.fromHtml( mAdventure.getTitle()));
+        binding.fragmentActiveAdventureTitleTv .setText( Html.fromHtml( mAdventure.getTitle(), Html.FROM_HTML_MODE_COMPACT));
         binding.fragmentActiveAdventureTagsTv .setText( mAdventure.getTags().replace(' ', '\n'));
         binding.fragmentActiveAdventureProgressBar.setProgressCompat( mAdventure.getPriority().intValue(), false);
         mAdapter.submit( mAdventure.getDetails());

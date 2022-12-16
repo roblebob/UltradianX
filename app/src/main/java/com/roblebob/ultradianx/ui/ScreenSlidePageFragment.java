@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,6 @@ import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
  * create an instance of this fragment.
  */
 public class ScreenSlidePageFragment extends Fragment {
-
-    public static final String TAG = ScreenSlidePageFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,15 +91,9 @@ public class ScreenSlidePageFragment extends Fragment {
     }
 
     public void refresh() {
-        ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_title_tv)) .setText(
-                //mBundle.getString("title")
-                Html.fromHtml( mBundle.getString("title"))
-        );
-
+        ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_title_tv)) .setText( Html.fromHtml( mBundle.getString("title"), Html.FROM_HTML_MODE_COMPACT));
         ((TextView) mRootView.findViewById( R.id.fragment_screen_slide_tags_tv)) .setText(mBundle.getString("tags").replace(' ', '\n'));
-
         ((LinearProgressIndicator) mRootView.findViewById(R.id.progressBar)).setProgressCompat( (int) mBundle.getFloat("priority"), false);
-
         mDetailsRVAdapter.submit(mBundle.getStringArrayList("details"));
     }
 }

@@ -1,0 +1,33 @@
+package com.roblebob.ultradianx.ui.adapter;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.roblebob.ultradianx.ui.MainFragment;
+import com.roblebob.ultradianx.ui.ScreenSlidePageFragment;
+
+/**
+ * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+ * sequence.
+ */
+public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+
+    MainFragment mFragment;
+
+    public ScreenSlidePagerAdapter(MainFragment f) {
+        super(f);
+        mFragment = f;
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        return ScreenSlidePageFragment.newInstance(mFragment.getAdventureList().get(position).toBundle());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mFragment.getAdventureList().size();
+    }
+}

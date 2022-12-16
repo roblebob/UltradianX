@@ -13,16 +13,14 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
-import com.roblebob.ultradianx.repository.worker.UpdateWorker;
+import com.roblebob.ultradianx.repository.worker.DefaultWorker;
 
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
 
-    // private final AppRepository appRepository;
-    private WorkManager mWorkManager;
+    private final WorkManager mWorkManager;
     AdventureDao adventureDao;
-
 
     public AppViewModel(@NonNull Application application) {
         super();
@@ -30,21 +28,16 @@ public class AppViewModel extends ViewModel {
         mWorkManager = WorkManager.getInstance(application);
     }
 
-
     public LiveData<List<Adventure>> getAdventureListLive() {
         return adventureDao.loadAdventureListLive();
     }
-
 
     public LiveData<Adventure> getAdventureLive( String title) {
         return adventureDao.loadAdventureLive( title);
     }
 
-
-
-
     public void start() {
-        mWorkManager.enqueue(OneTimeWorkRequest.from(UpdateWorker.class));
+        mWorkManager.enqueue(OneTimeWorkRequest.from(DefaultWorker.class));
 
 //        mWorkManager.enqueue(
 //                new PeriodicWorkRequest.Builder(ReminderWorker.class,
@@ -53,7 +46,6 @@ public class AppViewModel extends ViewModel {
 //                        .build()
 //        );
     }
-
 
     public void remoteClockify( String title) {
         Data.Builder builder = new Data.Builder();
@@ -65,8 +57,4 @@ public class AppViewModel extends ViewModel {
 
         mWorkManager.enqueue(requestBuilder.build());
     }
-
-
-
-
 }

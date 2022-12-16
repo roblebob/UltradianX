@@ -35,7 +35,7 @@ public class ClockifyWorker extends Worker {
         String result;
 
         String title = getInputData().getString("title");
-        //Log.e(TAG, " --> title: " + title);
+        Log.e(TAG, " --> title: " + title);
 
         try {
             final OkHttpClient client = new OkHttpClient();
@@ -73,7 +73,7 @@ public class ClockifyWorker extends Worker {
         }
 
 
-        //Log.e(TAG, "---->\n " + result);
+        Log.e(TAG, "---->\n " + result);
 
 
         return Result.success();

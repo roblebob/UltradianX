@@ -1,7 +1,6 @@
 package com.roblebob.ultradianx.ui.adapter;
 
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,9 @@ import java.util.List;
 
 
 public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.OverviewRVViewHolder> {
-    public static final String TAG = OverviewRVAdapter.class.getSimpleName();
-
-    List<Adventure> mAdventures = new ArrayList<>();
-
-    public void submit( List<Adventure> adventures) {
-        mAdventures = new ArrayList<>(adventures);
+    private List<Adventure> mAdventureList = new ArrayList<>();
+    public void submit( List<Adventure> adventureList) {
+        mAdventureList = new ArrayList<>(adventureList);
         notifyDataSetChanged();
     }
 
@@ -49,15 +45,13 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
 
     @Override
     public void onBindViewHolder(@NonNull OverviewRVViewHolder holder, int position) {
-        holder.textView.setText( Html.fromHtml( mAdventures.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
-
-        holder.itemView.setOnClickListener( v -> mItemClickListener.onItemClickListener( mAdventures.get(position), position));
-
+        holder.textView.setText( Html.fromHtml( mAdventureList.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
+        holder.itemView.setOnClickListener( v -> mItemClickListener.onItemClickListener( mAdventureList.get(position), position));
     }
 
     @Override
     public int getItemCount() {
-        return mAdventures.size();
+        return mAdventureList.size();
     }
 
 
@@ -69,7 +63,5 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
             super(itemView);
             textView = itemView.findViewById(R.id.single_item_adventures_tv);
         }
-
-
     }
 }

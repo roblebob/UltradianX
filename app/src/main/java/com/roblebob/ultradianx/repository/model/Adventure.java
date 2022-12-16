@@ -15,7 +15,6 @@ public class Adventure {
 
     @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "title")             private String  title;
-
     @ColumnInfo(name = "priority")          private Float   priority;
     @ColumnInfo(name = "tags"       )       private String  tags;
     @ColumnInfo(name = "details")           private ArrayList<String> details;
