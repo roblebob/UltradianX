@@ -15,6 +15,7 @@ import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.DefaultWorker;
 
+import java.time.Instant;
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
@@ -47,9 +48,11 @@ public class AppViewModel extends ViewModel {
 //        );
     }
 
-    public void remoteClockify( String title) {
+    public void remoteClockify(String title, Instant t_start, Instant t_end) {
         Data.Builder builder = new Data.Builder();
         builder.putString("title", title);
+        builder.putString("t_start", t_start.toString());
+        builder.putString("t_end", t_end.toString());
         Data data = builder.build();
 
         OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( ClockifyWorker.class);

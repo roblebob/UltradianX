@@ -73,8 +73,6 @@ public class MainFragment extends Fragment {
 
         mBinding.activeSwitch.setOnClickListener(v -> {
 
-            mViewModel.remoteClockify( mAdventureList.get(mBinding.pager.getCurrentItem()).getTitle());
-
             MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
                     MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
             action.setPosition( mBinding.pager.getCurrentItem());

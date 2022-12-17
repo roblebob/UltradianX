@@ -100,15 +100,6 @@
 
 
 
-# Strategies & Benefits
-
-+ to start the day what seems most important
-
-+ if you have started some domain and you notice that proceeding it, serves fun and interest, continue doing it, as to say give it a higher degree of importance
-
-+ to allow the present moment to decide what the next task might/should be  (free scheduler, like free jazz)
-
-+ so have th advantages of a daily routine, continuously working something, without the drawbacks, that only a limited amount can be handled daily
 
 
 

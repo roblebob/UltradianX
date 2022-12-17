@@ -23,31 +23,31 @@ It shall be noted here,
 Its target is to weaken that wall that appears when something worth pursuing
     has not been pursued for a while 
 
+Overall it tries to help with _atelic_ pursues which have no explicit endpoint, 
+    in contrast to _telic_ ones, which do.    
 
 
 
-## Data Structure
+## Strategies & Benefits
 
-### Adventures 
++ to start the day what seems most important, that which have the highest priority
 
-    Every Adventure is an emmergent structure 
-    which is build out of all Details 
-    dedicated to it.   
++ if you have started some domain and you notice that proceeding it,
+  serves fun and interest, continue doing it, as to say give it a higher degree of importance
 
++ to allow the present moment to decide what the next task might/should be
+  (free scheduler, like free jazz)
 
-
++ so have th advantages of a daily routine, continuously working something, 
+  without the drawbacks, that only a limited amount can be handled daily
 
 
 
 ## Paid vs. Free version
 
-In the Free version, in addition to every suggestion page popping up periodically, 
-there is a google advertising frame showing at the bottom of the page, 
+In the Free version, in addition to every suggestion page popping up periodically,
+there is a google advertising frame showing at the bottom of the page,
 until the user touches the screen.
-
-
-
-
 
 
 

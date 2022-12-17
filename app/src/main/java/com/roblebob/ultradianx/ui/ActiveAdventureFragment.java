@@ -3,6 +3,7 @@ package com.roblebob.ultradianx.ui;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -23,6 +24,8 @@ import com.roblebob.ultradianx.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
 
 
+import java.time.Instant;
+
 
 public class ActiveAdventureFragment extends Fragment {
     public static final String TAG = ActiveAdventureFragment.class.getSimpleName();
@@ -30,18 +33,29 @@ public class ActiveAdventureFragment extends Fragment {
     private FragmentActiveAdventureBinding binding;
     private Adventure mAdventure;
     private final ActiveAdventureDetailsRVAdapter mAdapter = new ActiveAdventureDetailsRVAdapter();
+    private AppViewModel mViewModel;
 
+    private Instant t_start;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState == null || savedInstanceState.getString("t_start") == null) {
+            t_start = Instant.now();
+        } else {
+            t_start = Instant.parse(savedInstanceState.getString("t_start"));
+        }
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentActiveAdventureBinding.inflate(inflater, container, false);
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        AppViewModel mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
 
 
-        binding.fragmentActiveAdventureDetailsRv.setLayoutManager(
-                new LinearLayoutManager( this.getContext(), RecyclerView.VERTICAL, false)
-        );
+        binding.fragmentActiveAdventureDetailsRv.setLayoutManager( new LinearLayoutManager( this.getContext(), RecyclerView.VERTICAL, false));
         binding.fragmentActiveAdventureDetailsRv.setAdapter( mAdapter);
 
 
@@ -53,13 +67,19 @@ public class ActiveAdventureFragment extends Fragment {
         });
 
 
+
         binding.fragmentActiveAdventurePassiveSwitch.setOnClickListener( (view) -> {
+
+            mViewModel.remoteClockify( mAdventure.getTitle(), t_start, Instant.now());
+            t_start = null;
+
             ActiveAdventureFragmentDirections .ActionActiveAdventureFragmentToMainFragment action =
                     ActiveAdventureFragmentDirections .actionActiveAdventureFragmentToMainFragment();
             action.setPosition( ActiveAdventureFragmentArgs.fromBundle( getArguments()).getPosition());
             NavController navController = NavHostFragment.findNavController( this);
             navController.navigate( action);
         });
+
 
 
         return binding.getRoot();
@@ -78,5 +98,15 @@ public class ActiveAdventureFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (t_start != null) {
+            outState.putString("t_start", t_start.toString());
+        }
+
+        super.onSaveInstanceState(outState);
     }
 }
