@@ -42,7 +42,7 @@ public class Adventure {
     }
 
     @Ignore
-    public Adventure(Bundle bundle) {
+    public Adventure( Bundle bundle) {
         this.id = bundle.getInt("id");
         this.title = bundle.getString("title");
         this.priority = bundle.getDouble("priority");
@@ -104,16 +104,5 @@ public class Adventure {
         bundle.putString("tags", this.tags);
         bundle.putStringArrayList("details", this.details);
         return bundle;
-    }
-
-    @Ignore
-    public Data toData() {
-
-        Data.Builder builder = new Data.Builder();
-        builder.putInt("id", id);
-        builder.putString("title", this.title);
-
-
-        return builder.build();
     }
 }

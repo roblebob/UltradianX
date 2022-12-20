@@ -1,6 +1,7 @@
 package com.roblebob.ultradianx.repository.worker;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -28,6 +29,7 @@ public class UpdatePassiveAdventure extends Worker {
         String last = getInputData().getString("last");
 
         if (id < 0 || priority == Double.MIN_VALUE) {
+            Log.e(TAG, "---> worker UpdatePassiveAdventure failed");
             return Result.failure();
         }
 

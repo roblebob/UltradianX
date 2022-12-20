@@ -112,7 +112,7 @@ public class ScreenSlidePageFragment extends Fragment {
 
     public void update() {
         //final double GROW_RATE = 100. / (24.0 * 60.0 * 60.0);
-        final double GROW_RATE = 20.0;
+        final double GROW_RATE = 1.0;
 
         Instant oldLast = Instant.parse( mBundle.getString("last"));
         Instant newLast = Instant.parse( UtilKt.getRidOfNanos( Instant.now().toString()));
@@ -120,16 +120,7 @@ public class ScreenSlidePageFragment extends Fragment {
         Duration duration = Duration.between(oldLast, newLast);
 
         double oldPriority = mBundle.getDouble("priority");
-
-
-        double newPriority = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            newPriority = oldPriority + (duration.toSeconds() * GROW_RATE);
-            Log.e(TAG, "---> priority=" + newPriority );
-        } else {
-            Log.e(TAG, "----> priority could not be updated; duration = " + duration.toString());
-            newPriority = 0.0;
-        }
+        double newPriority = oldPriority + (duration.getSeconds() * GROW_RATE);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         AppViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
