@@ -61,7 +61,7 @@ public class ActiveAdventureFragment extends Fragment {
 
         String adventureTitle = ActiveAdventureFragmentArgs.fromBundle(getArguments()).getAdventureTitle();
         if (adventureTitle.isEmpty()) { Log.e(TAG, "!!!!!!!!!  adventure title is empty  !!!!!!!!!!!"); }
-        mViewModel.getAdventureLive( adventureTitle).observe( getViewLifecycleOwner(), adventure -> {
+        mViewModel.getAdventureByTitleLive( adventureTitle).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
             refresh();
         });
@@ -69,6 +69,7 @@ public class ActiveAdventureFragment extends Fragment {
 
 
         binding.fragmentActiveAdventurePassiveSwitch.setOnClickListener( (view) -> {
+
 
             mViewModel.remoteClockify( mAdventure.getTitle(), t_start, Instant.now());
             t_start = null;
@@ -109,4 +110,17 @@ public class ActiveAdventureFragment extends Fragment {
 
         super.onSaveInstanceState(outState);
     }
+
+
+
+
+    public void updateAdventure() {
+        final double DECAY_RATE = 100.0 / 90.0;
+        final double GROW_RATE = 100.0 / (24.0 * 60.0);
+
+
+        //double newPriority = mAdventure.getPriority() - ( duration * DECAY_RATE);
+    }
+
+
 }

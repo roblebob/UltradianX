@@ -11,12 +11,15 @@ import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
+import com.roblebob.ultradianx.repository.model.AppState;
+import com.roblebob.ultradianx.repository.model.AppStateDao;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -27,11 +30,13 @@ public class DefaultWorker extends Worker {
     public static final String TAG = DefaultWorker.class.getSimpleName();
 
     private final AdventureDao mAdventureDao;
+    private final AppStateDao mAppStateDao;
     private final String mSrcUrl;
 
     DefaultWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
         super(appContext, workerParameters);
         mAdventureDao = AppDatabase.getInstance(appContext).adventureDao();
+        mAppStateDao = AppDatabase.getInstance( appContext).appStateDao();
         mSrcUrl = appContext.getString(R.string.src_url);
     }
 
@@ -80,13 +85,15 @@ public class DefaultWorker extends Worker {
                     details.add(jsonArrayDetails.getString(ii));
                 }
 
-                mAdventureDao.insert(new Adventure( title, 17.0f, tags, details));
+                mAdventureDao.insert(new Adventure( title, 17.0, Instant.now().toString(), tags, details));
             }
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, "Error, while gathering json data", e);
             return Result.failure();
         }
+
+        mAppStateDao.insert( new AppState("initialRun", "run before"));
 
         return Result.success();
     }

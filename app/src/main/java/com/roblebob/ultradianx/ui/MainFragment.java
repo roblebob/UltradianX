@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends Fragment {
+    public static final String TAG = MainFragment.class.getSimpleName();
 
     private AppViewModel mViewModel;
     private FragmentMainBinding mBinding;
@@ -48,10 +50,21 @@ public class MainFragment extends Fragment {
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
-        mViewModel.start();
+
+        mViewModel.getAppStateByKey("initialRun").observe( getViewLifecycleOwner(), value -> {
+            if (value == null) {
+                mViewModel.start();
+            } else {
+                Log.e(MainFragment.class.getSimpleName(), "----> initial: " + value);
+            }
+        });
+
+
+
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
             mPagerAdapter.notifyDataSetChanged();
+            Log.e(TAG, "---> adventurelist has changed");
         });
 
         ViewGroup.LayoutParams params = mBinding.toOverviewButton.getLayoutParams();
@@ -67,9 +80,13 @@ public class MainFragment extends Fragment {
             navController.navigate(action);
         });
 
+
+
         int position  = MainFragmentArgs.fromBundle(getArguments()).getPosition();
         mBinding.pager.postDelayed(
                 () -> mBinding.pager.setCurrentItem(position, false), 100);
+
+
 
         mBinding.activeSwitch.setOnClickListener(v -> {
 
@@ -80,6 +97,12 @@ public class MainFragment extends Fragment {
             NavController navController = NavHostFragment.findNavController( this);
             navController.navigate(action);
         });
+
+
+
+
+
+
 
         return mBinding.getRoot();
     }

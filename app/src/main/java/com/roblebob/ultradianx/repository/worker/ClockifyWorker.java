@@ -8,13 +8,11 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.repository.Util;
-import com.roblebob.ultradianx.repository.model.AdventureDao;
+import com.roblebob.ultradianx.util.UtilKt;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.TemporalUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,7 +25,6 @@ public class ClockifyWorker extends Worker {
     public static final String API_BASE_ENDPOINT_FOR_REPORTS = "https://reports.api.clockify.me/v1";
     public static final String API_BASE_ENDPOINT_FOR_TIME_OFF = "https://pto.api.clockify.me/v1";
 
-    Util util = new Util();
 
     ClockifyWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
         super(appContext, workerParameters);
@@ -38,8 +35,8 @@ public class ClockifyWorker extends Worker {
     public Result doWork() {
 
         String title = getInputData().getString("title");
-        Instant start = Instant.parse( util.getRidOfNanos( getInputData().getString("t_start")));
-        Instant end   = Instant.parse( util.getRidOfNanos( getInputData().getString("t_end")));
+        Instant start = Instant.parse( UtilKt.getRidOfNanos( getInputData().getString("t_start")));
+        Instant end   = Instant.parse( UtilKt.getRidOfNanos( getInputData().getString("t_end")));
         if (start.equals(end)) { end = end.plusSeconds(1); }
         Duration duration = Duration.between(start, end);
 

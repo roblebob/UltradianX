@@ -12,8 +12,10 @@ import androidx.work.WorkManager;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
+import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.DefaultWorker;
+import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventure;
 
 import java.time.Instant;
 import java.util.List;
@@ -22,23 +24,27 @@ public class AppViewModel extends ViewModel {
 
     private final WorkManager mWorkManager;
     AdventureDao adventureDao;
+    AppStateDao appStateDao;
 
     public AppViewModel(@NonNull Application application) {
         super();
         adventureDao = AppDatabase.getInstance(application.getApplicationContext()).adventureDao();
+        appStateDao = AppDatabase.getInstance(application.getApplicationContext()).appStateDao();
         mWorkManager = WorkManager.getInstance(application);
     }
 
-    public LiveData<List<Adventure>> getAdventureListLive() {
-        return adventureDao.loadAdventureListLive();
-    }
+    public LiveData<List<Adventure>> getAdventureListLive() { return adventureDao.loadAdventureListLive(); }
+    public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
+    public LiveData<Adventure> getAdventureByTitleLive(String title) { return adventureDao.loadAdventureByTitleLive( title); }
 
-    public LiveData<Adventure> getAdventureLive( String title) {
-        return adventureDao.loadAdventureLive( title);
-    }
+    public LiveData<String> getAppStateByKey( String key) { return appStateDao.loadValueByKeyLive( key); }
+
+
+
 
     public void start() {
         mWorkManager.enqueue(OneTimeWorkRequest.from(DefaultWorker.class));
+
 
 //        mWorkManager.enqueue(
 //                new PeriodicWorkRequest.Builder(ReminderWorker.class,
@@ -47,6 +53,8 @@ public class AppViewModel extends ViewModel {
 //                        .build()
 //        );
     }
+
+
 
     public void remoteClockify(String title, Instant t_start, Instant t_end) {
         Data.Builder builder = new Data.Builder();
@@ -60,4 +68,19 @@ public class AppViewModel extends ViewModel {
 
         mWorkManager.enqueue(requestBuilder.build());
     }
+
+
+
+    public void updatePassiveAdventure(int id, double priority, String last) {
+        Data.Builder builder = new Data.Builder();
+        builder.putInt("id", id);
+        builder.putDouble("priority", priority);
+        builder.putString("last", last);
+        Data data = builder.build();
+
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdatePassiveAdventure.class);
+        requestBuilder.setInputData( data);
+        mWorkManager.enqueue( requestBuilder.build());
+    }
+
 }
