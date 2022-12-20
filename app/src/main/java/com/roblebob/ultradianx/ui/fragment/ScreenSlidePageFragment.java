@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.ui;
+package com.roblebob.ultradianx.ui.fragment;
 
 import android.os.Bundle;
 
@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 import com.roblebob.ultradianx.util.UtilKt;
 import com.roblebob.ultradianx.viewmodel.AppViewModel;
@@ -25,7 +24,6 @@ import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

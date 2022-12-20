@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.roblebob.ultradianx.ui.MainFragment;
-import com.roblebob.ultradianx.ui.ScreenSlidePageFragment;
+import com.roblebob.ultradianx.ui.fragment.MainFragment;
+import com.roblebob.ultradianx.ui.fragment.ScreenSlidePageFragment;
 
 /**
  * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in

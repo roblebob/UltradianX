@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.roblebob.ultradianx.ui.MainFragment"
+        android:name="com.roblebob.ultradianx.ui.fragment.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
 
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.roblebob.ultradianx.ui.OverviewFragment"
+        android:name="com.roblebob.ultradianx.ui.fragment.OverviewFragment"
         android:label="OverviewFragment"
         tools:layout="@layout/fragment_overview">
 
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/activeAdventureFragment"
-        android:name="com.roblebob.ultradianx.ui.ActiveAdventureFragment"
+        android:name="com.roblebob.ultradianx.ui.fragment.ActiveAdventureFragment"
         android:label="ActiveAdventureFragment"
         tools:layout="@layout/fragment_active_adventure">
 

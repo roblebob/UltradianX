@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.ui;
+package com.roblebob.ultradianx.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

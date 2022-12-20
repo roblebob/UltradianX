@@ -6,7 +6,7 @@
     android:id="@+id/fragment_screen_slide_page_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ScreenSlidePageFragment"
+    tools:context=".ui.fragment.ScreenSlidePageFragment"
     android:theme="@style/Theme.UltradianX.passive"
     >
 
