@@ -34,9 +34,13 @@ public class MainFragment extends Fragment {
     private AppViewModel mViewModel;
     private FragmentMainBinding mBinding;
     private FragmentStateAdapter mPagerAdapter;
-    private List<Adventure> mAdventureList = new ArrayList<>();
 
-    public List<Adventure> getAdventureList() { return mAdventureList; }
+//    private List<Adventure> mAdventureList = new ArrayList<>();
+//    public List<Adventure> getAdventureList() { return mAdventureList; }
+
+    private List<Integer> mAdventureIdList = new ArrayList<>();
+    public List<Integer> getAdventureIdList() { return mAdventureIdList; }
+
 
     @Nullable
     @Override
@@ -51,7 +55,7 @@ public class MainFragment extends Fragment {
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
 
-        mViewModel.getAppStateByKey("initialRun").observe( getViewLifecycleOwner(), value -> {
+        mViewModel.getAppStateByKeyLive("initialRun").observe( getViewLifecycleOwner(), value -> {
             if (value == null) {
                 mViewModel.initialRun();
             } else {
@@ -61,12 +65,12 @@ public class MainFragment extends Fragment {
 
 
 
-        mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
-            mAdventureList = new ArrayList<>(adventureList);
+        mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
+            mAdventureIdList = new ArrayList<>(adventureIdList);
             mPagerAdapter.notifyDataSetChanged();
 
             //Log.e(TAG, "---> adventurelist has changed:\n" + UtilKt.adventureList2Titles(mAdventureList));
-            Log.e(TAG, "---> adventurelist has changed");
+            Log.e(TAG, "---> adventureIdList has changed");
         });
 
         ViewGroup.LayoutParams params = mBinding.toOverviewButton.getLayoutParams();
@@ -95,7 +99,7 @@ public class MainFragment extends Fragment {
             MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
                     MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
             action.setPosition( mBinding.pager.getCurrentItem());
-            action.setAdventureTitle( mAdventureList.get(mBinding.pager.getCurrentItem()).getTitle());
+            action.setAdventureId( mAdventureIdList.get(mBinding.pager.getCurrentItem()));
             NavController navController = NavHostFragment.findNavController( this);
             navController.navigate(action);
         });

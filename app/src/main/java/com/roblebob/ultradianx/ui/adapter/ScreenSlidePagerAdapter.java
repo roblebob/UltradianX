@@ -23,11 +23,11 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return ScreenSlidePageFragment.newInstance(mFragment.getAdventureList().get(position).toBundle());
+        return ScreenSlidePageFragment.newInstance(mFragment.getAdventureIdList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mFragment.getAdventureList().size();
+        return mFragment.getAdventureIdList().size();
     }
 }

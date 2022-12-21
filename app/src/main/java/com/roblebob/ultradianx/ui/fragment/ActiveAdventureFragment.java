@@ -61,9 +61,8 @@ public class ActiveAdventureFragment extends Fragment {
         binding.fragmentActiveAdventureDetailsRv.setAdapter( mAdapter);
 
 
-        String adventureTitle = ActiveAdventureFragmentArgs.fromBundle(getArguments()).getAdventureTitle();
-        if (adventureTitle.isEmpty()) { Log.e(TAG, "!!!!!!!!!  adventure title is empty  !!!!!!!!!!!"); }
-        mViewModel.getAdventureByTitleLive( adventureTitle).observe( getViewLifecycleOwner(), adventure -> {
+        int adventureId = ActiveAdventureFragmentArgs.fromBundle(getArguments()).getAdventureId();
+        mViewModel.getAdventureByIdLive( adventureId).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
             refresh();
         });
@@ -129,6 +128,7 @@ public class ActiveAdventureFragment extends Fragment {
         mViewModel.updateAdventure( mAdventure.getId(), newPriority, newLast.toString());
         mViewModel.remoteClockify( mAdventure.getTitle(), oldLast, newLast);
 
+        Log.e(TAG, "priority changed by: " + (newPriority - oldPriority));
         if (Duration.between(oldLast, t_start).getSeconds() != 0) { Log.e(TAG, "----> " + "Inconsistency warning !!!!!!"); }
     }
 }

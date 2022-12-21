@@ -65,9 +65,9 @@
             android:defaultValue="0"
             />
         <argument
-            android:name="adventureTitle"
-            app:argType="string"
-            android:defaultValue=""
+            android:name="adventureId"
+            app:argType="integer"
+            android:defaultValue="-1"
             />
     </fragment>
 

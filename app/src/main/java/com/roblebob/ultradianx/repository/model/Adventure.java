@@ -55,18 +55,6 @@ public class Adventure {
         this.details = bundle.getStringArrayList("details");
     }
 
-    @Ignore
-    public Adventure( Data data) {
-        this.id = data.getInt("id", -1);
-        this.title = data.getString("title");
-        this.priority = data.getDouble("priority", Double.MIN_VALUE);
-        this.last = data.getString("last");
-        this.tags = data.getString("tags");
-        this.details = new Gson().fromJson(
-                data.getString("details"),
-                new TypeToken<ArrayList<String>>() {}.getType()
-        );
-    }
 
 
 
@@ -124,19 +112,6 @@ public class Adventure {
         return bundle;
     }
 
-    @Ignore
-    public Data toData() {
-        Data.Builder builder = new Data.Builder();
-
-        builder.putInt("id", this.id);
-        builder.putString("title", this.title);
-        builder.putDouble("priority", this.priority);
-        builder.putString("last", this.last);
-        builder.putString("tags", this.tags);
-        builder.putString("details", new Gson().toJson(this.details));
-
-        return builder.build();
-    }
 
 
 }

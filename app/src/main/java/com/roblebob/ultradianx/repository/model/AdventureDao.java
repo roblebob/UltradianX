@@ -32,6 +32,18 @@ public interface AdventureDao {
     LiveData<Adventure> loadAdventureByTitleLive(String title);
 
 
+    @Query("SELECT * FROM Adventure ORDER BY priority DESC")
+    List<Adventure> loadAdventureList();
+
+    @Query("SELECT * FROM Adventure WHERE :id = id")
+    Adventure loadAdventureById(int id);
+
+
+    @Query("SELECT id FROM Adventure ORDER BY priority DESC")
+    LiveData<List<Integer>> loadAdventureIdListLive();
+
+
+
 
     @Query(value = "UPDATE Adventure SET `last` = :last WHERE id = :id ")
     void updateLast(int id, String last);

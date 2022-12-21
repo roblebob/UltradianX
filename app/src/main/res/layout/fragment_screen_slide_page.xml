@@ -36,7 +36,7 @@
 
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar"
+        android:id="@+id/fragment_screen_slide_page_progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"

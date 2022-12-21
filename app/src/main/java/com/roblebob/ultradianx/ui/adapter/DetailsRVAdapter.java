@@ -18,7 +18,7 @@ import java.util.List;
 
 public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.DetailsRVViewHolder> {
 
-    List<String> mDetails;
+    List<String> mDetails = new ArrayList<>();
 
     public void submit(List<String> details) {
         mDetails = new ArrayList<>(details);

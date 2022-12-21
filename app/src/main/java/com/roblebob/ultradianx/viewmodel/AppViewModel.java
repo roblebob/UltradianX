@@ -16,6 +16,7 @@ import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
+import com.roblebob.ultradianx.repository.worker.UpdateAdventureListWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateAdventureWorker;
 
 import java.time.Instant;
@@ -39,9 +40,10 @@ public class AppViewModel extends ViewModel {
     public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
     public LiveData<Adventure> getAdventureByTitleLive(String title) { return adventureDao.loadAdventureByTitleLive( title); }
 
-    public LiveData<String> getAppStateByKey( String key) { return appStateDao.loadValueByKeyLive( key); }
+    public LiveData<String> getAppStateByKeyLive(String key) { return appStateDao.loadValueByKeyLive( key); }
 
 
+    public LiveData<List<Integer>> getAdventureIdListLive() { return adventureDao.loadAdventureIdListLive(); }
 
 
     public void initialRun() {
@@ -85,6 +87,12 @@ public class AppViewModel extends ViewModel {
         mWorkManager.enqueue( requestBuilder.build());
 
         Log.e(TAG, "----> Adventure has been updated");
+    }
+
+
+    public void updateAdventureList() {
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateAdventureListWorker.class);
+        mWorkManager.enqueue( requestBuilder.build());
     }
 
 }
