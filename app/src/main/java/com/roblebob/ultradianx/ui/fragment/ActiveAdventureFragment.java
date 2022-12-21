@@ -20,10 +20,12 @@ import android.view.ViewGroup;
 import com.roblebob.ultradianx.databinding.FragmentActiveAdventureBinding;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.ActiveAdventureDetailsRVAdapter;
+import com.roblebob.ultradianx.util.UtilKt;
 import com.roblebob.ultradianx.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
 
 
+import java.time.Duration;
 import java.time.Instant;
 
 
@@ -70,8 +72,7 @@ public class ActiveAdventureFragment extends Fragment {
 
         binding.fragmentActiveAdventurePassiveSwitch.setOnClickListener( (view) -> {
 
-
-            mViewModel.remoteClockify( mAdventure.getTitle(), t_start, Instant.now());
+            updateAdventure();
             t_start = null;
 
             ActiveAdventureFragmentDirections .ActionActiveAdventureFragmentToMainFragment action =
@@ -115,12 +116,18 @@ public class ActiveAdventureFragment extends Fragment {
 
 
     public void updateAdventure() {
-        final double DECAY_RATE = 100.0 / 90.0;
-        final double GROW_RATE = 100.0 / (24.0 * 60.0);
+        //final double DECAY_RATE = 100.0 / (90.0 * 60.0) ;
+        final double DECAY_RATE = 100.0 / (90.0) ;
 
+        Instant oldLast = Instant.parse( mAdventure.getLast());
+        Instant newLast = Instant.parse( UtilKt.getRidOfNanos( Instant.now().toString()));
 
-        //double newPriority = mAdventure.getPriority() - ( duration * DECAY_RATE);
+        Duration duration = Duration.between(oldLast, newLast);
+
+        double oldPriority = mAdventure.getPriority();
+        double newPriority = oldPriority - ( duration.getSeconds() * DECAY_RATE);
+
+        mViewModel.updateAdventure( mAdventure.getId(), newPriority, newLast.toString());
+        mViewModel.remoteClockify( mAdventure.getTitle(), oldLast, newLast);
     }
-
-
 }

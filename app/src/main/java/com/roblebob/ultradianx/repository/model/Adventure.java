@@ -9,6 +9,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.work.Data;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -50,6 +54,20 @@ public class Adventure {
         this.tags = bundle.getString("tags");
         this.details = bundle.getStringArrayList("details");
     }
+
+    @Ignore
+    public Adventure( Data data) {
+        this.id = data.getInt("id", -1);
+        this.title = data.getString("title");
+        this.priority = data.getDouble("priority", Double.MIN_VALUE);
+        this.last = data.getString("last");
+        this.tags = data.getString("tags");
+        this.details = new Gson().fromJson(
+                data.getString("details"),
+                new TypeToken<ArrayList<String>>() {}.getType()
+        );
+    }
+
 
 
     public int getId() {
@@ -105,4 +123,20 @@ public class Adventure {
         bundle.putStringArrayList("details", this.details);
         return bundle;
     }
+
+    @Ignore
+    public Data toData() {
+        Data.Builder builder = new Data.Builder();
+
+        builder.putInt("id", this.id);
+        builder.putString("title", this.title);
+        builder.putDouble("priority", this.priority);
+        builder.putString("last", this.last);
+        builder.putString("tags", this.tags);
+        builder.putString("details", new Gson().toJson(this.details));
+
+        return builder.build();
+    }
+
+
 }

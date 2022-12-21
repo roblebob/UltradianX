@@ -1,6 +1,7 @@
 package com.roblebob.ultradianx.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -15,12 +16,13 @@ import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.DefaultWorker;
-import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventure;
+import com.roblebob.ultradianx.repository.worker.UpdateAdventure;
 
 import java.time.Instant;
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
+    public static final String TAG = AppViewModel.class.getSimpleName();
 
     private final WorkManager mWorkManager;
     AdventureDao adventureDao;
@@ -71,16 +73,18 @@ public class AppViewModel extends ViewModel {
 
 
 
-    public void updatePassiveAdventure(int id, double priority, String last) {
+    public void updateAdventure(int id, double priority, String last) {
         Data.Builder builder = new Data.Builder();
         builder.putInt("id", id);
         builder.putDouble("priority", priority);
         builder.putString("last", last);
         Data data = builder.build();
 
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdatePassiveAdventure.class);
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateAdventure.class);
         requestBuilder.setInputData( data);
         mWorkManager.enqueue( requestBuilder.build());
+
+        Log.e(TAG, "----> Adventure has been updated");
     }
 
 }

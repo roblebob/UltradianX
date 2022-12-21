@@ -98,7 +98,7 @@ public class ScreenSlidePageFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.e(TAG, "---> " + "onPause()");
-        update();
+        updateAdventure();
     }
 
     @Override
@@ -108,9 +108,9 @@ public class ScreenSlidePageFragment extends Fragment {
         refresh();
     }
 
-    public void update() {
+    public void updateAdventure() {
         //final double GROW_RATE = 100. / (24.0 * 60.0 * 60.0);
-        final double GROW_RATE = 1.0;
+        final double GROW_RATE = 100. / (24.0 * 60.0);
 
         Instant oldLast = Instant.parse( mBundle.getString("last"));
         Instant newLast = Instant.parse( UtilKt.getRidOfNanos( Instant.now().toString()));
@@ -122,6 +122,6 @@ public class ScreenSlidePageFragment extends Fragment {
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         AppViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
-        viewModel.updatePassiveAdventure(mBundle.getInt("id"), newPriority, newLast.toString());
+        viewModel.updateAdventure(mBundle.getInt("id"), newPriority, newLast.toString());
     }
 }
