@@ -53,7 +53,7 @@ public class MainFragment extends Fragment {
 
         mViewModel.getAppStateByKey("initialRun").observe( getViewLifecycleOwner(), value -> {
             if (value == null) {
-                mViewModel.start();
+                mViewModel.initialRun();
             } else {
                 Log.e(MainFragment.class.getSimpleName(), "----> initial: " + value);
             }
@@ -64,6 +64,8 @@ public class MainFragment extends Fragment {
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
             mPagerAdapter.notifyDataSetChanged();
+
+            //Log.e(TAG, "---> adventurelist has changed:\n" + UtilKt.adventureList2Titles(mAdventureList));
             Log.e(TAG, "---> adventurelist has changed");
         });
 

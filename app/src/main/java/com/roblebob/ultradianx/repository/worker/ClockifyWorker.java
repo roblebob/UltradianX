@@ -35,8 +35,8 @@ public class ClockifyWorker extends Worker {
     public Result doWork() {
 
         String title = getInputData().getString("title");
-        Instant start = Instant.parse( UtilKt.getRidOfNanos( getInputData().getString("t_start")));
-        Instant end   = Instant.parse( UtilKt.getRidOfNanos( getInputData().getString("t_end")));
+        Instant start = Instant.parse( UtilKt.getRidOfMillis( getInputData().getString("t_start")));
+        Instant end   = Instant.parse( UtilKt.getRidOfMillis( getInputData().getString("t_end")));
         if (start.equals(end)) { end = end.plusSeconds(1); }
         Duration duration = Duration.between(start, end);
 

@@ -113,7 +113,7 @@ public class ScreenSlidePageFragment extends Fragment {
         final double GROW_RATE = 100. / (24.0 * 60.0);
 
         Instant oldLast = Instant.parse( mBundle.getString("last"));
-        Instant newLast = Instant.parse( UtilKt.getRidOfNanos( Instant.now().toString()));
+        Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
         Duration duration = Duration.between(oldLast, newLast);
 

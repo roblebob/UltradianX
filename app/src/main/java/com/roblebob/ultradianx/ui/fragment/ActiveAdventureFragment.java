@@ -108,7 +108,6 @@ public class ActiveAdventureFragment extends Fragment {
         if (t_start != null) {
             outState.putString("t_start", t_start.toString());
         }
-
         super.onSaveInstanceState(outState);
     }
 
@@ -120,7 +119,7 @@ public class ActiveAdventureFragment extends Fragment {
         final double DECAY_RATE = 100.0 / (90.0) ;
 
         Instant oldLast = Instant.parse( mAdventure.getLast());
-        Instant newLast = Instant.parse( UtilKt.getRidOfNanos( Instant.now().toString()));
+        Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
         Duration duration = Duration.between(oldLast, newLast);
 
@@ -129,5 +128,7 @@ public class ActiveAdventureFragment extends Fragment {
 
         mViewModel.updateAdventure( mAdventure.getId(), newPriority, newLast.toString());
         mViewModel.remoteClockify( mAdventure.getTitle(), oldLast, newLast);
+
+        if (Duration.between(oldLast, t_start).getSeconds() != 0) { Log.e(TAG, "----> " + "Inconsistency warning !!!!!!"); }
     }
 }

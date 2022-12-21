@@ -10,12 +10,12 @@ import androidx.work.WorkerParameters;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 
-public class UpdateAdventure extends Worker {
-    public static final String TAG = UpdateAdventure.class.getSimpleName();
+public class UpdateAdventureWorker extends Worker {
+    public static final String TAG = UpdateAdventureWorker.class.getSimpleName();
 
     private final AdventureDao mAdventureDao;
 
-    public UpdateAdventure(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public UpdateAdventureWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         mAdventureDao = AppDatabase.getInstance(context).adventureDao();
     }

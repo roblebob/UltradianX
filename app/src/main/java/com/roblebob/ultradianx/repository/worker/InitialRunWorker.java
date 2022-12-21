@@ -26,14 +26,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DefaultWorker extends Worker {
-    public static final String TAG = DefaultWorker.class.getSimpleName();
+public class InitialRunWorker extends Worker {
+    public static final String TAG = InitialRunWorker.class.getSimpleName();
 
     private final AdventureDao mAdventureDao;
     private final AppStateDao mAppStateDao;
     private final String mSrcUrl;
 
-    DefaultWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
+    InitialRunWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
         super(appContext, workerParameters);
         mAdventureDao = AppDatabase.getInstance(appContext).adventureDao();
         mAppStateDao = AppDatabase.getInstance( appContext).appStateDao();
