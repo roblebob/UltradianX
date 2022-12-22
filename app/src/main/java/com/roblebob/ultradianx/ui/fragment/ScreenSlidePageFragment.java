@@ -58,26 +58,18 @@ public class ScreenSlidePageFragment extends Fragment {
         }
     }
 
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentScreenSlidePageBinding.inflate( inflater, container, false);
 
-        mBinding.fragmentScreenSlideTitleTv.setMovementMethod( new ScrollingMovementMethod());
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
-        mBinding.fragmentScreenSlideDetailsRv.setLayoutManager(layoutManager);
+        mBinding.fragmentScreenSlideDetailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
         mBinding.fragmentScreenSlideDetailsRv.setAdapter(mDetailsRVAdapter);
-
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), advent -> {
+            // TODO check if new assignment is necessary
             Adventure adventure = new Adventure( advent);
 
             mBinding.fragmentScreenSlideTitleTv.setText( Html.fromHtml( adventure.getTitle(), Html.FROM_HTML_MODE_COMPACT));
@@ -86,12 +78,10 @@ public class ScreenSlidePageFragment extends Fragment {
             mDetailsRVAdapter.submit( adventure.getDetails());
         });
 
+        mBinding.fragmentScreenSlideTitleTv.setMovementMethod( new ScrollingMovementMethod());
 
         return mBinding.getRoot();
     }
-
-
-
 
     @Override
     public void onPause() {

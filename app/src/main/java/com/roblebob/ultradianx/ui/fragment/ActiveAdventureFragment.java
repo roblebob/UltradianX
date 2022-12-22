@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,6 +84,24 @@ public class ActiveAdventureFragment extends Fragment {
 
 
 
+        Handler handler = new Handler();
+        // Define the code block to be executed
+        Runnable runnableCode = new Runnable() {
+            @Override
+            public void run() {
+                // Do something here on the main thread
+                mViewModel.updateActiveProgression( adventureId);
+                Log.d("Handlers", "Called on main thread");
+                // Repeat this the same runnable code block again another 2 seconds
+                // 'this' is referencing the Runnable object
+                handler.postDelayed(this, 2000);
+            }
+        };
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode);
+
+
+
         return binding.getRoot();
     }
 
@@ -99,6 +118,7 @@ public class ActiveAdventureFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+
     }
 
 
@@ -113,7 +133,7 @@ public class ActiveAdventureFragment extends Fragment {
 
 
 
-    public void updateAdventure() {
+    private void updateAdventure() {
         //final double DECAY_RATE = 100.0 / (90.0 * 60.0) ;
         final double DECAY_RATE = 100.0 / (90.0) ;
 
