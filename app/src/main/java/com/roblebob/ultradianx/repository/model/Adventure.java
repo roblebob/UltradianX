@@ -21,38 +21,48 @@ public class Adventure {
 
     @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "title")             private String  title;
-    @ColumnInfo(name = "priority")          private Double  priority;
-    @ColumnInfo(name = "last")              private String  last;
     @ColumnInfo(name = "tags"       )       private String  tags;
     @ColumnInfo(name = "details")           private ArrayList<String> details;
+    @ColumnInfo(name = "priority")          private Double  priority;
+    @ColumnInfo(name = "last")              private String  last;
+    @ColumnInfo(name = "grow")              private Double  grow;
+    @ColumnInfo(name = "decay")             private Double  decay;
 
 
-    public Adventure( String title, Double priority, String last, String tags, ArrayList<String> details) {
+
+
+    public Adventure( String title, String tags, ArrayList<String> details, Double priority, String last, Double grow, Double decay) {
         this.title = title;
-        this.priority = priority;
-        this.last = last;
         this.tags = tags;
         this.details = details;
+        this.priority = priority;
+        this.last = last;
+        this.grow = grow;
+        this.decay = decay;
     }
 
     @Ignore
     public Adventure( Adventure adventure) {
         this.id = adventure.getId();
         this.title = adventure.getTitle();
-        this.priority = adventure.getPriority();
-        this.last = adventure.getLast();
         this.tags = adventure.getTags();
         this.details = adventure.getDetails();
+        this.priority = adventure.getPriority();
+        this.last = adventure.getLast();
+        this.grow = adventure .getGrow();
+        this.decay = adventure.getDecay();
     }
 
     @Ignore
     public Adventure( Bundle bundle) {
         this.id = bundle.getInt("id");
         this.title = bundle.getString("title");
-        this.priority = bundle.getDouble("priority");
-        this.last = bundle.getString("last");
         this.tags = bundle.getString("tags");
         this.details = bundle.getStringArrayList("details");
+        this.priority = bundle.getDouble("priority");
+        this.last = bundle.getString("last");
+        this.grow = bundle.getDouble("grow");
+        this.decay = bundle.getDouble("decay");
     }
 
 
@@ -72,20 +82,6 @@ public class Adventure {
         this.title = title;
     }
 
-    public Double getPriority() {
-        return priority;
-    }
-    public void setPriority(Double priority) {
-        this.priority = priority;
-    }
-
-    public String getLast() {
-        return last;
-    }
-    public void setLast(String last) {
-        this.last = last;
-    }
-
     public String getTags() {
         return tags;
     }
@@ -100,15 +96,48 @@ public class Adventure {
         this.details = details;
     }
 
+    public Double getPriority() {
+        return priority;
+    }
+    public void setPriority(Double priority) {
+        this.priority = priority;
+    }
+
+    public String getLast() {
+        return last;
+    }
+    public void setLast(String last) {
+        this.last = last;
+    }
+
+    public Double getGrow() {
+        return grow;
+    }
+    public void setGrow(Double grow) {
+        this.grow = grow;
+    }
+
+    public Double getDecay() {
+        return decay;
+    }
+    public void setDecay(Double decay) {
+        this.decay = decay;
+    }
+
+
+
+
     @Ignore
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
         bundle.putInt("id", this.id);
         bundle.putString("title", this.title);
-        bundle.putDouble("priority", this.priority);
-        bundle.putString("last", this.last);
         bundle.putString("tags", this.tags);
         bundle.putStringArrayList("details", this.details);
+        bundle.putDouble("priority", this.priority);
+        bundle.putString("last", this.last);
+        bundle.putDouble("grow", this.grow);
+        bundle.putDouble("decay", this.decay);
         return bundle;
     }
 

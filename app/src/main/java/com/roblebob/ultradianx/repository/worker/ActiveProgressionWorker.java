@@ -37,23 +37,16 @@ public class ActiveProgressionWorker extends Worker {
 
         Adventure adventure = mAdventureDao.loadAdventureById( id);
 
-
-
-        //final double DECAY_RATE = 100.0 / (90.0 * 60.0) ;
-        final double DECAY_RATE = 100.0 / (90.0) ;
-
         Instant oldLast = Instant.parse( adventure.getLast());
         Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
         Duration duration = Duration.between(oldLast, newLast);
 
         double oldPriority = adventure.getPriority();
-        double newPriority = oldPriority - ( duration.getSeconds() * DECAY_RATE);
-
+        double newPriority = oldPriority - ( duration.getSeconds() * adventure.getDecay());
 
         mAdventureDao.updatePriority(id, newPriority);
         mAdventureDao.updateLast(id, newLast.toString());
-
 
         return Result.success();
     }

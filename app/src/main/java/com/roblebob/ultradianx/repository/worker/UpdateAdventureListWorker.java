@@ -24,7 +24,6 @@ public class UpdateAdventureListWorker extends Worker {
 
     private final AdventureDao mAdventureDao;
 
-
     public UpdateAdventureListWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         mAdventureDao = AppDatabase.getInstance(context).adventureDao();
@@ -39,16 +38,13 @@ public class UpdateAdventureListWorker extends Worker {
         Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
         adventureList.forEach( (adventure) -> {
-            //final double GROW_RATE = 100. / (24.0 * 60.0 * 60.0);
-            final double GROW_RATE = 100. / (24.0 * 60.0);
 
             Instant oldLast = Instant.parse( adventure.getLast());
-
 
             Duration duration = Duration.between(oldLast, newLast);
 
             double oldPriority = adventure.getPriority();
-            double newPriority = oldPriority + (duration.getSeconds() * GROW_RATE);
+            double newPriority = oldPriority + (duration.getSeconds() * adventure.getGrow());
 
             adventure.setPriority( newPriority);
             adventure.setLast( newLast.toString());
@@ -56,12 +52,6 @@ public class UpdateAdventureListWorker extends Worker {
             mAdventureDao.update(adventure);
         });
 
-
-
-
-
         return Result.success();
     }
-
-
 }

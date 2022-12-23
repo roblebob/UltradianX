@@ -29,6 +29,11 @@ import okhttp3.Response;
 public class InitialRunWorker extends Worker {
     public static final String TAG = InitialRunWorker.class.getSimpleName();
 
+    //final double GROW = 100. / (24.0 * 60.0 * 60.0);
+    final double GROW = 100. / (24.0 * 60.0);
+    //final double DECAY = 100.0 / (90.0 * 60.0) ;
+    final double DECAY = 100.0 / (90.0) ;
+
     private final AdventureDao mAdventureDao;
     private final AppStateDao mAppStateDao;
     private final String mSrcUrl;
@@ -85,7 +90,8 @@ public class InitialRunWorker extends Worker {
                     details.add(jsonArrayDetails.getString(ii));
                 }
 
-                mAdventureDao.insert(new Adventure( title, 17.0, Instant.now().toString(), tags, details));
+
+                mAdventureDao.insert(new Adventure( title, tags, details, 17.0, Instant.now().toString(), GROW, DECAY));
             }
         } catch (JSONException e) {
             e.printStackTrace();

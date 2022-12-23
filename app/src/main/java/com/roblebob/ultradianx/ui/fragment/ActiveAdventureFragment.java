@@ -37,8 +37,25 @@ public class ActiveAdventureFragment extends Fragment {
     private Adventure mAdventure;
     private final ActiveAdventureDetailsRVAdapter mAdapter = new ActiveAdventureDetailsRVAdapter();
     private AppViewModel mViewModel;
+    int mAdventureId;
+
 
     private Instant t_start;
+
+    private final Handler mHandler = new Handler();
+    // Define the code block to be executed
+    private final Runnable mProgressUpdaterRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // Do something here on the main thread
+            mViewModel.updateActiveProgression(mAdventureId);
+            Log.d("Handlers", "Called on main thread");
+            // Repeat this the same runnable code block again another 2 seconds
+            // 'this' is referencing the Runnable object
+            mHandler.postDelayed(this, 2000);
+        }
+    };
+
 
 
     @Override
@@ -62,8 +79,8 @@ public class ActiveAdventureFragment extends Fragment {
         binding.fragmentActiveAdventureDetailsRv.setAdapter( mAdapter);
 
 
-        int adventureId = ActiveAdventureFragmentArgs.fromBundle(getArguments()).getAdventureId();
-        mViewModel.getAdventureByIdLive( adventureId).observe( getViewLifecycleOwner(), adventure -> {
+        mAdventureId = ActiveAdventureFragmentArgs.fromBundle(getArguments()).getAdventureId();
+        mViewModel.getAdventureByIdLive(mAdventureId).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
             refresh();
         });
@@ -75,6 +92,8 @@ public class ActiveAdventureFragment extends Fragment {
             updateAdventure();
             t_start = null;
 
+            // TODO kill updating
+
             ActiveAdventureFragmentDirections .ActionActiveAdventureFragmentToMainFragment action =
                     ActiveAdventureFragmentDirections .actionActiveAdventureFragmentToMainFragment();
             action.setPosition( ActiveAdventureFragmentArgs.fromBundle( getArguments()).getPosition());
@@ -84,21 +103,9 @@ public class ActiveAdventureFragment extends Fragment {
 
 
 
-        Handler handler = new Handler();
-        // Define the code block to be executed
-        Runnable runnableCode = new Runnable() {
-            @Override
-            public void run() {
-                // Do something here on the main thread
-                mViewModel.updateActiveProgression( adventureId);
-                Log.d("Handlers", "Called on main thread");
-                // Repeat this the same runnable code block again another 2 seconds
-                // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 2000);
-            }
-        };
+
         // Start the initial runnable task by posting through the handler
-        handler.post(runnableCode);
+        mHandler.post(mProgressUpdaterRunnable);
 
 
 
@@ -118,7 +125,7 @@ public class ActiveAdventureFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-
+        mHandler.removeCallbacks( mProgressUpdaterRunnable);
     }
 
 
