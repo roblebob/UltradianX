@@ -28,9 +28,6 @@ public class Adventure {
     @ColumnInfo(name = "grow")              private Double  grow;
     @ColumnInfo(name = "decay")             private Double  decay;
 
-
-
-
     public Adventure( String title, String tags, ArrayList<String> details, Double priority, String last, Double grow, Double decay) {
         this.title = title;
         this.tags = tags;
@@ -65,7 +62,17 @@ public class Adventure {
         this.decay = bundle.getDouble("decay");
     }
 
-
+    @Ignore
+    public Adventure( Data data) {
+        this.id = data.getInt("id", -1);
+        this.title = data.getString("title");
+        this.tags = data.getString("tags");
+        this.details = new Gson().fromJson( data.getString("details"), new TypeToken<ArrayList<String>>() {}.getType());
+        this.priority = data.getDouble("priority", Double.NaN);
+        this.last = data.getString("last");
+        this.grow = data.getDouble("grow", Double.NaN);
+        this.decay = data.getDouble("decay", Double.NaN);
+    }
 
 
     public int getId() {
@@ -141,6 +148,17 @@ public class Adventure {
         return bundle;
     }
 
-
-
+    @Ignore
+    public Data toData() {
+        Data.Builder builder = new Data.Builder();
+        builder.putInt("id", this.id);
+        builder.putString("title", this.title);
+        builder.putString("tags", this.tags);
+        builder.putString("details", new Gson().toJson(this.details));
+        builder.putDouble("priority", this.priority);
+        builder.putString("last", this.last);
+        builder.putDouble("grow", this.grow);
+        builder.putDouble("decay", this.decay);
+        return builder.build();
+    }
 }

@@ -87,6 +87,6 @@ public class ScreenSlidePageFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.e(TAG, "---> " + "onPause()");
-        mViewModel.updateAdventureList();
+        mViewModel.updatePassiveAdventureList();
     }
 }

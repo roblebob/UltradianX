@@ -17,8 +17,8 @@ import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ActiveProgressionWorker;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
-import com.roblebob.ultradianx.repository.worker.UpdateAdventureListWorker;
-import com.roblebob.ultradianx.repository.worker.UpdateAdventureWorker;
+import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventureListWorker;
+import com.roblebob.ultradianx.repository.worker.UpdateActiveAdventureWorker;
 
 import java.time.Instant;
 import java.util.List;
@@ -36,14 +36,22 @@ public class AppViewModel extends ViewModel {
         appStateDao = AppDatabase.getInstance(application.getApplicationContext()).appStateDao();
         mWorkManager = WorkManager.getInstance(application);
     }
+
+
     public LiveData<String> getAppStateByKeyLive(String key) { return appStateDao.loadValueByKeyLive( key); }
 
     public LiveData<List<Adventure>> getAdventureListLive() { return adventureDao.loadAdventureListLive(); }
     public LiveData<List<Integer>> getAdventureIdListLive() { return adventureDao.loadAdventureIdListLive(); }
     public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
 
-    public void updateAdventureList() {
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateAdventureListWorker.class);
+
+    public void initialRun() {
+        mWorkManager.enqueue(OneTimeWorkRequest.from(InitialRunWorker.class));
+    }
+
+
+    public void updatePassiveAdventureList() {
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdatePassiveAdventureListWorker.class);
         mWorkManager.enqueue( requestBuilder.build());
     }
 
@@ -59,20 +67,20 @@ public class AppViewModel extends ViewModel {
     }
 
 
+    public void updateActiveAdventure( Data data) {
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateActiveAdventureWorker.class);
+        requestBuilder.setInputData( data);
+        mWorkManager.enqueue( requestBuilder.build());
 
-
-
-    public void initialRun() {
-        mWorkManager.enqueue(OneTimeWorkRequest.from(InitialRunWorker.class));
-
-
-//        mWorkManager.enqueue(
-//                new PeriodicWorkRequest.Builder(ReminderWorker.class,
-//                        15, TimeUnit.MINUTES,
-//                        1, TimeUnit.MINUTES)
-//                        .build()
-//        );
+        // TODO chain call to history worker
     }
+
+    // TODO ClockifyWorker
+
+
+
+
+
 
 
 
@@ -91,27 +99,10 @@ public class AppViewModel extends ViewModel {
 
 
 
-
-
-
-
-
-
-    public void updateAdventure(int id, double priority, String last) {
-        Data.Builder builder = new Data.Builder();
-        builder.putInt("id", id);
-        builder.putDouble("priority", priority);
-        builder.putString("last", last);
-        Data data = builder.build();
-
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateAdventureWorker.class);
-        requestBuilder.setInputData( data);
-        mWorkManager.enqueue( requestBuilder.build());
-
-        Log.e(TAG, "----> Adventure has been updated");
-    }
-
-
-
-
+    //        mWorkManager.enqueue(
+//                new PeriodicWorkRequest.Builder(ReminderWorker.class,
+//                        15, TimeUnit.MINUTES,
+//                        1, TimeUnit.MINUTES)
+//                        .build()
+//        );
 }
