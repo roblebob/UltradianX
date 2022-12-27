@@ -2,33 +2,4 @@
     <string name="app_name">UltradianX</string>
     <string name="src_url">https://raw.githubusercontent.com/roblebob/UltradianX/test/temporary.json</string>
     <string name="default_msg">default</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
-    <string name="htmlsource"><![CDATA[
-    <p>
-        Adults are spotted gold and black on the crown, back and wings.
-        Their face and neck are black with a white border; they have a black breast and a dark rump.
-        The legs are black.
-    </p>
-
-    <p>
-        It is similar to two other golden plovers, Eurasian and Pacific.
-
-        <h1>The American Golden Plover</h1>
-
-        is smaller, slimmer and relatively longer-legged than Eurasian Golden Plover (<i>Pluvialis apricaria</i>) which also has white axillary (armpit) feathers.
-
-        It is more similar to Pacific Golden Plover (<i>Pluvialis fulva</i>) with which it was once <b>considered</b> conspecific under the name \"Lesser Golden Plover\".
-
-        The Pacific Golden Plover is slimmer than the American species, has a shorter primary projection, and longer legs, and is usually yellower on the back.
-    </p>
-
-    <p>
-        These birds forage for food on tundra, fields, beaches and tidal flats, usually by sight. They eat insects and crustaceans, also berries.
-    </p>
-    ]]></string>
-
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -59,6 +60,13 @@ public class UpdateActiveAdventureWorker extends Worker {
 
         mAdventureDao.update( newAdventure);
 
-        return Result.success();
+
+        Data outputData = new Data.Builder()
+                .putInt("adventureId", newAdventure.getId())
+                .putString("start", oldLast.toString())
+                .putString("end", newLast.toString())
+                .build();
+
+        return Result.success( outputData);
     }
 }

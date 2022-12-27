@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -48,6 +49,13 @@ public class ActiveProgressionWorker extends Worker {
         mAdventureDao.updatePriority(id, newPriority);
         mAdventureDao.updateLast(id, newLast.toString());
 
-        return Result.success();
+
+        Data outputData = new Data.Builder()
+                .putInt("adventureId", id)
+                .putString("start", oldLast.toString())
+                .putString("end", newLast.toString())
+                .build();
+
+        return Result.success( outputData);
     }
 }

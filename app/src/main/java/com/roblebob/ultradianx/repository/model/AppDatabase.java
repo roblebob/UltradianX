@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 
-@Database( entities = { Adventure.class, AppState.class},   version = 1,   exportSchema = false)
+@Database( entities = { Adventure.class, AppState.class, History.class},   version = 1,   exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase { /*singleton-pattern*/
     private static final String DATABASE_NAME  = "UltradianXAppDatabase";
@@ -24,4 +24,5 @@ public abstract class AppDatabase extends RoomDatabase { /*singleton-pattern*/
     }
     public abstract AdventureDao adventureDao();
     public abstract AppStateDao appStateDao();
+    public abstract HistoryDao historyDao();
 }

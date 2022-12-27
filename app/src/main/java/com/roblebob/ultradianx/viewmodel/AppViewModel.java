@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkContinuation;
 import androidx.work.WorkManager;
 
 import com.roblebob.ultradianx.repository.model.Adventure;
@@ -16,6 +17,7 @@ import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ActiveProgressionWorker;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
+import com.roblebob.ultradianx.repository.worker.HistoryWorker;
 import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
 import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventureListWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateActiveAdventureWorker;
@@ -61,21 +63,52 @@ public class AppViewModel extends ViewModel {
         builder.putInt("id", id);
         Data data = builder.build();
 
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( ActiveProgressionWorker.class);
-        requestBuilder.setInputData( data);
-        mWorkManager.enqueue( requestBuilder.build());
+        OneTimeWorkRequest.Builder updateActiveProgressionRequestBuilder = new OneTimeWorkRequest.Builder( ActiveProgressionWorker.class);
+        updateActiveProgressionRequestBuilder.setInputData( data);
+
+
+        WorkContinuation continuation = mWorkManager.beginWith( updateActiveProgressionRequestBuilder.build());
+
+        OneTimeWorkRequest.Builder historyRequestBuilder = new OneTimeWorkRequest.Builder( HistoryWorker.class);
+
+        continuation = continuation.then(historyRequestBuilder.build());
+
+        continuation.enqueue();
+
+        //mWorkManager.enqueue( updateActiveProgressionRequestBuilder.build());
     }
 
 
     public void updateActiveAdventure( Data data) {
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdateActiveAdventureWorker.class);
-        requestBuilder.setInputData( data);
-        mWorkManager.enqueue( requestBuilder.build());
+        OneTimeWorkRequest.Builder updateActiveAdventureRequestBuilder = new OneTimeWorkRequest.Builder( UpdateActiveAdventureWorker.class);
+        updateActiveAdventureRequestBuilder.setInputData( data);
 
-        // TODO chain call to history worker
+
+        WorkContinuation continuation = mWorkManager.beginWith( updateActiveAdventureRequestBuilder.build());
+
+        OneTimeWorkRequest.Builder historyRequestBuilder = new OneTimeWorkRequest.Builder( HistoryWorker.class);
+
+        continuation = continuation.then(historyRequestBuilder.build());
+
+        continuation.enqueue();
+
+
+        //mWorkManager.enqueue( updateActiveAdventureRequestBuilder.build());
     }
 
+
+    // TODO chain call (continuation) to HistoryWorker from both UpdateActiveProgressionWorker and UpdateActiveAdventureWorker
     // TODO ClockifyWorker
+
+
+
+
+
+
+
+
+
+
 
 
 
