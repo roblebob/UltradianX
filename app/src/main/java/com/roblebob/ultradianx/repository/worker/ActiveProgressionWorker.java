@@ -31,7 +31,7 @@ public class ActiveProgressionWorker extends Worker {
     public Result doWork() {
 
         int id = getInputData().getInt("id", -1);
-        if (id < 0) {
+        if (id < 1) {
             Log.e(TAG, "---> worker failed");
             return Result.failure();
         }

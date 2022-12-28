@@ -24,4 +24,9 @@ public interface HistoryDao {
 
     @Query("SELECT * FROM History WHERE :adventureId = adventureId ORDER BY `end` DESC")
     List<History> loadHistoryByAdventureId( int adventureId);
+
+    @Query("SELECT * FROM History ORDER BY `end` DESC")
+    List<History> loadEntireHistory( );
+
+
 }

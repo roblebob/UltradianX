@@ -97,26 +97,8 @@ public class AppViewModel extends ViewModel {
     }
 
 
-    // TODO chain call (continuation) to HistoryWorker from both UpdateActiveProgressionWorker and UpdateActiveAdventureWorker
+
     // TODO ClockifyWorker
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void remoteClockify(String title, Instant t_start, Instant t_end) {
         Data.Builder builder = new Data.Builder();
         builder.putString("title", title);

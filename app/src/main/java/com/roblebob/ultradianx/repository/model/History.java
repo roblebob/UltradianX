@@ -1,5 +1,6 @@
 package com.roblebob.ultradianx.repository.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,8 +13,7 @@ public class History {
     @ColumnInfo(name = "start")             private String  start;
     @ColumnInfo(name = "end")               private String  end;
 
-    public History(int id, int adventureId, String start, String end) {
-        this.id = id;
+    public History(int adventureId, String start, String end) {
         this.adventureId = adventureId;
         this.start = start;
         this.end = end;
@@ -49,4 +49,14 @@ public class History {
     }
 
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", adventureId=" + adventureId +
+                ", start='" + start + '\'' +
+                ", end='" + end + '\'' +
+                '}';
+    }
 }

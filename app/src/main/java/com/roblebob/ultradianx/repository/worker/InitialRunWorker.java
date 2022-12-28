@@ -13,6 +13,7 @@ import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppState;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
+import com.roblebob.ultradianx.util.UtilKt;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,7 +92,7 @@ public class InitialRunWorker extends Worker {
                 }
 
 
-                mAdventureDao.insert(new Adventure( title, tags, details, 17.0, Instant.now().toString(), GROW, DECAY));
+                mAdventureDao.insert(new Adventure( title, tags, details, 17.0, UtilKt.getRidOfMillis(Instant.now().toString()), GROW, DECAY));
             }
         } catch (JSONException e) {
             e.printStackTrace();
