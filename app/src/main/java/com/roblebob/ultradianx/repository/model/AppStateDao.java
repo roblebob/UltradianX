@@ -13,4 +13,7 @@ public interface AppStateDao {
 
     @Query("SELECT value FROM AppState WHERE :key = `key`")
     LiveData<String> loadValueByKeyLive( String key);
+
+    @Query("SELECT value FROM AppState WHERE :key = `key`")
+    String loadValueByKey( String key);
 }

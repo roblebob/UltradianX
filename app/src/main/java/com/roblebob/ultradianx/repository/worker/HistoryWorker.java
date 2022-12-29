@@ -16,13 +16,12 @@ import com.roblebob.ultradianx.util.UtilKt;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HistoryWorker extends Worker {
     public static final String TAG = HistoryWorker.class.getSimpleName();
 
 
-    private HistoryDao historyDao;
+    private final HistoryDao historyDao;
 
     public HistoryWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -39,13 +38,7 @@ public class HistoryWorker extends Worker {
         String start = data.getString("start");
         String end = data.getString("end");
 
-
-        Log.e(TAG, "----> "
-                + "id: " + adventureId + "   "
-                + "start: " + start + "   "
-                + "end: " + end + "   "
-        );
-
+        //Log.e(TAG, "----> " + "id: " + adventureId + "   " + "start: " + start + "   " + "end: " + end + "   ");
 
         List<History> historyList = historyDao.loadHistoryByAdventureId( adventureId);
 
@@ -65,12 +58,7 @@ public class HistoryWorker extends Worker {
         }
 
 
-
-
-        historyList = historyDao.loadEntireHistory();
-
-        Log.e(TAG, UtilKt.historyList2String( historyList));
-
+        //Log.e(TAG, UtilKt.historyList2String( historyDao.loadEntireHistory()));
 
 
         return Result.success();

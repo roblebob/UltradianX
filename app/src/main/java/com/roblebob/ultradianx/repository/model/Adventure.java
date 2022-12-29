@@ -27,8 +27,9 @@ public class Adventure {
     @ColumnInfo(name = "last")              private String  last;
     @ColumnInfo(name = "grow")              private Double  grow;
     @ColumnInfo(name = "decay")             private Double  decay;
+    @ColumnInfo(name = "clockify")          private String  clockify;
 
-    public Adventure( String title, String tags, ArrayList<String> details, Double priority, String last, Double grow, Double decay) {
+    public Adventure( String title, String tags, ArrayList<String> details, Double priority, String last, Double grow, Double decay, String clockify) {
         this.title = title;
         this.tags = tags;
         this.details = details;
@@ -36,6 +37,7 @@ public class Adventure {
         this.last = last;
         this.grow = grow;
         this.decay = decay;
+        this.clockify = clockify;
     }
 
     @Ignore
@@ -48,6 +50,7 @@ public class Adventure {
         this.last = adventure.getLast();
         this.grow = adventure .getGrow();
         this.decay = adventure.getDecay();
+        this.clockify = adventure.getClockify();
     }
 
     @Ignore
@@ -60,6 +63,7 @@ public class Adventure {
         this.last = bundle.getString("last");
         this.grow = bundle.getDouble("grow");
         this.decay = bundle.getDouble("decay");
+        this.clockify = bundle.getString("clockify");
     }
 
     @Ignore
@@ -72,6 +76,7 @@ public class Adventure {
         this.last = data.getString("last");
         this.grow = data.getDouble("grow", Double.NaN);
         this.decay = data.getDouble("decay", Double.NaN);
+        this.clockify = data.getString("clockify");
     }
 
 
@@ -131,6 +136,12 @@ public class Adventure {
         this.decay = decay;
     }
 
+    public String getClockify() {
+        return clockify;
+    }
+    public void setClockify(String clockify) {
+        this.clockify = clockify;
+    }
 
 
 
@@ -145,6 +156,7 @@ public class Adventure {
         bundle.putString("last", this.last);
         bundle.putDouble("grow", this.grow);
         bundle.putDouble("decay", this.decay);
+        bundle.putString("clockify", this.clockify);
         return bundle;
     }
 
@@ -159,6 +171,7 @@ public class Adventure {
         builder.putString("last", this.last);
         builder.putDouble("grow", this.grow);
         builder.putDouble("decay", this.decay);
+        builder.putString("clockify", this.clockify);
         return builder.build();
     }
 }

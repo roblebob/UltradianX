@@ -92,7 +92,7 @@ public class InitialRunWorker extends Worker {
                 }
 
 
-                mAdventureDao.insert(new Adventure( title, tags, details, 17.0, UtilKt.getRidOfMillis(Instant.now().toString()), GROW, DECAY));
+                mAdventureDao.insert(new Adventure( title, tags, details, 17.0, UtilKt.getRidOfMillis(Instant.now().toString()), GROW, DECAY, null));
             }
         } catch (JSONException e) {
             e.printStackTrace();

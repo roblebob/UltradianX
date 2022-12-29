@@ -43,6 +43,8 @@ public interface AdventureDao {
     LiveData<List<Integer>> loadAdventureIdListLive();
 
 
+    @Query("SELECT title FROM Adventure WHERE :id = id")
+    String loadAdventureTitleById(int id);
 
 
     @Query(value = "UPDATE Adventure SET `last` = :last WHERE id = :id ")

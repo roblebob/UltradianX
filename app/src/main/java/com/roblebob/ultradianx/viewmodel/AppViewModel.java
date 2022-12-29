@@ -42,6 +42,7 @@ public class AppViewModel extends ViewModel {
 
     public LiveData<String> getAppStateByKeyLive(String key) { return appStateDao.loadValueByKeyLive( key); }
 
+
     public LiveData<List<Adventure>> getAdventureListLive() { return adventureDao.loadAdventureListLive(); }
     public LiveData<List<Integer>> getAdventureIdListLive() { return adventureDao.loadAdventureIdListLive(); }
     public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
@@ -88,7 +89,10 @@ public class AppViewModel extends ViewModel {
 
         OneTimeWorkRequest.Builder historyRequestBuilder = new OneTimeWorkRequest.Builder( HistoryWorker.class);
 
-        continuation = continuation.then(historyRequestBuilder.build());
+        continuation = continuation
+                .then( historyRequestBuilder.build())
+                .then( OneTimeWorkRequest.from( ClockifyWorker.class))
+        ;
 
         continuation.enqueue();
 
