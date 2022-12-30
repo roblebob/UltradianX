@@ -8,6 +8,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.roblebob.ultradianx.R;
+import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppState;
@@ -15,6 +16,10 @@ import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.model.History;
 import com.roblebob.ultradianx.repository.model.HistoryDao;
 import com.roblebob.ultradianx.util.UtilKt;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -73,90 +78,132 @@ public class ClockifyWorker extends Worker {
         Log.e(TAG, appStateDao.loadValueByKey(CLOCKIFY_USER) + "   " + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE));
 
 
-//        List<History> historyList = historyDao.loadEntireHistory();
-//        historyList.remove( 0);
-//
-//        historyList.forEach( history -> {
-//
-//            int adventureId = history.getAdventureId();
-//            String adventureTitle = adventureDao.loadAdventureTitleById( adventureId);
-//
-//            String start = history.getStart();
-//            String end   = history.getEnd();
-//
-//            Duration duration = Duration.between( Instant.parse(start), Instant.parse(end));
-//
-//            Log.e(TAG, " --> " +
-//                    "title: " + adventureTitle + "   " +
-//                    "start: " + start + "   " +
-//                    "end: "   + end + "   " +
-//                    "dur: "   + duration
-//            );
-//        });
+        List<History> historyList = historyDao.loadEntireHistory();
+
+        // TODO determine if deleting current (i=0) is useful
+        //historyList.remove( 0);
 
 
 
+        historyList.forEach( history -> {
+
+            Adventure adventure = adventureDao.loadAdventureById( history.getAdventureId());
+            String start = history.getStart();
+            String end   = history.getEnd();
+
+            Log.e(TAG, " --> " + "title: " + adventure.getTitle() + "   " + "start: " + start + "   " + "end: "   + end + "   " + "dur: "   + Duration.between( Instant.parse(start), Instant.parse(end)));
+
+            if (adventure.getClockify() == null) {
+
+                // checking if project (adventure title) exists, and if it does update adventure with its project id
+                boolean projectsExists = false;
+
+                try {
+                    Request request = new Request.Builder()
+                            .addHeader("content-type", "application/json")
+                            .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
+                            .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
+                            .build();
+
+                    Response response = client.newCall(request).execute();
+
+                    String result = response.body().string();
+
+                    JSONArray jsonArray = new JSONArray(result);
+
+                    for (int i=0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
+                        if (jsonObject.getString("name") .equals( adventure.getTitle())) {
+
+                            adventure.setClockify( jsonObject.getString("id"));
+                            adventureDao.update(adventure);
+                            projectsExists = true;
+                            break;
+                        }
+                    }
+                }
+                catch (IOException | JSONException e) { Log.e(TAG,  "Error in processing " + adventure.toString() + "  (checking if project - adventure title - exists)", e);}
 
 
+                if (!projectsExists) {
+                    // creating new project
+                    try {
+                        Request request = new Request.Builder()
+                                .addHeader("content-type", "application/json")
+                                .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
+                                .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
+                                .post( RequestBody.create(MEDIA_TYPE, "{\"name\": \"" + adventure.getTitle() +"\"}"))
+                                .build();
 
-        String result;
-
-        try {
-
-            String projectName = "Android";
-
-
-
-
-            String X = "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE)
-                    + "/time-entries"
-            ;
+                        Response response = client.newCall(request).execute();
 
 
-            String Y = "{\n" +
-                    "  \"start\": \"2022-12-29T12:24:00.000Z\",\n" +
-                    //"  \"billable\": \"false\",\n" +
-                    //"  \"description\": \"Writing documentation\",\n" +
-                    "  \"projectId\": \"63ad76d7d4809211c45cf93c\",\n" +
-                    //"  \"taskId\": \"5b1e6b160cb8793dd93ec120\",\n" +
-                    "  \"end\": \"2022-12-29T12:30:00.000Z\"" +
-                    //"  \"tagIds\": [],\n" +
-                    //"  \"customFields\": []\n" +
-                    "}";
+                        String result = response.body().string();
+                        Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
+                    } catch (IOException e) { Log.e(TAG,  "Error in processing " + adventure.toString() + "  (creating new project", e);}
+                }
 
 
-            Request request = new Request.Builder()
-                    .addHeader("content-type", "application/json")
-                    .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
-                    .url(API_BASE_ENDPOINT + X)
-                    .post( RequestBody.create(MEDIA_TYPE, Y))
-                    .build();
-
-
-
-
-            Response response = client.newCall(request).execute();
-
-
-            Headers responseHeaders = response.headers();
-
-            for (int i = 0; i < responseHeaders.size(); i++) {
-                Log.e(TAG + " Header", responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                // wait for one second until server has progressed passed request
+                try { TimeUnit.SECONDS.sleep(5); } catch (InterruptedException e) { e.printStackTrace(); }
             }
 
 
-            result = response.body().string();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            Log.e(TAG,  "Error, while gathering response" , e);
-            return Result.failure();
-        }
+
+            // updating time entries
+            try {
+
+                Request request = new Request.Builder()
+                        .addHeader("content-type", "application/json")
+                        .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
+                        .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/time-entries")
+                        .post( RequestBody.create(MEDIA_TYPE,
+                                "{\n" +
+                                        "  \"start\": \"" + start + "\",\n" +
+                                        //"  \"billable\": \"false\",\n" +
+                                        //"  \"description\": \"Writing documentation\",\n" +
+                                        "  \"projectId\": \"" + adventure.getClockify() + "\",\n" +
+                                        //"  \"taskId\": \"5b1e6b160cb8793dd93ec120\",\n" +
+                                        "  \"end\": \"" + end + "\"" +
+                                        //"  \"tagIds\": [],\n" +
+                                        //"  \"customFields\": []\n" +
+                                        "}"
+                                )
+                        )
+                        .build();
+
+                Response response = client.newCall(request).execute();
+
+                Headers responseHeaders = response.headers();
+                for (int i = 0; i < responseHeaders.size(); i++) {
+                    Log.e(TAG + " Header", responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                }
+
+                String result = response.body().string();
+                Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                Log.e(TAG,  "Error in processing " + adventure.toString() + "  (updating time entries)", e);
+            }
+
+            historyDao.delete( history);
+        });
 
 
-        Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
+
+
+
+
+
+
+
+
+
+
+
 
 
         return Result.success();
