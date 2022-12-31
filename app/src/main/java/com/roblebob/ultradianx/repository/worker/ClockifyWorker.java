@@ -15,7 +15,6 @@ import com.roblebob.ultradianx.repository.model.AppState;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.model.History;
 import com.roblebob.ultradianx.repository.model.HistoryDao;
-import com.roblebob.ultradianx.util.UtilKt;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,72 +86,8 @@ public class ClockifyWorker extends Worker {
 
         historyList.forEach( history -> {
 
-            Adventure adventure = adventureDao.loadAdventureById( history.getAdventureId());
-            String start = history.getStart();
-            String end   = history.getEnd();
+            Adventure adventure = validate( adventureDao.loadAdventureById( history.getAdventureId()));
 
-            Log.e(TAG, " --> " + "title: " + adventure.getTitle() + "   " + "start: " + start + "   " + "end: "   + end + "   " + "dur: "   + Duration.between( Instant.parse(start), Instant.parse(end)));
-
-            if (adventure.getClockify() == null) {
-
-                // checking if project (adventure title) exists, and if it does update adventure with its project id
-                boolean projectsExists = false;
-
-                try {
-                    Request request = new Request.Builder()
-                            .addHeader("content-type", "application/json")
-                            .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
-                            .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
-                            .build();
-
-                    Response response = client.newCall(request).execute();
-
-                    String result = response.body().string();
-
-                    JSONArray jsonArray = new JSONArray(result);
-
-                    for (int i=0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
-                        if (jsonObject.getString("name") .equals( adventure.getTitle())) {
-
-                            adventure.setClockify( jsonObject.getString("id"));
-                            adventureDao.update(adventure);
-                            projectsExists = true;
-                            break;
-                        }
-                    }
-                }
-                catch (IOException | JSONException e) { Log.e(TAG,  "Error in processing " + adventure.toString() + "  (checking if project - adventure title - exists)", e);}
-
-
-                if (!projectsExists) {
-                    // creating new project
-                    try {
-                        Request request = new Request.Builder()
-                                .addHeader("content-type", "application/json")
-                                .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
-                                .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
-                                .post( RequestBody.create(MEDIA_TYPE, "{\"name\": \"" + adventure.getTitle() +"\"}"))
-                                .build();
-
-                        Response response = client.newCall(request).execute();
-
-
-                        String result = response.body().string();
-                        Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
-                    } catch (IOException e) { Log.e(TAG,  "Error in processing " + adventure.toString() + "  (creating new project", e);}
-                }
-
-
-                // wait for one second until server has progressed passed request
-                try { TimeUnit.SECONDS.sleep(5); } catch (InterruptedException e) { e.printStackTrace(); }
-            }
-
-
-
-            // updating time entries
             try {
 
                 Request request = new Request.Builder()
@@ -161,12 +96,12 @@ public class ClockifyWorker extends Worker {
                         .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/time-entries")
                         .post( RequestBody.create(MEDIA_TYPE,
                                 "{\n" +
-                                        "  \"start\": \"" + start + "\",\n" +
+                                        "  \"start\": \"" + history.getStart() + "\",\n" +
                                         //"  \"billable\": \"false\",\n" +
                                         //"  \"description\": \"Writing documentation\",\n" +
                                         "  \"projectId\": \"" + adventure.getClockify() + "\",\n" +
                                         //"  \"taskId\": \"5b1e6b160cb8793dd93ec120\",\n" +
-                                        "  \"end\": \"" + end + "\"" +
+                                        "  \"end\": \"" + history.getEnd() + "\"" +
                                         //"  \"tagIds\": [],\n" +
                                         //"  \"customFields\": []\n" +
                                         "}"
@@ -192,20 +127,62 @@ public class ClockifyWorker extends Worker {
             historyDao.delete( history);
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return Result.success();
     }
+
+
+    /**
+     * function validating an adventure, by guaranteeing a valid clockify id for it
+     *
+     * @param adventure
+     * @return
+     */
+    private Adventure validate( Adventure adventure) {
+
+        if (adventure.getClockify() != null) { return adventure; }
+
+        try {
+            Response response = client.newCall(
+                    new Request.Builder()
+                            .addHeader("content-type", "application/json")
+                            .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
+                            .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
+                            .build()
+            ).execute();
+
+            JSONArray jsonArray = new JSONArray( response.body().string());
+            for (int i=0; i < jsonArray.length(); i++) {
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                if (jsonObject.getString("name") .equals( adventure.getTitle())) {
+
+                    adventure.setClockify( jsonObject.getString("id"));
+                    adventureDao.update( adventure);
+                    return adventure;
+                }
+            }
+
+            // create new
+            response = client.newCall(
+                    new Request.Builder()
+                            .addHeader("content-type", "application/json")
+                            .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
+                            .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
+                            .post( RequestBody.create(MEDIA_TYPE, "{\"name\": \"" + adventure.getTitle() +"\"}"))
+                            .build()
+            ).execute();
+
+            adventure.setClockify( new JSONObject( response.body().string()) .getString("id"));
+            adventureDao.update( adventure);
+            return adventure;
+        }
+        catch (IOException | JSONException e) {
+            Log.e(TAG,  "Error validating adventure " + adventure.getTitle(), e);
+            return adventure;
+        }
+    }
 }
+
+// wait for one second until server has progressed passed request
+// try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
