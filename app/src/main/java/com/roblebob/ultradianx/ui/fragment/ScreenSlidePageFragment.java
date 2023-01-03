@@ -73,7 +73,7 @@ public class ScreenSlidePageFragment extends Fragment {
             Adventure adventure = new Adventure( advent);
 
             mBinding.fragmentScreenSlideTitleTv.setText( Html.fromHtml( adventure.getTitle(), Html.FROM_HTML_MODE_COMPACT));
-            mBinding.fragmentScreenSlideTagsTv.setText( Html.fromHtml(adventure.getTags().replace(' ', '\n'), Html.FROM_HTML_MODE_COMPACT));
+            mBinding.fragmentScreenSlideTagsTv.setText( adventure.getTags().replace(" ", "\n"));
             mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(adventure.getPriority().intValue(), true);
             mDetailsRVAdapter.submit( adventure.getDetails());
         });

@@ -64,26 +64,13 @@ public class ClockifyWorker extends Worker {
     @Override
     public Result doWork() {
 
-//        if (appStateDao.loadValueByKey(CLOCKIFY_USER) == null) {
-//            appStateDao.insert( new AppState( CLOCKIFY_USER, "62595214a59c3f5bb60280c2"));
-//            try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
-//        }
-
         if (appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) == null) {
+            // TODO mechanism which creates a new clockify workspace if necessary
             appStateDao.insert( new AppState( CLOCKIFY_WORKSPACE, "63ad4e7d46839705993badc2"));  // workspace called UlradianX));
             try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
         }
 
-        Log.e(TAG, appStateDao.loadValueByKey(CLOCKIFY_USER) + "   " + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE));
-
-
         List<History> historyList = historyDao.loadEntireHistory();
-
-        // TODO determine if deleting current (i=0) is useful
-        //historyList.remove( 0);
-
-
-
         historyList.forEach( history -> {
 
             Adventure adventure = validate( adventureDao.loadAdventureById( history.getAdventureId()));
@@ -118,13 +105,13 @@ public class ClockifyWorker extends Worker {
 
                 String result = response.body().string();
                 Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
+
+                historyDao.delete( history);
             }
             catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG,  "Error in processing " + adventure.toString() + "  (updating time entries)", e);
             }
-
-            historyDao.delete( history);
         });
 
         return Result.success();
@@ -134,13 +121,16 @@ public class ClockifyWorker extends Worker {
     /**
      * function validating an adventure, by guaranteeing a valid clockify id for it
      *
-     * @param adventure
-     * @return
+     * @param adventure to be considered
+     * @return adventure
      */
     private Adventure validate( Adventure adventure) {
 
+        // check if adventure has a clockify entry
         if (adventure.getClockify() != null) { return adventure; }
 
+
+        // check if clockify has a project corresponding to the adventure title
         try {
             Response response = client.newCall(
                     new Request.Builder()
@@ -163,7 +153,8 @@ public class ClockifyWorker extends Worker {
                 }
             }
 
-            // create new
+
+            // create new project associated with the adventure at hand
             response = client.newCall(
                     new Request.Builder()
                             .addHeader("content-type", "application/json")
@@ -183,6 +174,3 @@ public class ClockifyWorker extends Worker {
         }
     }
 }
-
-// wait for one second until server has progressed passed request
-// try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
