@@ -20,8 +20,8 @@ import android.view.ViewGroup;
 import com.roblebob.ultradianx.databinding.FragmentActiveAdventureBinding;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.ActiveAdventureDetailsRVAdapter;
-import com.roblebob.ultradianx.viewmodel.AppViewModel;
-import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
+import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
+import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 
 
 public class ActiveAdventureFragment extends Fragment {

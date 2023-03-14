@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 import com.roblebob.ultradianx.databinding.FragmentScreenSlidePageBinding;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
-import com.roblebob.ultradianx.viewmodel.AppViewModel;
-import com.roblebob.ultradianx.viewmodel.AppViewModelFactory;
+import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
+import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 
 /**
  * A simple {@link Fragment} subclass.

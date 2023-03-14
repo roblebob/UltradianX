@@ -1,12 +1,10 @@
-package com.roblebob.ultradianx.viewmodel;
+package com.roblebob.ultradianx.repository.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.roblebob.ultradianx.viewmodel.AppViewModel;
 
 public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
 
