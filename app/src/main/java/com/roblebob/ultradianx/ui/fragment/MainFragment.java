@@ -74,7 +74,7 @@ public class MainFragment extends Fragment {
 
         ViewGroup.LayoutParams params = mBinding.toOverviewButton.getLayoutParams();
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeResource(getResources(), R.drawable.bcn_04),
+                BitmapFactory.decodeResource(getResources(), R.drawable.tagesplan),
                 params.width, params.height);
         mBinding.toOverviewButton.setImageBitmap( thumbImage);
         mBinding.toOverviewButton.setOnClickListener(v -> {

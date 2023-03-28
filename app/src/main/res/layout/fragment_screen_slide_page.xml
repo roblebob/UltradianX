@@ -52,12 +52,13 @@
         android:id="@+id/fragment_screen_slide_tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="32dp"
         android:elevation="4dp"
         android:text="@string/default_msg"
-        android:layout_margin="32dp"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_title_tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_screen_slide_title_tv" />
 
     <androidx.recyclerview.widget.RecyclerView

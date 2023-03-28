@@ -1,0 +1,25 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="65.01631dp"
+    android:width="64dp"
+    android:viewportHeight="30451"
+    android:viewportWidth="29975"
+    >
+    <path
+        android:fillAlpha="0.667"
+        android:fillColor="#729FCF"
+        android:fillType="evenOdd"
+        android:pathData="@string/tagesplan_path"
+        android:strokeAlpha="0.149"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineJoin="round"
+        android:strokeWidth="28.222"
+        />
+    <path
+        android:fillColor="#00000000"
+        android:fillType="evenOdd"
+        android:pathData="@string/tagesplan_path"
+        android:strokeColor="#3465A4"
+        android:strokeLineJoin="round"
+        android:strokeWidth="28.222"/>
+</vector>

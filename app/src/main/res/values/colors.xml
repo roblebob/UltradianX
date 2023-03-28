@@ -9,6 +9,10 @@
     <color name="color_8">#303840</color>
     <color name="color_1">#2C3740</color>
 
+
+    <color name="new_design_1">#729FCF</color>
+    <color name="new_design_2">#3465A4</color>
+
     <color name="active">#10900000</color>
     <color name="transparent">#00000000</color>
 </resources>
