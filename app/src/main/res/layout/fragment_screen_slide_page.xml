@@ -58,8 +58,10 @@
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_title_tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_screen_slide_title_tv" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_screen_slide_title_tv"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_screen_slide_details_rv"

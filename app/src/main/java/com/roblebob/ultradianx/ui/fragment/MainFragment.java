@@ -14,7 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,7 +29,10 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements
+        GestureDetector.OnGestureListener,
+        GestureDetector.OnDoubleTapListener {
+
     public static final String TAG = MainFragment.class.getSimpleName();
 
     private AppViewModel mViewModel;
@@ -74,19 +79,36 @@ public class MainFragment extends Fragment {
 
         ViewGroup.LayoutParams params = mBinding.toOverviewButton.getLayoutParams();
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeResource(getResources(), R.drawable.tagesplan),
+                BitmapFactory.decodeResource(getResources(), R.drawable.tagesplan_reduced),
                 params.width, params.height);
         mBinding.toOverviewButton.setImageBitmap( thumbImage);
+
+
+
+
         mBinding.toOverviewButton.setOnClickListener(v -> {
+
+            Log.e(TAG, "toOverviewButton.setOnClickListener---------");
+
             MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
                     MainFragmentDirections.actionMainFragmentToOverviewFragment();
             action.setPosition(mBinding.pager.getCurrentItem());
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(action);
+
+
         });
 
 
+        mBinding.activeSwitch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e(TAG, "----------------------------------------------------->   ok");
+                return false;
+            }
+        });
 
+        assert getArguments() != null;
         int position  = MainFragmentArgs.fromBundle(getArguments()).getPosition();
         mBinding.pager.postDelayed(
                 () -> mBinding.pager.setCurrentItem(position, false), 100);
@@ -94,6 +116,9 @@ public class MainFragment extends Fragment {
 
 
         mBinding.activeSwitch.setOnClickListener(v -> {
+
+
+            Log.e(TAG, "----------------------------------------------------->   ok (5/2)");
 
             MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
                     MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
@@ -116,5 +141,56 @@ public class MainFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mBinding = null;
+    }
+
+
+
+
+
+
+
+    @Override
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(@NonNull MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(@NonNull MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }

@@ -36,7 +36,7 @@
     </style>
 
     <style name="Theme.UltradianX.passive" parent="Theme.UltradianX">
-        <item name="android:background">#000000</item>
+        <item name="android:background">#FF000000</item>
     </style>
 
 
