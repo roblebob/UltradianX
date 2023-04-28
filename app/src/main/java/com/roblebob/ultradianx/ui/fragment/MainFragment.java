@@ -14,14 +14,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
+import com.roblebob.ultradianx.ui.MyController;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
@@ -29,18 +28,13 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements
-        GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener {
+public class MainFragment extends Fragment implements MyController.OnCallbackListener {
 
     public static final String TAG = MainFragment.class.getSimpleName();
 
     private AppViewModel mViewModel;
     private FragmentMainBinding mBinding;
     private FragmentStateAdapter mPagerAdapter;
-
-//    private List<Adventure> mAdventureList = new ArrayList<>();
-//    public List<Adventure> getAdventureList() { return mAdventureList; }
 
     private List<Integer> mAdventureIdList = new ArrayList<>();
     public List<Integer> getAdventureIdList() { return mAdventureIdList; }
@@ -63,7 +57,7 @@ public class MainFragment extends Fragment implements
             if (value == null) {
                 mViewModel.initialRun();
             } else {
-                Log.e(MainFragment.class.getSimpleName(), "----> initial: " + value);
+                Log.e(TAG, "----> initial: " + value);
             }
         });
 
@@ -72,67 +66,19 @@ public class MainFragment extends Fragment implements
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
             mAdventureIdList = new ArrayList<>(adventureIdList);
             mPagerAdapter.notifyDataSetChanged();
-
-            //Log.e(TAG, "---> adventurelist has changed:\n" + UtilKt.adventureList2Titles(mAdventureList));
-            Log.e(TAG, "---> adventureIdList has changed");
-        });
-
-        ViewGroup.LayoutParams params = mBinding.toOverviewButton.getLayoutParams();
-        Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeResource(getResources(), R.drawable.tagesplan_reduced),
-                params.width, params.height);
-        mBinding.toOverviewButton.setImageBitmap( thumbImage);
-
-
-
-
-        mBinding.toOverviewButton.setOnClickListener(v -> {
-
-            Log.e(TAG, "toOverviewButton.setOnClickListener---------");
-
-            MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
-                    MainFragmentDirections.actionMainFragmentToOverviewFragment();
-            action.setPosition(mBinding.pager.getCurrentItem());
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(action);
-
-
+            Log.d(TAG, "---> adventureIdList has changed");
         });
 
 
-        mBinding.activeSwitch.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.e(TAG, "----------------------------------------------------->   ok");
-                return false;
-            }
-        });
 
-        assert getArguments() != null;
-        int position  = MainFragmentArgs.fromBundle(getArguments()).getPosition();
+
+
+        mBinding.activeSwitch.setCallBack(this);
+
+
+        int position  = MainFragmentArgs.fromBundle(requireArguments()).getPosition();
         mBinding.pager.postDelayed(
                 () -> mBinding.pager.setCurrentItem(position, false), 100);
-
-
-
-        mBinding.activeSwitch.setOnClickListener(v -> {
-
-
-            Log.e(TAG, "----------------------------------------------------->   ok (5/2)");
-
-            MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
-                    MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
-            action.setPosition( mBinding.pager.getCurrentItem());
-            action.setAdventureId( mAdventureIdList.get(mBinding.pager.getCurrentItem()));
-            NavController navController = NavHostFragment.findNavController( this);
-            navController.navigate(action);
-        });
-
-
-
-
-
-
 
         return mBinding.getRoot();
     }
@@ -147,50 +93,23 @@ public class MainFragment extends Fragment implements
 
 
 
-
-
     @Override
-    public boolean onSingleTapConfirmed(@NonNull MotionEvent e) {
-        return false;
+    public void onActivateSelected() {
+
+        MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
+                MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
+        action.setPosition( mBinding.pager.getCurrentItem());
+        action.setAdventureId( mAdventureIdList.get(mBinding.pager.getCurrentItem()));
+        NavController navController = NavHostFragment.findNavController( this);
+        navController.navigate(action);
     }
 
     @Override
-    public boolean onDoubleTap(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDown(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(@NonNull MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(@NonNull MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(@NonNull MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
-        return false;
+    public void onOverviewSelected() {
+        MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
+                MainFragmentDirections.actionMainFragmentToOverviewFragment();
+        action.setPosition(mBinding.pager.getCurrentItem());
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(action);
     }
 }
