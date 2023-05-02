@@ -47,6 +47,9 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
 
         mBinding = FragmentMainBinding.inflate(inflater, container, false);
 
+        mBinding.activeSwitch.setCallBack(this);
+
+
         mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mBinding.pager.setAdapter(mPagerAdapter);
 
@@ -62,18 +65,11 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
         });
 
 
-
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
             mAdventureIdList = new ArrayList<>(adventureIdList);
             mPagerAdapter.notifyDataSetChanged();
             Log.d(TAG, "---> adventureIdList has changed");
         });
-
-
-
-
-
-        mBinding.activeSwitch.setCallBack(this);
 
 
         int position  = MainFragmentArgs.fromBundle(requireArguments()).getPosition();
@@ -95,7 +91,6 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
 
     @Override
     public void onActivateSelected() {
-
         MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
                 MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
         action.setPosition( mBinding.pager.getCurrentItem());
