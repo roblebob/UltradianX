@@ -18,16 +18,20 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
+import com.roblebob.ultradianx.util.UtilKt;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OverviewFragment extends Fragment implements OverviewRVAdapter.ItemClickListener {
+public class OverviewFragment extends Fragment implements OverviewRVAdapter.Callback {
     public OverviewFragment() { /* Required empty public constructor */ }
 
     private FragmentOverviewBinding mBinding;
     private List<Adventure> mAdventureList = new ArrayList<>();
     private GridLayoutManager overviewRVLayoutManager;
+
+    AppViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Item
         mBinding.fragmentOverviewRv.setLayoutManager( overviewRVLayoutManager);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        AppViewModel mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
             overviewRVAdapter.submit(mAdventureList);
@@ -49,6 +53,9 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Item
             int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
             overviewRVLayoutManager.scrollToPosition(position);
         }, 100);
+
+
+
 
         return mBinding.getRoot();
     }
@@ -66,5 +73,13 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Item
         action.setPosition(position);
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(action);
+    }
+
+    @Override
+    public void onNewAdventureCreated(String title) {
+        Adventure adventure = new Adventure(title, "", new ArrayList<String>(), 0.0, UtilKt.getRidOfMillis(Instant.now().toString()), 0.0, 0.0, null);
+
+
+        mViewModel.addAdventure(adventure.toData());
     }
 }

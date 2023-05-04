@@ -3,8 +3,8 @@
     <style name="Theme.UltradianX" parent="Theme.MaterialComponents.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_3</item>
-        <item name="colorPrimaryVariant">@color/color_5</item>
+        <item name="colorPrimary">@color/new_design_1</item>
+        <item name="colorPrimaryVariant">@color/new_design_2</item>
         <item name="colorOnPrimary">@color/color_6</item>
 
 

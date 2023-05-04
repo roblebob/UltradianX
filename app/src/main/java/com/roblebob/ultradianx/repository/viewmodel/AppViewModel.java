@@ -15,13 +15,16 @@ import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
 import com.roblebob.ultradianx.repository.worker.ActiveProgressionWorker;
+import com.roblebob.ultradianx.repository.worker.AddAdventureWorker;
 import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
 import com.roblebob.ultradianx.repository.worker.HistoryWorker;
 import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
 import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventureListWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateActiveAdventureWorker;
+import com.roblebob.ultradianx.util.UtilKt;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
@@ -50,6 +53,18 @@ public class AppViewModel extends ViewModel {
     public void initialRun() {
         mWorkManager.enqueue(OneTimeWorkRequest.from(InitialRunWorker.class));
     }
+
+
+    public void addAdventure(Data data) {
+
+        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( AddAdventureWorker.class);
+        requestBuilder.setInputData(data);
+        mWorkManager.enqueue( requestBuilder.build());
+
+    }
+
+
+
 
 
     public void updatePassiveAdventureList() {

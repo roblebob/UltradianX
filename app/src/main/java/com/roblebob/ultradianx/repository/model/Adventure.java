@@ -40,6 +40,7 @@ public class Adventure {
         this.clockify = clockify;
     }
 
+
     @Ignore
     public Adventure( Adventure adventure) {
         this.id = adventure.getId();

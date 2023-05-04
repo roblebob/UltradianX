@@ -4,4 +4,6 @@
     <string name="default_msg">default</string>
     <string name="contentDescription_toOverviewButton">getting to the overview fragment</string>
     <string name="contentDescription_active_switch">activating the adventure</string>
+    <string name="fab_edit_adventure">fab to edit adventures properties</string>
+    <string name="fab_add_detail">fab to add e new detail of the current active adventure</string>
 </resources>

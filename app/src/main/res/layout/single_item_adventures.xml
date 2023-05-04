@@ -13,10 +13,34 @@
         android:layout_margin="32dp"
         android:text="default"
         android:textAlignment="textEnd"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/single_item_adventures_text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/single_item_adventures_tv"
+        app:layout_constraintEnd_toEndOf="@+id/single_item_adventures_tv"
+        app:layout_constraintTop_toTopOf="@+id/single_item_adventures_tv"
+        app:layout_constraintStart_toStartOf="@+id/single_item_adventures_tv"
+        android:layout_margin="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/baseline_save_24"
+
+        android:hint="enter new adventure">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/single_item_adventures_text_input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

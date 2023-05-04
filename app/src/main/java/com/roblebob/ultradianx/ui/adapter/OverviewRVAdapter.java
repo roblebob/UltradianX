@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.repository.model.Adventure;
 
@@ -24,12 +26,13 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
     }
 
 
-    public interface ItemClickListener {
+    public interface Callback {
         void onItemClickListener(Adventure adventure, Integer integer);
+        void onNewAdventureCreated(String title);
     }
-    ItemClickListener mItemClickListener;
-    public OverviewRVAdapter(ItemClickListener itemClickListener) {
-        mItemClickListener = itemClickListener;
+    Callback mCallback;
+    public OverviewRVAdapter(Callback callback) {
+        this.mCallback = callback;
     }
 
 
@@ -45,23 +48,42 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
 
     @Override
     public void onBindViewHolder(@NonNull OverviewRVViewHolder holder, int position) {
+        if (position == mAdventureList.size()) {
+            holder.textInputLayout.setVisibility(View.VISIBLE);
+            holder.textView.setVisibility(View.INVISIBLE);
+            holder.textInputLayout.setEndIconOnClickListener((v) -> {
+                String title = holder.textInputEditText.getText().toString();
+                if (!title.isEmpty()) {
+                    mCallback.onNewAdventureCreated(title);
+                }
+            } );
+            return;
+        }
+
+
+        holder.textInputLayout.setVisibility(View.INVISIBLE);
+        holder.textView.setVisibility(View.VISIBLE);
         holder.textView.setText( Html.fromHtml( mAdventureList.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
-        holder.itemView.setOnClickListener( v -> mItemClickListener.onItemClickListener( mAdventureList.get(position), position));
+        holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( mAdventureList.get(position), position));
     }
 
     @Override
     public int getItemCount() {
-        return mAdventureList.size();
+        return mAdventureList.size() + 1;
     }
 
 
     public static class OverviewRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        TextInputLayout textInputLayout;
+        TextInputEditText textInputEditText;
 
         public OverviewRVViewHolder( View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.single_item_adventures_tv);
+            textInputLayout = itemView.findViewById(R.id.single_item_adventures_text_input_layout);
+            textInputEditText = itemView.findViewById(R.id.single_item_adventures_text_input_edit_text);
         }
     }
 }

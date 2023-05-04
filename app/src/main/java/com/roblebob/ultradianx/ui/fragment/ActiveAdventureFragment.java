@@ -83,6 +83,15 @@ public class ActiveAdventureFragment extends Fragment {
         });
 
 
+        binding.fabAddDetail.setOnClickListener((v) -> {
+            if (binding.textField.getVisibility() == View.VISIBLE) {
+                binding.textField.setVisibility(View.INVISIBLE);
+                
+            } else if (binding.textField.getVisibility() == View.INVISIBLE || binding.textField.getVisibility() == View.GONE )  {
+                binding.textField.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         return binding.getRoot();
     }

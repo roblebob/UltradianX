@@ -24,7 +24,6 @@
 
     <TextView
         android:id="@+id/fragment_active_adventure_title_tv"
-        android:textSize="22sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -32,11 +31,11 @@
         android:padding="16dp"
         android:scrollbars="vertical"
         android:text="@string/default_msg"
+        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_active_adventure_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 
@@ -59,11 +58,11 @@
         android:id="@+id/fragment_active_adventure_tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_msg"
         android:layout_margin="32dp"
+        android:text="@string/default_msg"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/fragment_active_adventure_title_tv"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fragment_active_adventure_title_tv"
         app:layout_constraintTop_toTopOf="@+id/fragment_active_adventure_title_tv" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -85,6 +84,44 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/head_height" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_edit_adventure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/fab_edit_adventure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_edit_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/fab_add_detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_add_24" />
 
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_add_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fab_add_detail"
+        android:layout_margin="16dp"
+        android:hint="enter new detail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
