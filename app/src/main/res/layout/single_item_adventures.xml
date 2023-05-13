@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    >
 
     <TextView
         android:id="@+id/single_item_adventures_tv"
@@ -30,7 +32,8 @@
         app:layout_constraintStart_toStartOf="@+id/single_item_adventures_tv"
         android:layout_margin="16dp"
         app:endIconMode="custom"
-        app:endIconDrawable="@drawable/baseline_save_24"
+        app:endIconDrawable="@drawable/baseline_check_circle_24"
+        app:endIconContentDescription="confirms the creation of a new adventure"
 
         android:hint="enter new adventure">
 
@@ -38,6 +41,7 @@
             android:id="@+id/single_item_adventures_text_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

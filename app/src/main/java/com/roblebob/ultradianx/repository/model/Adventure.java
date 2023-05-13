@@ -11,8 +11,10 @@ import androidx.work.Data;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.roblebob.ultradianx.util.UtilKt;
 
 import java.lang.reflect.Type;
+import java.time.Instant;
 import java.util.ArrayList;
 
 
@@ -78,6 +80,20 @@ public class Adventure {
         this.grow = data.getDouble("grow", Double.NaN);
         this.decay = data.getDouble("decay", Double.NaN);
         this.clockify = data.getString("clockify");
+    }
+
+    @Ignore
+    public static Adventure newAdventure( String title) {
+        return new Adventure(
+                title,
+                "",
+                new ArrayList<String>(),
+                0.0,
+                UtilKt.getRidOfMillis(Instant.now().toString()),
+                0.0,
+                0.0,
+                null
+        );
     }
 
 

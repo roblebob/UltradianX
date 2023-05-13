@@ -1,6 +1,8 @@
 package com.roblebob.ultradianx.repository.worker;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -15,6 +17,7 @@ public class AddAdventureWorker extends Worker {
 
     private final AdventureDao mAdventureDao;
 
+
     public AddAdventureWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         mAdventureDao = AppDatabase.getInstance(context).adventureDao();
@@ -24,7 +27,16 @@ public class AddAdventureWorker extends Worker {
     @Override
     public Result doWork() {
 
-        mAdventureDao.insert( new Adventure( getInputData()));
+        Adventure candidate = new Adventure( getInputData());
+
+        if (mAdventureDao.countAdventuresWithTitle(candidate.getTitle()) != 0) {
+
+            Toast.makeText(getApplicationContext(), "Failed, title already exists!"  , Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Failed, title already exists!");
+            return Result.failure();
+        }
+
+        mAdventureDao.insert( candidate);
 
         return Result.success();
     }

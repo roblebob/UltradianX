@@ -9,6 +9,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +20,17 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
-import com.roblebob.ultradianx.util.UtilKt;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OverviewFragment extends Fragment implements OverviewRVAdapter.Callback {
+    public static final String TAG = OverviewFragment.class.getSimpleName();
     public OverviewFragment() { /* Required empty public constructor */ }
-
     private FragmentOverviewBinding mBinding;
     private List<Adventure> mAdventureList = new ArrayList<>();
     private GridLayoutManager overviewRVLayoutManager;
-
+    private OverviewRVAdapter mOverviewRVAdapter;
     AppViewModel mViewModel;
 
     @Override
@@ -38,24 +38,41 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
         mBinding = FragmentOverviewBinding.inflate(inflater, container, false);
 
         overviewRVLayoutManager = new GridLayoutManager( this.getContext(), 1, RecyclerView.VERTICAL, false);
-        OverviewRVAdapter overviewRVAdapter = new OverviewRVAdapter(this);
-        mBinding.fragmentOverviewRv.setAdapter( overviewRVAdapter);
+        mOverviewRVAdapter = new OverviewRVAdapter(this);
+        mBinding.fragmentOverviewRv.setAdapter( mOverviewRVAdapter);
         mBinding.fragmentOverviewRv.setLayoutManager( overviewRVLayoutManager);
+        mBinding.fragmentOverviewRv.setOnFlingListener(new RecyclerView.OnFlingListener() {
+            @Override
+            public boolean onFling(int velocityX, int velocityY) {
+
+                if (!mBinding.fragmentOverviewRv.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
+
+                    mOverviewRVAdapter.setExtended(true);
+                    Log.e(TAG, "---->   set to TRUE");
+                    return true;
+                }
+
+                if (mBinding.fragmentOverviewRv.canScrollVertically(1) && mOverviewRVAdapter.isExtended()) {
+                    mOverviewRVAdapter.setExtended(false);
+                    Log.e(TAG, "---->   set to FALSE");
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
-            overviewRVAdapter.submit(mAdventureList);
+            mOverviewRVAdapter.submit(mAdventureList);
         });
 
         mBinding.fragmentOverviewRv.postDelayed( () -> {
             int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
             overviewRVLayoutManager.scrollToPosition(position);
         }, 100);
-
-
-
 
         return mBinding.getRoot();
     }
@@ -70,16 +87,14 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
     public void onItemClickListener(Adventure adventure, Integer position) {
 
         OverviewFragmentDirections.ActionOverviewFragmentToMainFragment action = OverviewFragmentDirections.actionOverviewFragmentToMainFragment();
-        action.setPosition(position);
+        action .setPosition( position);
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(action);
     }
 
     @Override
     public void onNewAdventureCreated(String title) {
-        Adventure adventure = new Adventure(title, "", new ArrayList<String>(), 0.0, UtilKt.getRidOfMillis(Instant.now().toString()), 0.0, 0.0, null);
-
-
-        mViewModel.addAdventure(adventure.toData());
+        mViewModel .addAdventure( Adventure.newAdventure( title) .toData());
+        mOverviewRVAdapter .setExtended( false);
     }
 }

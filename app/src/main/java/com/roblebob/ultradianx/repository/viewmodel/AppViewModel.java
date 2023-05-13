@@ -56,11 +56,9 @@ public class AppViewModel extends ViewModel {
 
 
     public void addAdventure(Data data) {
-
         OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( AddAdventureWorker.class);
         requestBuilder.setInputData(data);
         mWorkManager.enqueue( requestBuilder.build());
-
     }
 
 

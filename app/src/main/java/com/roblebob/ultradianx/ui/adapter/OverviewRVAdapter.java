@@ -25,6 +25,14 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
         notifyDataSetChanged();
     }
 
+    private boolean mExtended = false;
+    public void setExtended(boolean extended) {
+        mExtended = extended;
+        notifyItemChanged(getItemCount());
+    }
+    public boolean isExtended() {
+        return mExtended;
+    }
 
     public interface Callback {
         void onItemClickListener(Adventure adventure, Integer integer);
@@ -48,28 +56,30 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
 
     @Override
     public void onBindViewHolder(@NonNull OverviewRVViewHolder holder, int position) {
-        if (position == mAdventureList.size()) {
-            holder.textInputLayout.setVisibility(View.VISIBLE);
-            holder.textView.setVisibility(View.INVISIBLE);
+        if (position == mAdventureList.size() && mExtended) {
+            holder.textInputLayout.setVisibility( View.VISIBLE);
+            holder.textView.setVisibility( View.INVISIBLE);
             holder.textInputLayout.setEndIconOnClickListener((v) -> {
                 String title = holder.textInputEditText.getText().toString();
                 if (!title.isEmpty()) {
                     mCallback.onNewAdventureCreated(title);
+
                 }
             } );
+
             return;
         }
 
 
-        holder.textInputLayout.setVisibility(View.INVISIBLE);
-        holder.textView.setVisibility(View.VISIBLE);
+        holder.textInputLayout.setVisibility( View.INVISIBLE);
+        holder.textView.setVisibility( View.VISIBLE);
         holder.textView.setText( Html.fromHtml( mAdventureList.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
         holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( mAdventureList.get(position), position));
     }
 
     @Override
     public int getItemCount() {
-        return mAdventureList.size() + 1;
+        return (mExtended)  ?  mAdventureList.size() + 1  :  mAdventureList.size();
     }
 
 

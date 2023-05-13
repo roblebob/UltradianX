@@ -22,6 +22,9 @@ public interface AdventureDao {
     void delete(Adventure adventure);
 
 
+    @Query("SELECT COUNT(*) FROM Adventure WHERE title=:title")
+    int countAdventuresWithTitle(String title);
+
     @Query("SELECT * FROM Adventure ORDER BY priority DESC")
     LiveData<List<Adventure>> loadAdventureListLive();
 
