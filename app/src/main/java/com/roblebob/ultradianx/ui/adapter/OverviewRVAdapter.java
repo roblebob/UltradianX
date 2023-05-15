@@ -4,6 +4,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,7 +64,7 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
                 String title = holder.textInputEditText.getText().toString();
                 if (!title.isEmpty()) {
                     mCallback.onNewAdventureCreated(title);
-
+                    holder.textInputEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 }
             } );
 

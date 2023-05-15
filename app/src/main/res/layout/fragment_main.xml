@@ -25,7 +25,7 @@
 
 
 
-    <com.roblebob.ultradianx.ui.MyController
+    <com.roblebob.ultradianx.ui.view.MyController
         android:id="@+id/active_switch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/head_height"

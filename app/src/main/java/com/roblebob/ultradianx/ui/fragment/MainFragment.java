@@ -1,8 +1,5 @@
 package com.roblebob.ultradianx.ui.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,9 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
-import com.roblebob.ultradianx.ui.MyController;
+import com.roblebob.ultradianx.ui.view.MyController;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
