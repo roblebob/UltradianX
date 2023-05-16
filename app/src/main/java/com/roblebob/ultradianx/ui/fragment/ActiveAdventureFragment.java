@@ -36,7 +36,7 @@ public class ActiveAdventureFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentActiveAdventureBinding.inflate(inflater, container, false);
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        final AppViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        final AppViewModel viewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
 
         binding.fragmentActiveAdventureDetailsRv.setLayoutManager( new LinearLayoutManager( this.getContext(), RecyclerView.VERTICAL, false));
@@ -51,6 +51,7 @@ public class ActiveAdventureFragment extends Fragment {
             binding.fragmentActiveAdventureProgressBar.setProgressCompat( mAdventure.getPriority().intValue(), false);
             mAdapter.submit( mAdventure.getDetails());
         });
+
 
 
         final Handler handler = new Handler();
@@ -68,6 +69,8 @@ public class ActiveAdventureFragment extends Fragment {
         };
         // Start the initial runnable task by posting through the handler
         handler.post(progressUpdaterRunnable);
+
+
 
         binding.fragmentActiveAdventurePassiveSwitch.setOnClickListener( (view) -> {
 

@@ -63,7 +63,7 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
         });
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
             mOverviewRVAdapter.submit(mAdventureList);

@@ -50,7 +50,7 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
         mBinding.pager.setAdapter(mPagerAdapter);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
         mViewModel.getAppStateByKeyLive("initialRun").observe( getViewLifecycleOwner(), value -> {
             if (value == null) {

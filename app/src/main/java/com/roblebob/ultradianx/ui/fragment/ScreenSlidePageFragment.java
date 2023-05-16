@@ -67,7 +67,7 @@ public class ScreenSlidePageFragment extends Fragment {
         mBinding.fragmentScreenSlideDetailsRv.setAdapter(mDetailsRVAdapter);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) appViewModelFactory).get(AppViewModel.class);
+        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), advent -> {
             // TODO check if new assignment is necessary

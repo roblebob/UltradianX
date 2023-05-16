@@ -107,9 +107,6 @@ public class AppViewModel extends ViewModel {
         ;
 
         continuation.enqueue();
-
-
-        //mWorkManager.enqueue( updateActiveAdventureRequestBuilder.build());
     }
 
 
@@ -127,13 +124,4 @@ public class AppViewModel extends ViewModel {
 
         mWorkManager.enqueue(requestBuilder.build());
     }
-
-
-
-    //        mWorkManager.enqueue(
-//                new PeriodicWorkRequest.Builder(ReminderWorker.class,
-//                        15, TimeUnit.MINUTES,
-//                        1, TimeUnit.MINUTES)
-//                        .build()
-//        );
 }
