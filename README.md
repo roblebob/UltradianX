@@ -1,23 +1,35 @@
-# UltradianX
+# UltradianX  _(ud801_CapStone)_
 
-The _Ultradian eXplorer_, 
-    an app aiming to serve as a tool, 
+The _Ultradian eXplorer_ is an Android app, 
+    aiming to serve as a mindful tracking tool, 
     by which one can explore ones ultradian rhythm, usefully.
 
 
 ## Background
 
-The foundation is the belief 
-    that if you want to acquire certain skills, 
-    you have to work on them every day,
-    even if touched only briefly  (< 10 min), 
-    so you can make a habit out of them. 
+As a proposed foundation of strategic belief, 
+    that is, ___if you want to acquire certain skills, 
+    you have to work on them daily, to be the most efficient,
+    even when touched only briefly___  (< 10 min), 
+    so you can make a habit out of them, or at least invite to the idea:
+    ___"You are an explorer exploring that particular domain."___
 
-This idea is juxtaposed to that of ultradian rhythms, 
-    those 90 min partitions of the circadian cycle. 
+Thereby we call each domain or individual endeavour, 
+    an ___Adventure___.
 
-It shall be noted here, 
-    that it doesn't claim to be a scientific endeavor at all.
+Inspired by the concept of ___ultradian rhythms___, 
+    those 90 min partitions of the circadian cycle,
+    determining the experience of the day.    
+Although not at all a scientific endeavor, 
+    the user may find it useful to explore the idea, 
+    as the app purpose is to present the user, 
+    how he has spent his time. Not to suggested to change any habits, 
+    or to even give any advise how they are supposed to be spent. 
+    
+Just that one may experience them more consciously,
+    so first one gains an understanding what one needs are and thereby who oneself is.
+    
+and helps to not get lost, when immersed in a particular task. 
 
 
 Its target is to weaken that wall that appears when something worth pursuing

@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -18,12 +19,17 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.xyzreader.ui.adapter.ListDiffCallback;
 
 public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.OverviewRVViewHolder> {
     private List<Adventure> mAdventureList = new ArrayList<>();
     public void submit( List<Adventure> adventureList) {
-        mAdventureList = new ArrayList<>(adventureList);
-        notifyDataSetChanged();
+
+        ListDiffCallback< Adventure> listDiffCallback = new ListDiffCallback<>(mAdventureList, adventureList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( listDiffCallback);
+        mAdventureList.clear();
+        mAdventureList.addAll( adventureList);
+        diffResult.dispatchUpdatesTo( this);
     }
 
     private boolean mExtended = false;

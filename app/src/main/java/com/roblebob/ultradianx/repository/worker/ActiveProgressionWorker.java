@@ -16,9 +16,11 @@ import com.roblebob.ultradianx.util.UtilKt;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * This worker is used to update the priority of an active adventure.
+ */
 public class ActiveProgressionWorker extends Worker {
     public static final String TAG = ActiveProgressionWorker.class.getSimpleName();
-
     private final AdventureDao mAdventureDao;
 
     public ActiveProgressionWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -30,13 +32,18 @@ public class ActiveProgressionWorker extends Worker {
     @Override
     public Result doWork() {
 
+        /*
+            * Get the adventure id from the input data, and load the adventure from the database.
+         */
         int id = getInputData().getInt("id", -1);
         if (id < 1) {
             Log.e(TAG, "---> worker failed");
             return Result.failure();
         }
-
         Adventure adventure = mAdventureDao.loadAdventureById( id);
+
+
+
 
         Instant oldLast = Instant.parse( adventure.getLast());
         Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));

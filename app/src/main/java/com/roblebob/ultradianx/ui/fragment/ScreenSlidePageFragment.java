@@ -57,6 +57,9 @@ public class ScreenSlidePageFragment extends Fragment {
         if (getArguments() != null) {
             mId = getArguments().getInt(ID);
         }
+        mViewModel = new ViewModelProvider(this,
+                new AppViewModelFactory( requireActivity().getApplication())
+        ).get(AppViewModel.class);
     }
 
     @Override
@@ -66,17 +69,14 @@ public class ScreenSlidePageFragment extends Fragment {
         mBinding.fragmentScreenSlideDetailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
         mBinding.fragmentScreenSlideDetailsRv.setAdapter(mDetailsRVAdapter);
 
-        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
-
-        mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), advent -> {
+        mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
             // TODO check if new assignment is necessary
-            Adventure adventure = new Adventure( advent);
+            //Adventure adventure = new Adventure( advent);
 
-            mBinding.fragmentScreenSlideTitleTv.setText( Html.fromHtml( adventure.getTitle(), Html.FROM_HTML_MODE_COMPACT));
-            mBinding.fragmentScreenSlideTagsTv.setText( adventure.getTags().replace(" ", "\n"));
-            mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(adventure.getPriority().intValue(), true);
-            mDetailsRVAdapter.submit( adventure.getDetails());
+            mBinding.fragmentScreenSlideTitleTv.setText( Html.fromHtml(         adventure.getTitle(),   Html.FROM_HTML_MODE_COMPACT));
+            mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags()     .replace(" ", "\n"));
+            mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
+            mDetailsRVAdapter.submit(                                           adventure.getDetails()  );
         });
 
         mBinding.fragmentScreenSlideTitleTv.setMovementMethod( new ScrollingMovementMethod());

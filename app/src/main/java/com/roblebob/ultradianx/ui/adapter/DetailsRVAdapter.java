@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ultradianx.R;
@@ -16,13 +17,19 @@ import com.roblebob.ultradianx.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.xyzreader.ui.adapter.ListDiffCallback;
+
 public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.DetailsRVViewHolder> {
 
     List<String> mDetails = new ArrayList<>();
 
     public void submit(List<String> details) {
-        mDetails = new ArrayList<>(details);
-        notifyDataSetChanged();
+
+        ListDiffCallback< String> listDiffCallback = new ListDiffCallback<String>(mDetails, details);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( listDiffCallback);
+        mDetails.clear();
+        mDetails.addAll( details);
+        diffResult.dispatchUpdatesTo( this);
     }
 
 

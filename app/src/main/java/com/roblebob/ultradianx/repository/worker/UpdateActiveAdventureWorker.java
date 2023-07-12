@@ -17,6 +17,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * This worker is used to update the priority of an active adventure.
+ */
 public class UpdateActiveAdventureWorker extends Worker {
     public static final String TAG = UpdateActiveAdventureWorker.class.getSimpleName();
 

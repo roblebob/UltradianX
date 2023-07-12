@@ -61,6 +61,9 @@
             app:popUpTo="@+id/mainFragment"
             app:popUpToInclusive="true"
             />
+        <!-- app:popUpToSaveState="true" -->
+
+
         <argument
             android:name="position"
             app:argType="integer"

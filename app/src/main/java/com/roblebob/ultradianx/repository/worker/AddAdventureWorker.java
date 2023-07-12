@@ -12,11 +12,16 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 
+/**
+ * This worker is used to add a new adventure to the database.
+ * It checks if the title already exists, and if so, it fails.
+ * Otherwise it adds the adventure to the database.
+ *
+ */
 public class AddAdventureWorker extends Worker {
     public static final String TAG = AddAdventureWorker.class.getSimpleName();
 
     private final AdventureDao mAdventureDao;
-
 
     public AddAdventureWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
