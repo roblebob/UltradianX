@@ -17,7 +17,6 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.xyzreader.ui.adapter.ListDiffCallback;
 
 
 public class ActiveAdventureDetailsRVAdapter

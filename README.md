@@ -36,8 +36,9 @@ in contrast to _telic_ ones, which do.
 
 ## Strategies 
 
-+ the app includes an ___24h spiral activity clock___   
-    ![](/proposal/photo1677797580.jpeg)
++ the app includes an ___24h spiral activity clock___
+<img src="/proposal/photo1677797580.jpeg" width="280" height="280">
+  
 
 + uses ___Clockify API___, so the app can be regarded as a Clockify client or remote control
    

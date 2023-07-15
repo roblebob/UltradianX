@@ -17,7 +17,6 @@ import com.roblebob.ultradianx.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.xyzreader.ui.adapter.ListDiffCallback;
 
 public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.DetailsRVViewHolder> {
 
