@@ -19,10 +19,8 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.xyzreader.ui.adapter.ListDiffCallback;
-
 public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.OverviewRVViewHolder> {
-    private List<Adventure> mAdventureList = new ArrayList<>();
+    private final List<Adventure> mAdventureList = new ArrayList<>();
     public void submit( List<Adventure> adventureList) {
 
         ListDiffCallback< Adventure> listDiffCallback = new ListDiffCallback<>(mAdventureList, adventureList);
@@ -73,7 +71,6 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
                     holder.textInputEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 }
             } );
-
             return;
         }
 

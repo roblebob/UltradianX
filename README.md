@@ -1,8 +1,7 @@
 # UltradianX  _(ud801_CapStone)_
 
 The _Ultradian eXplorer_ is an Android app, 
-    aiming to serve as a mindful tracking tool, 
-    by which one can explore one' daily routines.
+    aiming to serve as a mindful tracking tool of one's daily routines.
 
 
 ## Background
@@ -17,53 +16,88 @@ Thereby we shall call each individual domain or endeavour,
     an ___Adventure___.
 
 Inspired by the concept of ___ultradian rhythms___, 
-    those 90 min partitions of the circadian cycle,
-    determining the experience of each moment.    
-Although not at all a scientific endeavor, 
+    those &#8776; 90 min partitions of the circadian cycle,
+    determining the experience within each moment, 
     the user may find it useful to explore the idea, 
-    as the app purpose is to present the user, 
-    how he has spent his time. Not to suggested to change any habits, 
-    or to even give any advise how they should be spent.
-    
+    as the app's purpose is to present how time is spent. 
+
+Not to suggest to change any habits, or to even give any advise. 
 Just that one may experience them more consciously.
-So first one gains an understanding of what one's habits and needs actually are, 
+So first one may gain a deeper understanding of what one's habits and needs actually are, 
     and thereby gaining an understanding of who oneself is.
-And secondly, to get help to not get lost, 
+And secondly, as a help to not get lost, 
     when being immersed within some particular thing, and thereby forgetting about all the rest. 
 
-
- 
-
-
-
-## Strategies & Benefits
-
-Its target is to weaken that wall that appears when something worth pursuing
-has not been pursued for a while
-
+Furthermore, its target is to weaken that wall that appears 
+    when something worth pursuing has not been pursued for a while.
 Overall it tries to help with _atelic_ pursues which have no explicit endpoint,
 in contrast to _telic_ ones, which do.
 
 
+## Strategies 
 
-+ to start the day what seems most important, that which have the highest priority
++ the app includes an ___24h spiral activity clock___   
+    ![](/proposal/photo1677797580.jpeg)
 
-+ if you have started some domain and you notice that proceeding it,
-  serves fun and interest, continue doing it, as to say give it a higher degree of importance
++ uses ___Clockify API___, so the app can be regarded as a Clockify client or remote control
+   
 
-+ to allow the present moment to decide what the next task might/should be
-  (free scheduler, like free jazz)
++ each _Adventure_ has a property called ___Priority___, 
+  determining the order of the _Adventures_ within the presented list, as well as their individual 
+  presentations.
+  It is updated dynamically every time the _Adventure_ is presented, 
+  wheres the type of how the _Priority_ is updated, is determined by the user, who is provided with a 
+  a set of Possibilities. 
 
+
++ As a productivity hack, it is known to be beneficial 
+  to start the day with what seems to be most important, we could say that _Adventure_ having the 
+  highest _Priority_.
+  However, when it's difficult to start with the most important thing, 
+  and one risks to end up doing nothing, one might contra with the idea of starting with the
+  most exciting thing, and thereby getting into the flow or even better: 
+  ___Let the present moment decide what the next might be___,
+  _(free scheduler, like in free jazz)_
+
+
+
++ If you have started some domain and you notice that proceeding it,
+  serves fun and interest, continue doing it, as to say gives it a higher degree of importance
+
+
+<!-- TODO: ???? 
 + so have th advantages of a daily routine, continuously working something, 
   without the drawbacks, that only a limited amount can be handled daily
+ -->
+
+## Prototype
+
+### UI Mocks
+
+
+
+
+### Business Logic
+
+
+
+## The work which needs be done
+
+### Implementing a set of strategies for updating the _Priority_ of an _Adventure_
+
+
+### Implementing the _24h spiral activity clock_
+
+
+
 
 
 
 ## Paid vs. Free version
 
-In the Free version, in addition to every suggestion page popping up periodically,
-there is a google advertising frame showing at the bottom of the page,
-until the user touches the screen.
+In the Free version, like in Reaper, there is a info page showing that this is a trial version,
+in which the trial period is unlimited, but the user is presented with a google advertising frame 
+showing until the user touches the screen.
 
-
+ 
 

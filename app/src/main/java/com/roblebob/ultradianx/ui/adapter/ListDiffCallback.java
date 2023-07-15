@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui.adapter;
+package com.roblebob.ultradianx.ui.adapter;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;

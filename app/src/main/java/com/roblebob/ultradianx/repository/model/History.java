@@ -5,6 +5,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
+/**
+ * This class represents a history entry.
+ * The purpose of this table is to keep track of the history of the adventures.
+ * They serve as an intermediate cache between the database and the clockify API.
+ * So only those adventures that are completed (for the day or so)  and not yet uploaded to the
+ * clockify API are stored in this table.
+ */
 @Entity(tableName = "History")
 public class History {
 
