@@ -36,8 +36,8 @@ in contrast to _telic_ ones, which do.
 
 ## Strategies 
 
-+ the app includes an ___24h spiral activity clock___
-<img src="/proposal/photo1677797580.jpeg" width="280" height="280">
++ the app includes an ___24h spiral activity clock___. [(see below)](#Implementing-the-24h-spiral-activity-clock)
+
   
 
 + uses ___Clockify API___, so the app can be regarded as a Clockify client or remote control
@@ -71,7 +71,13 @@ in contrast to _telic_ ones, which do.
   without the drawbacks, that only a limited amount can be handled daily
  -->
 
+
+
 ## Prototype
+
+At the present moment, there is a prototype which roughly implements some strategies mentioned,
+or at least tries to give some foundation for them. 
+From that, some of the strategies can be tested.
 
 ### UI Mocks
 
@@ -86,18 +92,31 @@ in contrast to _telic_ ones, which do.
 
 ### Implementing a set of strategies for updating the _Priority_ of an _Adventure_
 
++ as a result of accumaling
+
++ an option to reset the _Priority_ of an _Adventure_ to its default value
+
+
 
 ### Implementing the _24h spiral activity clock_
 
+This view is a 24h clock, 
+updated when some adventure is active, and passive otherwise.
+This clock is not only presented within the app, 
+but can also be used as a widget on the home screen.
+
+
+<img src="/proposal/photo1677797580.jpeg" width="280" height="280">
 
 
 
+### Paid vs. Free version
 
-
-## Paid vs. Free version
-
-In the Free version, like in Reaper, there is a info page showing that this is a trial version,
-in which the trial period is unlimited, but the user is presented with a google advertising frame 
+In the Free version, like in Reaper, 
+when starting the app, 
+there is a info page showing that this is a trial version, 
+in which the trial period is unlimited, 
+but the user is presented with a google advertising frame 
 showing until the user touches the screen.
 
  
