@@ -36,7 +36,7 @@ in contrast to _telic_ ones, which do.
 
 ## Strategies 
 
-+ the app includes an ___24h spiral activity clock___. [(see below)](#24h-spiral-activity-clock)
++ the app includes an [___24h spiral activity clock___](#24h-spiral-activity-clock).
 
   
 
