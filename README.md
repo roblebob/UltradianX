@@ -84,7 +84,7 @@ which is concluded by the present state of the business logic.
 
 ### UI Mocks
 
-<img src="/proposal/ui_mocks_main.png" width="340">
+<img src="/proposal/ui_mocks_main.png">
 
 
 ### Business Logic
