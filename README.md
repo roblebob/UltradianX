@@ -36,7 +36,7 @@ in contrast to _telic_ ones, which do.
 
 ## Strategies 
 
-+ the app includes an ___24h spiral activity clock___. [(see below)](#Implementing-the-24h-spiral-activity-clock)
++ the app includes an ___24h spiral activity clock___. [(see below)](#24h-spiral-activity-clock)
 
   
 
@@ -88,9 +88,9 @@ From that, some of the strategies can be tested.
 
 
 
-## The work which needs be done
+## The work which needs to be implemented
 
-### Implementing a set of strategies for updating the _Priority_ of an _Adventure_
+### Strategies for updating the _Priority_ of an _Adventure_
 
 + as a result of accumaling
 
@@ -98,7 +98,7 @@ From that, some of the strategies can be tested.
 
 
 
-### Implementing the _24h spiral activity clock_
+### 24h spiral activity clock
 
 This view is a 24h clock, 
 updated when some adventure is active, and passive otherwise.
