@@ -44,11 +44,11 @@ in contrast to _telic_ ones, which do.
    
 
 + each _Adventure_ has a property called ___Priority___, 
-  determining the order of the _Adventures_ within the presented list, as well as their individual 
-  presentations.
-  It is updated dynamically every time the _Adventure_ is presented, 
-  wheres the type of how the _Priority_ is updated, is determined by the user, who is provided with a 
-  a set of Possibilities. 
+  which gives order to the list in which all _Adventures_ are presented.
+
+
++ As it is intrinsically an accumulative property, the dynamics of each individual _Priority_ can be 
+  updated in various ways, determined by the user, who is provided with a set of Possibilities. 
 
 
 + As a productivity hack, it is known to be beneficial 
@@ -77,7 +77,9 @@ in contrast to _telic_ ones, which do.
 
 At the present moment, there is a prototype which roughly implements some strategies mentioned,
 or at least tries to give some foundation for them. 
-From that, some of the strategies can be tested.
+From that, some of the strategies can be tested. 
+Furthermore, some UI mocks are presented below to give some idea of how the app might look like,
+which is concluded by the present state of the business logic.
 
 ### UI Mocks
 
@@ -90,24 +92,26 @@ From that, some of the strategies can be tested.
 
 ## The work which needs to be implemented
 
-### Strategies for updating the _Priority_ of an _Adventure_
-
-+ as a result of accumaling
-
-+ an option to reset the _Priority_ of an _Adventure_ to its default value
-
-
-
 ### 24h spiral activity clock
 
-This view is a 24h clock, 
+This view is a 24h clock,
 updated when some adventure is active, and passive otherwise.
-This clock is not only presented within the app, 
+This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
 
 
 <img src="/proposal/photo1677797580.jpeg" width="280" height="280">
 
+
+### Strategies for updating the _Priority_ 
+
++ an option to reset the _Priority_ of an _Adventure_ to its default value
+
+
+### Clockify API
+
+Although some basics are already implemented within the presented prototype, they need to be 
+generalized to new users, including account management and workspaces within clockify.
 
 
 ### Paid vs. Free version
