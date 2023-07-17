@@ -13,9 +13,9 @@ As a proposed foundation of strategic belief,
     so you can make a habit out of them, or at least invite to the idea:
     _"You are an explorer exploring that particular domain."_
 Thereby we shall call each individual domain or endeavour, 
-    an ___Adventure___.
+    an __Adventure__.
 
-Inspired by the concept of ___ultradian rhythms___, 
+Inspired by the concept of _ultradian rhythms_, 
     those &#8776; 90 min partitions of the circadian cycle,
     determining the experience within each moment, 
     the user may find it useful to explore the idea, 
@@ -48,7 +48,8 @@ in contrast to _telic_ ones, which do.
 
 
 + As it is intrinsically an accumulative property, the dynamics of each individual _Priority_ can be 
-  updated in various ways, determined by the user, who is provided with a set of Possibilities. 
+  updated in various ways, determined by the user, who is provided with a set of Possibilities,
+  reflecting different user cases.
 
 
 + As a productivity hack, it is known to be beneficial 
@@ -83,14 +84,16 @@ which is concluded by the present state of the business logic.
 
 ### UI Mocks
 
-
+<img src="/proposal/ui_mocks_main.png" width="340">
 
 
 ### Business Logic
 
 
 
-## The work which needs to be implemented
+## Upcoming implementations
+
+
 
 ### 24h spiral activity clock
 
