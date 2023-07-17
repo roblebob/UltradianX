@@ -84,7 +84,11 @@ which is concluded by the present state of the business logic.
 
 ### UI Mocks
 
-<img src="/proposal/ui_mocks_main.png">
+#### Overview
+<img src="/proposal/ui_mocks_overview.png">
+
+#### Preferences
+<img src="/proposal/ui_mocks_preferences.png">
 
 
 ### Business Logic
