@@ -49,12 +49,13 @@ in contrast to _telic_ ones, which do.
 
 + As it is intrinsically an accumulative property, the dynamics of each individual _Priority_ can be 
   updated in various ways, determined by the user, who is provided with a set of Possibilities,
-  reflecting different user cases.
+  reflecting different use cases.
 
 
 + Every _Adventure_ has a single Tag, which is used to determine the color of the _Adventure_.
   This color is used to color the _Adventure_ in the list of _Adventures_ and in the
-  _24h spiral activity clock_.
+  _24h spiral activity clock_. In general, the Tag is used to group _Adventures_, so that the user
+  is invited to have a certain diversity of _Adventures_.
 
 
 + As a productivity hack, it is known to be beneficial 
@@ -98,10 +99,11 @@ In short, the bigger the font, and the more it is on the left side, the higher t
 
 ___Right:___ The PreferencesFragment shows all the Tags and their associated color, an _Adventures_ 
 is dedicated to. Here the user can add, edit and delete Tags, but most important change its color.
+Here the user has the most detailed view on the _24h spiral activity clock_.
 
 To navigate from the OverviewFragment to the PreferencesFragment, the user has to swipe upwards on 
-the _24h-spiral activity clock_. To return from the PreferencesFragment to the OverviewFragment,
-the user has to swipe downwards on the _24h-spiral activity clock_.
+the _24h spiral activity clock_. To return from the PreferencesFragment to the OverviewFragment,
+the user has to swipe downwards on the _24h spiral activity clock_.
 
 
 #### Main & Detail
@@ -134,7 +136,9 @@ but can also be used as a widget on the home screen.
 ### Clockify API
 
 Although some basics are already implemented within the presented prototype, they need to be 
-generalized to new users, including account management and workspaces within clockify.
+generalized to new users, including account management and workspaces within clockify. 
+At present, the communication to the clockify server is only one sided,  
+which might be subject to change. 
 
 
 ### Paid vs. Free version
