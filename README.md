@@ -52,6 +52,11 @@ in contrast to _telic_ ones, which do.
   reflecting different user cases.
 
 
++ Every _Adventure_ has a single Tag, which is used to determine the color of the _Adventure_.
+  This color is used to color the _Adventure_ in the list of _Adventures_ and in the
+  _24h spiral activity clock_.
+
+
 + As a productivity hack, it is known to be beneficial 
   to start the day with what seems to be most important, we could say that _Adventure_ having the 
   highest _Priority_.
@@ -87,6 +92,19 @@ which is concluded by the present state of the business logic.
 #### Overview & Preferences
 <img src="/proposal/ui_mocks_overview_preferences.png">
 
+___Left:___ The OverviewFragment shows all _Adventures_ with their respective _Priorities_.
+The _Priority_ is represented by the font size and its displacement from the right of the screen.
+In short, the bigger the font, and the more it is on the left side, the higher the _Priority_.
+
+___Right:___ The PreferencesFragment shows all the Tags and their associated color, an _Adventures_ 
+is dedicated to. Here the user can add, edit and delete Tags, but most important change its color.
+
+To navigate from the OverviewFragment to the PreferencesFragment, the user has to swipe upwards on 
+the _24h-spiral activity clock_. To return from the PreferencesFragment to the OverviewFragment,
+the user has to swipe downwards on the _24h-spiral activity clock_.
+
+
+#### Main & Detail
 
 
 ### Business Logic
