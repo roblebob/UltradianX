@@ -91,7 +91,7 @@ which is concluded by the present state of the business logic.
 ### UI Mocks
 
 #### Overview & Preferences
-<img src="/proposal/ui_mocks_overview_preferences.png">
+<img src="/proposal/ui_mocks_overview_preferences_complete.png">
 
 ___Left:___ The OverviewFragment shows all _Adventures_ with their respective _Priorities_.
 The _Priority_ is represented by the font size and its displacement from the right of the screen.
@@ -106,8 +106,8 @@ the _24h spiral activity clock_. To return from the PreferencesFragment to the O
 the user has to swipe downwards on the _24h spiral activity clock_.
 
 
-#### Main & Detail
-
+#### Main (passive/active)
+<img src="/proposal/ui_mocks_main.png">
 
 ### Business Logic
 
@@ -125,7 +125,7 @@ This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
 
 
-<img src="/proposal/photo1677797580.jpeg" width="280" height="280">
+<img src="/proposal/ui_mocks_clock.png" width="280" height="280">
 
 
 ### Strategies for updating the _Priority_ 
