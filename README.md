@@ -28,6 +28,18 @@ So first one may gain a deeper understanding of what one's habits and needs actu
 And secondly, as a help to not get lost, 
     when being immersed within some particular thing, and thereby forgetting about all the rest. 
 
+As a productivity hack, it is known to be beneficial
+  to start the day with what seems to be most important, we could say that _Adventure_ having the
+  highest _Priority_.
+However, when it's difficult to start with the most important thing,
+  and one risks to end up doing nothing, one might contra with the idea of starting with the
+  most exciting thing, and thereby getting into the flow or even better:
+  ___Let the present moment decide what the next might be___,
+  _(free scheduler, like in free jazz)_
+
+If you have started some domain and you notice that proceeding it,
+  serves fun and interest, continue doing it, as to say gives it a higher degree of importance
+
 Furthermore, its target is to weaken that wall that appears 
     when something worth pursuing has not been pursued for a while.
 Overall it tries to help with _atelic_ pursues which have no explicit endpoint,
@@ -58,19 +70,6 @@ in contrast to _telic_ ones, which do.
   is invited to have a certain diversity of _Adventures_.
 
 
-+ As a productivity hack, it is known to be beneficial 
-  to start the day with what seems to be most important, we could say that _Adventure_ having the 
-  highest _Priority_.
-  However, when it's difficult to start with the most important thing, 
-  and one risks to end up doing nothing, one might contra with the idea of starting with the
-  most exciting thing, and thereby getting into the flow or even better: 
-  ___Let the present moment decide what the next might be___,
-  _(free scheduler, like in free jazz)_
-
-
-
-+ If you have started some domain and you notice that proceeding it,
-  serves fun and interest, continue doing it, as to say gives it a higher degree of importance
 
 
 <!-- TODO: ???? 
@@ -123,8 +122,6 @@ This view is a 24h clock,
 updated when some adventure is active, and passive otherwise.
 This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
-
-
 <img src="/proposal/ui_mocks_clock2.png">
 
 
