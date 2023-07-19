@@ -107,7 +107,7 @@ the user has to swipe downwards on the _24h spiral activity clock_.
 
 
 #### Main (passive/active)
-<img src="/proposal/ui_mocks_main.png">
+<img src="/proposal/ui_mocks_main_passive_active.png">
 
 ### Business Logic
 
