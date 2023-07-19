@@ -125,7 +125,7 @@ This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
 
 
-<img src="/proposal/ui_mocks_clock.png" width="280" height="280">
+<img src="/proposal/ui_mocks_clock.png">
 
 
 ### Strategies for updating the _Priority_ 
