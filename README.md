@@ -111,6 +111,15 @@ the user has to swipe downwards on the _24h spiral activity clock_.
 #### Main (passive/active)
 <img src="/proposal/ui_mocks_main_passive_active.png">
 
+___Left:___ The MainFragment makes use of ViewPager2 to let the user swipe through the entire list.
+Wheres the color theme presented for each _Adventure_ is determined by the Tag associated with it.
+The entirety of the upper half of the screen is dedicated to a multifunctional controller.
+The controller is used to start and stop the _Adventure_, when clicking on it, but also like the
+faded spiral clock in the background, tinted to the tags color, it is used to navigate to the 
+OverviewFragment, when swiping upwards, and to the PreferencesFragment, when swiping upwards.
+
+
+
 ### Business Logic
 
 
@@ -127,7 +136,7 @@ This view is a 24h clock,
 updated when some adventure is active, and passive otherwise.
 This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
-<img src="/proposal/ui_mocks_clock2.png">
+<img src="/proposal/ui_mocks_clock.png">
 
 
 ### Strategies for updating the _Priority_ 
