@@ -89,8 +89,7 @@ A useful dichotomy might be that overall the app tries to help with _atelic_ pur
 At the present moment, there is a prototype which roughly implements some strategies mentioned,
 or at least tries to give some foundation for them. 
 From that, some of the strategies can be tested. 
-Furthermore, some UI mocks are presented below to give some idea of how the app might look like,
-which is concluded by the present state of the business logic.
+Furthermore, some UI mocks are presented below to give some idea of how the app might look like.
 
 ### UI Mocks
 
@@ -111,7 +110,7 @@ the user has to swipe downwards on the _24h spiral activity clock_.
 
 
 #### Main (passive/active)
-<img src="/proposal/ui_mocks_main_passive_active.png">
+<img src="/proposal/ui_mocks_main_passive_active2.png">
 
 ___Left:___ The MainFragment makes use of ViewPager2 to let the user left/right-swipe through the 
     entire list.
@@ -134,7 +133,7 @@ Here the user can change the properties of the _Adventure_ itself:
 + create and edit notes/remarks/comments that the user might find useful to remember.
   (html format -> enables links to resources)
 
-### Business Logic
+
 
 
 <br/>
@@ -150,12 +149,13 @@ This view is a 24h clock,
 updated when some adventure is active, and passive otherwise.
 This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
-<img src="/proposal/ui_mocks_clock.png" width="300">
+<img src="/proposal/ui_mocks_clock.png" width="400">
 
 
-### Strategies for updating the _Priority_ 
+### Business Logic
 
-+ an option to reset the _Priority_ of an _Adventure_ to its default value
+To have different Strategies for updating the _Priority_, 
+may be key to enable different use cases.
 
 
 ### Clockify API
