@@ -51,7 +51,9 @@ A useful dichotomy might be that overall the app tries to help with _atelic_ pur
 
 ## Strategies 
 
-+ the app includes an [___24h spiral activity clock___](#24h-spiral-activity-clock).
++ the app includes a [___24h spiral activity clock___](#24h-spiral-activity-clock),
+  which appearance and location is different, dependent on the users whereabouts within the app.
+  So navigation through the app is done by swiping up and downwards on the clocks surface. 
 
   
 
@@ -111,14 +113,28 @@ the user has to swipe downwards on the _24h spiral activity clock_.
 #### Main (passive/active)
 <img src="/proposal/ui_mocks_main_passive_active.png">
 
-___Left:___ The MainFragment makes use of ViewPager2 to let the user swipe through the entire list.
+___Left:___ The MainFragment makes use of ViewPager2 to let the user left/right-swipe through the 
+    entire list.
 Wheres the color theme presented for each _Adventure_ is determined by the Tag associated with it.
 The entirety of the upper half of the screen is dedicated to a multifunctional controller.
-The controller is used to start and stop the _Adventure_, when clicking on it, but also like the
-faded spiral clock in the background, tinted to the tags color, it is used to navigate to the 
-OverviewFragment, when swiping upwards, and to the PreferencesFragment, when swiping upwards.
+The controller is used to start and stop the _Adventure_, 
+    when clicking on it, but also like the faded spiral clock in the background, 
+    tinted to the tags color suggests, 
+    it is used to navigate to the OverviewFragment, when swiping upwards.
 
+___Right:___ When an _Adventure_ is active, which is represented by the ActiveAdventureFragment, 
+    the controller is only used to deactivate the _Adventure_, 
+    any navigation, like swiping upwards, is disabled.
+Also, while being active it is not possible to swipe left/right to navigate through the list of 
+    _Adventures_.
+The clock itself is glowing golden, pulsating like breathing to indicate that it is active.
+Here the user can change the properties of the _Adventure_ itself: 
++ which Tag/category is associated with it.
++ how _Priority_ is calculated 
++ create and edit notes/remarks/comments that the user might find useful to remember.
 
+Those remarks are thought to make use of the html format,
+    by which links to certain resources can be included, and later easily accessed.
 
 ### Business Logic
 
