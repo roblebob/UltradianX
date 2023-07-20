@@ -132,9 +132,7 @@ Here the user can change the properties of the _Adventure_ itself:
 + which Tag/category is associated with it.
 + how _Priority_ is calculated 
 + create and edit notes/remarks/comments that the user might find useful to remember.
-
-Those remarks are thought to make use of the html format,
-    by which links to certain resources can be included, and later easily accessed.
+  (html format -> enables links to resources)
 
 ### Business Logic
 
@@ -152,7 +150,7 @@ This view is a 24h clock,
 updated when some adventure is active, and passive otherwise.
 This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
-<img src="/proposal/ui_mocks_clock.png">
+<img src="/proposal/ui_mocks_clock.png" width="300">
 
 
 ### Strategies for updating the _Priority_ 
