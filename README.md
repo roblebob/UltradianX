@@ -91,9 +91,9 @@ or at least tries to give some foundation for them.
 From that, some of the strategies can be tested. 
 Furthermore, some UI mocks are presented below to give some idea of how the app might look like.
 
-### UI Mocks
 
-#### Overview & Preferences
+
+### UI Mocks: Overview & Preferences
 <img src="/proposal/ui_mocks_overview_preferences_complete.png">
 
 ___Left:___ The OverviewFragment shows all _Adventures_ with their respective _Priorities_.
@@ -109,7 +109,7 @@ the _24h spiral activity clock_. To return from the PreferencesFragment to the O
 the user has to swipe downwards on the _24h spiral activity clock_.
 
 
-#### Main (passive/active)
+### UI Mocks: Main (_passive/active_)
 <img src="/proposal/ui_mocks_main_passive_active2.png">
 
 ___Left:___ The MainFragment makes use of ViewPager2 to let the user left/right-swipe through the 
@@ -150,6 +150,11 @@ updated when some adventure is active, and passive otherwise.
 This clock is not only presented within the app,
 but can also be used as a widget on the home screen.
 <img src="/proposal/ui_mocks_clock.png" width="400">
+
+As the spiral clock only shows the present day, a more precise picture of the mock above would be,
+presuming it is 10:30 am, and the user has been up since 6:00 am:
+<img src="/proposal/ui_mocks_overview_preferences_partial.png">
+
 
 
 ### Business Logic
