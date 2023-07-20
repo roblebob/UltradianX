@@ -3,6 +3,7 @@
 The _Ultradian eXplorer_ is an Android app, 
     aiming to serve as a mindful tracking tool of one's daily routines.
 
+<br/>
 
 ## Background
 
@@ -23,28 +24,30 @@ Inspired by the concept of _ultradian rhythms_,
 
 Not to suggest to change any habits, or to even give any advise. 
 Just that one may experience them more consciously.
-So first one may gain a deeper understanding of what one's habits and needs actually are, 
-    and thereby gaining an understanding of who oneself is.
+So first, perhaps to grasp what one's habits and needs actually are, 
+    and by that eventual deepen the understanding of who oneself is.
 And secondly, as a help to not get lost, 
     when being immersed within some particular thing, and thereby forgetting about all the rest. 
 
-As a productivity hack, it is known to be beneficial
-  to start the day with what seems to be most important, we could say that _Adventure_ having the
-  highest _Priority_.
+As a productivity hack, it has been known to be beneficial
+    to start the day with what seems to be most important, we could say that _Adventure_ having the
+    highest _Priority_.
 However, when it's difficult to start with the most important thing,
-  and one risks to end up doing nothing, one might contra with the idea of starting with the
-  most exciting thing, and thereby getting into the flow or even better:
-  ___Let the present moment decide what the next might be___,
-  _(free scheduler, like in free jazz)_
+    and one risks to end up doing nothing, one might contra with the idea of starting with the
+    most exciting thing, and thereby getting into the flow or even better:
+    ___Let the present moment decide what the next might be___,
+    _(free scheduler, like in free jazz)_
 
 If you have started some domain and you notice that proceeding it,
-  serves fun and interest, continue doing it, as to say gives it a higher degree of importance
+    serves fun and interest, continue doing it, as to say gives it a higher degree of importance,
+    and most importantly a drive of its own.
 
 Furthermore, its target is to weaken that wall that appears 
     when something worth pursuing has not been pursued for a while.
-Overall it tries to help with _atelic_ pursues which have no explicit endpoint,
-in contrast to _telic_ ones, which do.
+A useful dichotomy might be that overall the app tries to help with _atelic_ pursues which have no 
+    explicit endpoint, in contrast to _telic_ ones, which do.
 
+<br/>
 
 ## Strategies 
 
@@ -77,7 +80,7 @@ in contrast to _telic_ ones, which do.
   without the drawbacks, that only a limited amount can be handled daily
  -->
 
-
+<br/>
 
 ## Prototype
 
@@ -110,6 +113,8 @@ the user has to swipe downwards on the _24h spiral activity clock_.
 
 ### Business Logic
 
+
+<br/>
 
 
 ## Upcoming implementations
