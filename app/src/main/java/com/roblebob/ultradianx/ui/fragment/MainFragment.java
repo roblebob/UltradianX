@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
+import com.roblebob.ultradianx.ui.adapter.ListDiffCallback;
 import com.roblebob.ultradianx.ui.view.MyController;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
@@ -62,9 +64,17 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
 
 
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
-            mAdventureIdList = new ArrayList<>(adventureIdList);
-            mPagerAdapter.notifyDataSetChanged();
+//            mAdventureIdList = new ArrayList<>(adventureIdList);
+//            mPagerAdapter.notifyDataSetChanged();
             Log.d(TAG, "---> adventureIdList has changed");
+
+            ListDiffCallback<Integer> listDiffCallback = new ListDiffCallback<>( mAdventureIdList, adventureIdList);
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( listDiffCallback);
+            mAdventureIdList.clear();
+            mAdventureIdList.addAll( adventureIdList);
+            diffResult.dispatchUpdatesTo( mPagerAdapter);
+
+
         });
 
 

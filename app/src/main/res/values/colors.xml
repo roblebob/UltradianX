@@ -15,4 +15,13 @@
 
     <color name="active">#10900000</color>
     <color name="transparent">#00000000</color>
+
+
+
+    <color name="tag_theory">#6B91C1</color>
+    <color name="tag_music">#C76496</color>
+    <color name="tag_health">#EF9A13</color>
+    <color name="tag_coding">#C8C8C8</color>
+
+
 </resources>

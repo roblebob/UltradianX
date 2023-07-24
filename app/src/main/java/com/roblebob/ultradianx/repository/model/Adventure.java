@@ -1,6 +1,11 @@
 package com.roblebob.ultradianx.repository.model;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.style.AbsoluteSizeSpan;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -191,4 +196,24 @@ public class Adventure {
         builder.putString("clockify", this.clockify);
         return builder.build();
     }
+
+
+    @Ignore
+    public SpannableStringBuilder toSpannableStringBuilder() {
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+        spannableStringBuilder.append( this.title);
+
+        int priority = min(100, this.priority.intValue());
+        int maxFontSize = priority / 2;
+
+
+        for (int i = 0; i < this.title.length(); i++) {
+            int fontSize = maxFontSize - 3*i;
+            spannableStringBuilder.setSpan( new AbsoluteSizeSpan( max( fontSize , MIN_FONT_SIZE), true), i, i + 1, 0);
+        }
+
+        return spannableStringBuilder;
+    }
+
+    public static final int MIN_FONT_SIZE = 3;
 }

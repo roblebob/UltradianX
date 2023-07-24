@@ -17,7 +17,6 @@ import java.util.List;
 
 /**
  * This worker is used to update the priority of the passive adventures.
- * It is called every minute.
  * It checks the last time the adventure was updated, and calculates the new priority.
  */
 public class UpdatePassiveAdventureListWorker extends Worker {
@@ -42,10 +41,14 @@ public class UpdatePassiveAdventureListWorker extends Worker {
 
             Instant oldLast = Instant.parse( adventure.getLast());
 
+
+
             Duration duration = Duration.between(oldLast, newLast);
 
             double oldPriority = adventure.getPriority();
             double newPriority = oldPriority + (duration.getSeconds() * adventure.getGrow());
+
+            newPriority = Math.min( newPriority, 100.0);
 
             adventure.setPriority( newPriority);
             adventure.setLast( newLast.toString());

@@ -77,7 +77,7 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
 
         holder.textInputLayout.setVisibility( View.INVISIBLE);
         holder.textView.setVisibility( View.VISIBLE);
-        holder.textView.setText( Html.fromHtml( mAdventureList.get(position).getTitle() , Html.FROM_HTML_MODE_COMPACT));
+        holder.textView.setText( mAdventureList.get(position).toSpannableStringBuilder() );
         holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( mAdventureList.get(position), position));
     }
 

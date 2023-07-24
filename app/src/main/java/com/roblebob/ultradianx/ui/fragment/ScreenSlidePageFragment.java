@@ -73,9 +73,10 @@ public class ScreenSlidePageFragment extends Fragment {
             // TODO check if new assignment is necessary
             //Adventure adventure = new Adventure( advent);
 
-            mBinding.fragmentScreenSlideTitleTv.setText( Html.fromHtml(         adventure.getTitle(),   Html.FROM_HTML_MODE_COMPACT));
+            mBinding.fragmentScreenSlideTitleTv.setText(                        adventure.toSpannableStringBuilder());
             mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags()     .replace(" ", "\n"));
             mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
+            mBinding.fragmentScreenSlidePagePriorityTv.setText( String.valueOf( adventure.getPriority().intValue()));
             mDetailsRVAdapter.submit(                                           adventure.getDetails()  );
         });
 

@@ -108,6 +108,8 @@ To navigate from the OverviewFragment to the PreferencesFragment, the user has t
 the _24h spiral activity clock_. To return from the PreferencesFragment to the OverviewFragment,
 the user has to swipe downwards on the _24h spiral activity clock_.
 
+When you click on a particular _Adventure_, you are taken to the MainFragment.
+
 
 ### UI Mocks: Main (_passive/active_)
 <img src="/proposal/ui_mocks_main_passive_active2.png">
@@ -158,6 +160,10 @@ presuming it is 10:30 am, and the user has been up since 6:00 am:
 <img src="/proposal/ui_mocks_overview_preferences_partial.png">
 
 
+### All the rest of the UI. 
+
+Ideas presented in the mocks above, are not yet implemented within the prototype.
+
 
 ### Business Logic
 
@@ -169,8 +175,8 @@ may be key to enable different use cases.
 
 Although some basics are already implemented within the presented prototype, they need to be 
 generalized to new users, including account management and workspaces within clockify. 
-At present, the communication to the clockify server is only one sided,  
-which might be subject to change. 
+At present, the communication to the clockify server is only one sided, which might be subject to 
+change. 
 
 
 ### Paid vs. Free version
