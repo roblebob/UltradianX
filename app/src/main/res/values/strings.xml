@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">UltradianX</string>
-    <string name="src_url">https://raw.githubusercontent.com/roblebob/UltradianX/test/temporary.json</string>
+    <string name="src_url">https://raw.githubusercontent.com/roblebob/UltradianX/develop/proposal/temporary.json</string>
     <string name="default_msg">default</string>
     <string name="contentDescription_toOverviewButton">getting to the overview fragment</string>
     <string name="contentDescription_active_switch">activating the adventure</string>
