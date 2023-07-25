@@ -8,15 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentScreenSlidePageBinding;
-import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
@@ -70,14 +69,36 @@ public class ScreenSlidePageFragment extends Fragment {
         mBinding.fragmentScreenSlideDetailsRv.setAdapter(mDetailsRVAdapter);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
-            // TODO check if new assignment is necessary
-            //Adventure adventure = new Adventure( advent);
 
-            mBinding.fragmentScreenSlideTitleTv.setText(                        adventure.toSpannableStringBuilder());
-            mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags()     .replace(" ", "\n"));
+            mBinding.fragmentScreenSlideTitleTv.setText(                        adventure.titleToSpannableStringBuilder(8));
+            mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags() );
             mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
             mBinding.fragmentScreenSlidePagePriorityTv.setText( String.valueOf( adventure.getPriority().intValue()));
             mDetailsRVAdapter.submit(                                           adventure.getDetails()  );
+
+
+            int color = 0;
+            switch (adventure.getTags()) {
+                case "health":
+                    color = this.getContext().getColor(R.color.tag_health);
+                    break;
+                case "theory":
+                    color = this.getContext().getColor(R.color.tag_theory);
+
+                    break;
+                case "coding":
+                    color = this.getContext().getColor(R.color.tag_coding);
+                    break;
+                case "music":
+                    color = this.getContext().getColor(R.color.tag_music);
+                    break;
+            }
+
+            mBinding.fragmentScreenSlideTitleTv.setTextColor( color);
+            mBinding.fragmentScreenSlideTagsTv.setTextColor( color);
+            mBinding.fragmentScreenSlidePageProgressBar.setIndicatorColor( color);
+            mBinding.fragmentScreenSlidePagePriorityTv.setTextColor( color);
+
         });
 
         mBinding.fragmentScreenSlideTitleTv.setMovementMethod( new ScrollingMovementMethod());

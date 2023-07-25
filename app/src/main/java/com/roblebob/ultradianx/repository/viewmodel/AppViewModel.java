@@ -21,10 +21,6 @@ import com.roblebob.ultradianx.repository.worker.HistoryWorker;
 import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
 import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventureListWorker;
 import com.roblebob.ultradianx.repository.worker.UpdateActiveAdventureWorker;
-import com.roblebob.ultradianx.util.UtilKt;
-
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
@@ -87,8 +83,6 @@ public class AppViewModel extends ViewModel {
         continuation = continuation.then(historyRequestBuilder.build());
 
         continuation.enqueue();
-
-        //mWorkManager.enqueue( updateActiveProgressionRequestBuilder.build());
     }
 
 
@@ -107,21 +101,5 @@ public class AppViewModel extends ViewModel {
         ;
 
         continuation.enqueue();
-    }
-
-
-
-    // TODO ClockifyWorker
-    public void remoteClockify(String title, Instant t_start, Instant t_end) {
-        Data.Builder builder = new Data.Builder();
-        builder.putString("title", title);
-        builder.putString("t_start", t_start.toString());
-        builder.putString("t_end", t_end.toString());
-        Data data = builder.build();
-
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( ClockifyWorker.class);
-        requestBuilder.setInputData(data);
-
-        mWorkManager.enqueue(requestBuilder.build());
     }
 }

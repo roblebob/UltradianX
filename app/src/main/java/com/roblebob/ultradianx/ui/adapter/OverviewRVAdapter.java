@@ -1,6 +1,6 @@
 package com.roblebob.ultradianx.ui.adapter;
 
-import android.text.Html;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,8 +45,10 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
         void onNewAdventureCreated(String title);
     }
     Callback mCallback;
-    public OverviewRVAdapter(Callback callback) {
-        this.mCallback = callback;
+    Context mContext;
+    public OverviewRVAdapter(Fragment fragment) {
+        this.mCallback = fragment instanceof Callback ? (Callback) fragment : null;
+        this.mContext = fragment.getContext();
     }
 
 
@@ -74,11 +77,33 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
             return;
         }
 
+        Adventure adventure = mAdventureList.get(position);
 
+
+
+        // TODO: remove this
+        int color = 0;
+        switch (adventure.getTags()) {
+            case "health":
+                color = mContext.getColor(R.color.tag_health);
+                break;
+            case "theory":
+                color = mContext.getColor(R.color.tag_theory);
+                break;
+            case "coding":
+                color = mContext.getColor(R.color.tag_coding);
+                break;
+            case "music":
+                color = mContext.getColor(R.color.tag_music);
+                break;
+        }
+
+
+        holder.textView.setTextColor( color);
         holder.textInputLayout.setVisibility( View.INVISIBLE);
         holder.textView.setVisibility( View.VISIBLE);
-        holder.textView.setText( mAdventureList.get(position).toSpannableStringBuilder() );
-        holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( mAdventureList.get(position), position));
+        holder.textView.setText( adventure.titleToSpannableStringBuilder() );
+        holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( adventure, position));
     }
 
     @Override
@@ -100,4 +125,6 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
             textInputEditText = itemView.findViewById(R.id.single_item_adventures_text_input_edit_text);
         }
     }
+
+
 }

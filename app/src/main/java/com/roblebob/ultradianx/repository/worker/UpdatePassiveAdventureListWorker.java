@@ -17,7 +17,8 @@ import java.util.List;
 
 /**
  * This worker is used to update the priority of the passive adventures.
- * It checks the last time the adventure was updated, and calculates the new priority.
+ * It checks the last time the adventure was updated, and calculates the new priority, and finally
+ * resets 'last' to now.
  */
 public class UpdatePassiveAdventureListWorker extends Worker {
     public static final String TAG = UpdatePassiveAdventureListWorker.class.getSimpleName();
@@ -35,15 +36,13 @@ public class UpdatePassiveAdventureListWorker extends Worker {
 
         List<Adventure> adventureList = mAdventureDao.loadAdventureList();
 
-        Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
+        Instant now = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
         adventureList.forEach( (adventure) -> {
 
-            Instant oldLast = Instant.parse( adventure.getLast());
+            Instant last = Instant.parse( adventure.getLast());
 
-
-
-            Duration duration = Duration.between(oldLast, newLast);
+            Duration duration = Duration.between(last, now);
 
             double oldPriority = adventure.getPriority();
             double newPriority = oldPriority + (duration.getSeconds() * adventure.getGrow());
@@ -51,7 +50,16 @@ public class UpdatePassiveAdventureListWorker extends Worker {
             newPriority = Math.min( newPriority, 100.0);
 
             adventure.setPriority( newPriority);
-            adventure.setLast( newLast.toString());
+            adventure.setLast( now.toString());
+
+
+            // TODO: remove this
+            final double GROW = 100. / (24.0 * 60.0 * 60.0);  // 1 day
+            final double DECAY = 100.0 / (90.0 * 60.0) ;  // 90 minutes
+            adventure.setGrow( GROW);
+            adventure.setDecay( DECAY);
+
+
 
             mAdventureDao.update(adventure);
         });

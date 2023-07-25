@@ -25,7 +25,7 @@
         android:padding="16dp"
         android:text="@string/default_msg"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide__guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,43 +57,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#50F00000"
-        android:text="100"
         app:layout_constraintLeft_toLeftOf="@id/fragment_screen_slide_page_progressBar"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_screen_slide_page_progressBar"
+        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide_page_progressBar"
         />
 
     <TextView
-        android:id="@+id/fragment_screen_slide_tags_tv"
+        android:id="@+id/fragment_screen_slide__tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:elevation="4dp"
+        android:layout_margin="4dp"
         android:text="@string/default_msg"
         android:textAlignment="textEnd"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide_title_tv"
+        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide_page_progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_screen_slide_title_tv"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+
+        android:textColor="#50F00000"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_screen_slide_details_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide__guideline"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
+        android:id="@+id/fragment_screen_slide__guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/head_height" />
+        app:layout_constraintGuide_begin="@dimen/head_height"
+        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide__tags_tv"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

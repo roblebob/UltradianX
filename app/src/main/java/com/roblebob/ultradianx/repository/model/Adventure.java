@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.roblebob.ultradianx.util.UtilKt;
 
-import java.lang.reflect.Type;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -92,7 +91,7 @@ public class Adventure {
         return new Adventure(
                 title,
                 "",
-                new ArrayList<String>(),
+                new ArrayList<>(),
                 0.0,
                 UtilKt.getRidOfMillis(Instant.now().toString()),
                 0.0,
@@ -167,20 +166,6 @@ public class Adventure {
 
 
 
-    @Ignore
-    public Bundle toBundle() {
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", this.id);
-        bundle.putString("title", this.title);
-        bundle.putString("tags", this.tags);
-        bundle.putStringArrayList("details", this.details);
-        bundle.putDouble("priority", this.priority);
-        bundle.putString("last", this.last);
-        bundle.putDouble("grow", this.grow);
-        bundle.putDouble("decay", this.decay);
-        bundle.putString("clockify", this.clockify);
-        return bundle;
-    }
 
     @Ignore
     public Data toData() {
@@ -199,7 +184,7 @@ public class Adventure {
 
 
     @Ignore
-    public SpannableStringBuilder toSpannableStringBuilder() {
+    public SpannableStringBuilder titleToSpannableStringBuilder(int minFontSize) {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append( this.title);
 
@@ -209,11 +194,17 @@ public class Adventure {
 
         for (int i = 0; i < this.title.length(); i++) {
             int fontSize = maxFontSize - 3*i;
-            spannableStringBuilder.setSpan( new AbsoluteSizeSpan( max( fontSize , MIN_FONT_SIZE), true), i, i + 1, 0);
+            spannableStringBuilder.setSpan( new AbsoluteSizeSpan( max( fontSize , minFontSize), true), i, i + 1, 0);
         }
 
         return spannableStringBuilder;
     }
 
+    @Ignore
+    public SpannableStringBuilder titleToSpannableStringBuilder() {
+        return titleToSpannableStringBuilder( MIN_FONT_SIZE);
+    }
+
+    @Ignore
     public static final int MIN_FONT_SIZE = 3;
 }

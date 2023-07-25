@@ -32,9 +32,6 @@ public class ActiveProgressionWorker extends Worker {
     @Override
     public Result doWork() {
 
-        /*
-            * Get the adventure id from the input data, and load the adventure from the database.
-         */
         int id = getInputData().getInt("id", -1);
         if (id < 1) {
             Log.e(TAG, "---> worker failed");
@@ -42,25 +39,21 @@ public class ActiveProgressionWorker extends Worker {
         }
         Adventure adventure = mAdventureDao.loadAdventureById( id);
 
+        Instant last = Instant.parse( adventure.getLast());
+        Instant now = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
 
-
-
-        Instant oldLast = Instant.parse( adventure.getLast());
-        Instant newLast = Instant.parse( UtilKt.getRidOfMillis( Instant.now().toString()));
-
-        Duration duration = Duration.between(oldLast, newLast);
+        Duration duration = Duration.between(last, now);
 
         double oldPriority = adventure.getPriority();
         double newPriority = oldPriority - ( duration.getSeconds() * adventure.getDecay());
 
         mAdventureDao.updatePriority(id, newPriority);
-        mAdventureDao.updateLast(id, newLast.toString());
-
+        mAdventureDao.updateLast(id, now.toString());
 
         Data outputData = new Data.Builder()
                 .putInt("adventureId", id)
-                .putString("start", oldLast.toString())
-                .putString("end", newLast.toString())
+                .putString("start", last.toString())
+                .putString("end", now.toString())
                 .build();
 
         return Result.success( outputData);
