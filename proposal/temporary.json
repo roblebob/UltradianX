@@ -1,0 +1,88 @@
+[
+    {
+        "title": "Morning Sun",
+        "tags": "health",
+        "details": ["at least 20 min", "within 1 hour after waking up", "no glasses !!!"]
+    },
+
+    {
+        "title": "Breakfast",
+        "tags": "food",
+        "details": []
+    },
+
+
+    {
+        "title": "Android",
+        "tags": "coding",
+        "details": []
+    },
+
+    {
+        "title": "Push-Ups",
+        "tags": "health",
+        "details": ["from 9am to 3pm on every hour 15 (x7)"]
+    },
+
+    {
+        "title": "meditation",
+        "tags": "health",
+        "details": []
+    },
+
+    {
+        "title": "RL",
+        "tags": "ml",
+        "details": [
+            "<a href=\"https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm\">2021 DeepMind x UCL RL Lecture Series</a>",
+            "<a href=\"http://incompleteideas.net/book/RLbook2020trimmed.pdf\">book</a>",
+            "<a href=\"https://coggle.it/diagram/XW4s6Wn5-zKZbJRB/t/reinforcement-learning\">coggle</a>"
+        ]
+    },
+
+    {
+        "title": "lunch",
+        "tags": "food",
+        "details": []
+    },
+
+
+    {
+        "title": "Docker, Kubernetes",
+        "tags": "coding",
+        "details": ["<a href=\"https://livebook.manning.com/book/docker-in-action-second-edition/chapter-2/\">Docker in Action></a>"]
+    },
+
+    {
+        "title": "Kotlin",
+        "tags": "coding",
+        "details": ["<a href=\"https://hyperskill.org/study-plan\">hyperskill</a>"]
+    },
+
+    {
+        "title": "Walking into sunset",
+        "tags": "health",
+        "details": ["min. 10_000 steps"]
+    },
+
+    {
+        "title": "Transformers",
+        "tags": "ml",
+        "details": [
+            "<a href=\"https://coggle.it/diagram/Y4YpE2qS3BdYKxu-/t/-\">coggle</a>",
+            "<a href=\"https://lena-voita.github.io/posts.html\">Lena Voita's Blog</a>"
+        ]
+    },
+
+    {
+        "title": "bass",
+        "tags": "music",
+        "details": []
+    },
+
+    {
+        "title": "sleep",
+        "tags": "health",
+        "details": []
+    }
+]
