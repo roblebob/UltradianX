@@ -16,9 +16,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.repository.model.Adventure;
+import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.OverviewRVViewHolder> {
     private final List<Adventure> mAdventureList = new ArrayList<>();
@@ -68,7 +70,7 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
             holder.textInputLayout.setVisibility( View.VISIBLE);
             holder.textView.setVisibility( View.INVISIBLE);
             holder.textInputLayout.setEndIconOnClickListener((v) -> {
-                String title = holder.textInputEditText.getText().toString();
+                String title = Objects.requireNonNull(holder.textInputEditText.getText()).toString();
                 if (!title.isEmpty()) {
                     mCallback.onNewAdventureCreated(title);
                     holder.textInputEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
@@ -78,31 +80,13 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
         }
 
         Adventure adventure = mAdventureList.get(position);
+        AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, mContext);
 
-
-
-        // TODO: remove this
-        int color = 0;
-        switch (adventure.getTags()) {
-            case "health":
-                color = mContext.getColor(R.color.tag_health);
-                break;
-            case "theory":
-                color = mContext.getColor(R.color.tag_theory);
-                break;
-            case "coding":
-                color = mContext.getColor(R.color.tag_coding);
-                break;
-            case "music":
-                color = mContext.getColor(R.color.tag_music);
-                break;
-        }
-
-
+        int color = adventureDisplay.getColor();
         holder.textView.setTextColor( color);
         holder.textInputLayout.setVisibility( View.INVISIBLE);
         holder.textView.setVisibility( View.VISIBLE);
-        holder.textView.setText( adventure.titleToSpannableStringBuilder() );
+        holder.textView.setText( adventureDisplay.titleToSpannableStringBuilder() );
         holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( adventure, position));
     }
 

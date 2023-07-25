@@ -14,11 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.databinding.FragmentScreenSlidePageBinding;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
+import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,30 +70,15 @@ public class ScreenSlidePageFragment extends Fragment {
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
 
-            mBinding.fragmentScreenSlideTitleTv.setText(                        adventure.titleToSpannableStringBuilder(8));
+            AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, this.getContext());
+
+            mBinding.fragmentScreenSlideTitleTv.setText(                        adventureDisplay.titleToSpannableStringBuilder(3));
             mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags() );
             mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
             mBinding.fragmentScreenSlidePagePriorityTv.setText( String.valueOf( adventure.getPriority().intValue()));
             mDetailsRVAdapter.submit(                                           adventure.getDetails()  );
 
-
-            int color = 0;
-            switch (adventure.getTags()) {
-                case "health":
-                    color = this.getContext().getColor(R.color.tag_health);
-                    break;
-                case "theory":
-                    color = this.getContext().getColor(R.color.tag_theory);
-
-                    break;
-                case "coding":
-                    color = this.getContext().getColor(R.color.tag_coding);
-                    break;
-                case "music":
-                    color = this.getContext().getColor(R.color.tag_music);
-                    break;
-            }
-
+            int color = adventureDisplay.getColor();
             mBinding.fragmentScreenSlideTitleTv.setTextColor( color);
             mBinding.fragmentScreenSlideTagsTv.setTextColor( color);
             mBinding.fragmentScreenSlidePageProgressBar.setIndicatorColor( color);

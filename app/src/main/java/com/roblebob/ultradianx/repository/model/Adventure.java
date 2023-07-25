@@ -181,30 +181,4 @@ public class Adventure {
         builder.putString("clockify", this.clockify);
         return builder.build();
     }
-
-
-    @Ignore
-    public SpannableStringBuilder titleToSpannableStringBuilder(int minFontSize) {
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-        spannableStringBuilder.append( this.title);
-
-        int priority = min(100, this.priority.intValue());
-        int maxFontSize = priority / 2;
-
-
-        for (int i = 0; i < this.title.length(); i++) {
-            int fontSize = maxFontSize - 3*i;
-            spannableStringBuilder.setSpan( new AbsoluteSizeSpan( max( fontSize , minFontSize), true), i, i + 1, 0);
-        }
-
-        return spannableStringBuilder;
-    }
-
-    @Ignore
-    public SpannableStringBuilder titleToSpannableStringBuilder() {
-        return titleToSpannableStringBuilder( MIN_FONT_SIZE);
-    }
-
-    @Ignore
-    public static final int MIN_FONT_SIZE = 3;
 }

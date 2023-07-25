@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
 import com.roblebob.ultradianx.ui.adapter.ListDiffCallback;
-import com.roblebob.ultradianx.ui.view.MyController;
+import com.roblebob.ultradianx.ui.extra.MyController;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
@@ -34,7 +34,7 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
     private FragmentMainBinding mBinding;
     private FragmentStateAdapter mPagerAdapter;
 
-    private List<Integer> mAdventureIdList = new ArrayList<>();
+    private final List<Integer> mAdventureIdList = new ArrayList<>();
     public List<Integer> getAdventureIdList() { return mAdventureIdList; }
 
 
@@ -64,8 +64,6 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
 
 
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
-//            mAdventureIdList = new ArrayList<>(adventureIdList);
-//            mPagerAdapter.notifyDataSetChanged();
             Log.d(TAG, "---> adventureIdList has changed");
 
             ListDiffCallback<Integer> listDiffCallback = new ListDiffCallback<>( mAdventureIdList, adventureIdList);

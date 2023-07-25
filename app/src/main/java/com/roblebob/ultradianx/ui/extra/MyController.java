@@ -1,4 +1,4 @@
-package com.roblebob.ultradianx.ui.view;
+package com.roblebob.ultradianx.ui.extra;
 
 import android.content.Context;
 import android.util.AttributeSet;
