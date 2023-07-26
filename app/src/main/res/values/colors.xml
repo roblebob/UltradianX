@@ -22,7 +22,6 @@
     <color name="tag_music">#C76496</color>
     <color name="tag_health">#EF9A13</color>
     <color name="tag_coding">#C8C8C8</color>
-
-    <color name="tag_neutral">#909090</color>
+    <color name="tag_neutral">#777777</color>
 
 </resources>

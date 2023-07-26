@@ -31,19 +31,19 @@ public class Adventure {
     @ColumnInfo(name = "details")           private ArrayList<String> details;
     @ColumnInfo(name = "priority")          private Double  priority;
     @ColumnInfo(name = "last")              private String  last;
-    @ColumnInfo(name = "grow")              private Double  grow;
-    @ColumnInfo(name = "decay")             private Double  decay;
+
     @ColumnInfo(name = "clockify")          private String  clockify;
 
-    public Adventure( String title, String tags, ArrayList<String> details, Double priority, String last, Double grow, Double decay, String clockify) {
+    @ColumnInfo(name = "duration")          private Integer duration; // in seconds
+
+    public Adventure( String title, String tags, ArrayList<String> details, String clockify, Double priority, String last, Integer duration) {
         this.title = title;
         this.tags = tags;
         this.details = details;
+        this.clockify = clockify;
         this.priority = priority;
         this.last = last;
-        this.grow = grow;
-        this.decay = decay;
-        this.clockify = clockify;
+        this.duration = duration;
     }
 
 
@@ -53,25 +53,13 @@ public class Adventure {
         this.title = adventure.getTitle();
         this.tags = adventure.getTags();
         this.details = adventure.getDetails();
+        this.clockify = adventure.getClockify();
         this.priority = adventure.getPriority();
         this.last = adventure.getLast();
-        this.grow = adventure .getGrow();
-        this.decay = adventure.getDecay();
-        this.clockify = adventure.getClockify();
+        this.duration = adventure.getDuration();
     }
 
-    @Ignore
-    public Adventure( Bundle bundle) {
-        this.id = bundle.getInt("id");
-        this.title = bundle.getString("title");
-        this.tags = bundle.getString("tags");
-        this.details = bundle.getStringArrayList("details");
-        this.priority = bundle.getDouble("priority");
-        this.last = bundle.getString("last");
-        this.grow = bundle.getDouble("grow");
-        this.decay = bundle.getDouble("decay");
-        this.clockify = bundle.getString("clockify");
-    }
+
 
     @Ignore
     public Adventure( Data data) {
@@ -79,11 +67,10 @@ public class Adventure {
         this.title = data.getString("title");
         this.tags = data.getString("tags");
         this.details = new Gson().fromJson( data.getString("details"), new TypeToken<ArrayList<String>>() {}.getType());
+        this.clockify = data.getString("clockify");
         this.priority = data.getDouble("priority", Double.NaN);
         this.last = data.getString("last");
-        this.grow = data.getDouble("grow", Double.NaN);
-        this.decay = data.getDouble("decay", Double.NaN);
-        this.clockify = data.getString("clockify");
+        this.duration = data.getInt("duration", -1);
     }
 
     @Ignore
@@ -92,11 +79,10 @@ public class Adventure {
                 title,
                 "",
                 new ArrayList<>(),
+                null,
                 0.0,
                 UtilKt.getRidOfMillis(Instant.now().toString()),
-                0.0,
-                0.0,
-                null
+                0
         );
     }
 
@@ -143,20 +129,6 @@ public class Adventure {
         this.last = last;
     }
 
-    public Double getGrow() {
-        return grow;
-    }
-    public void setGrow(Double grow) {
-        this.grow = grow;
-    }
-
-    public Double getDecay() {
-        return decay;
-    }
-    public void setDecay(Double decay) {
-        this.decay = decay;
-    }
-
     public String getClockify() {
         return clockify;
     }
@@ -164,7 +136,13 @@ public class Adventure {
         this.clockify = clockify;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
 
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
 
     @Ignore
@@ -174,11 +152,21 @@ public class Adventure {
         builder.putString("title", this.title);
         builder.putString("tags", this.tags);
         builder.putString("details", new Gson().toJson(this.details));
+        builder.putString("clockify", this.clockify);
         builder.putDouble("priority", this.priority);
         builder.putString("last", this.last);
-        builder.putDouble("grow", this.grow);
-        builder.putDouble("decay", this.decay);
-        builder.putString("clockify", this.clockify);
+        builder.putInt("duration", this.duration);
         return builder.build();
     }
+
+    @Ignore
+    public double getGrow() {
+        return 100. / (24.0 * 60.0 * 60.0);  // 1 day
+    }
+
+    @Ignore
+    public double getDecay() {
+        return 100.0 / this.duration ;
+    }
+
 }

@@ -52,15 +52,6 @@ public class UpdatePassiveAdventureListWorker extends Worker {
             adventure.setPriority( newPriority);
             adventure.setLast( now.toString());
 
-
-            // TODO: remove this
-            final double GROW = 100. / (24.0 * 60.0 * 60.0);  // 1 day
-            final double DECAY = 100.0 / (90.0 * 60.0) ;  // 90 minutes
-            adventure.setGrow( GROW);
-            adventure.setDecay( DECAY);
-
-
-
             mAdventureDao.update(adventure);
         });
 

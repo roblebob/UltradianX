@@ -2,32 +2,29 @@
     {
         "title": "Morning Sun",
         "tags": "health",
-        "details": ["at least 20 min", "within 1 hour after waking up", "no glasses !!!"]
+        "details": ["at least 20 min", "within 1 hour after waking up", "no glasses !!!"],
+        "duration": 20
     },
-
-    {
-        "title": "Breakfast",
-        "tags": "food",
-        "details": []
-    },
-
 
     {
         "title": "Android",
         "tags": "coding",
-        "details": []
+        "details": [],
+        "duration": 180
     },
 
     {
         "title": "Push-Ups",
         "tags": "health",
-        "details": ["from 9am to 3pm on every hour 15 (x7)"]
+        "details": ["from 9am to 3pm on every hour 15 (x7)"],
+        "duration": 7
     },
 
     {
         "title": "meditation",
         "tags": "health",
-        "details": []
+        "details": [],
+        "duration": 20
     },
 
     {
@@ -37,52 +34,73 @@
             "<a href=\"https://www.youtube.com/watch?v=TCCjZe0y4Qc&list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm\">2021 DeepMind x UCL RL Lecture Series</a>",
             "<a href=\"http://incompleteideas.net/book/RLbook2020trimmed.pdf\">book</a>",
             "<a href=\"https://coggle.it/diagram/XW4s6Wn5-zKZbJRB/t/reinforcement-learning\">coggle</a>"
-        ]
+        ],
+        "duration": 90
     },
-
-    {
-        "title": "lunch",
-        "tags": "food",
-        "details": []
-    },
-
 
     {
         "title": "Docker, Kubernetes",
         "tags": "coding",
-        "details": ["<a href=\"https://livebook.manning.com/book/docker-in-action-second-edition/chapter-2/\">Docker in Action></a>"]
+        "details": ["<a href=\"https://livebook.manning.com/book/docker-in-action-second-edition/chapter-2/\">Docker in Action></a>"],
+        "duration": 90
     },
 
     {
         "title": "Kotlin",
         "tags": "coding",
-        "details": ["<a href=\"https://hyperskill.org/study-plan\">hyperskill</a>"]
+        "details": ["<a href=\"https://hyperskill.org/study-plan\">hyperskill</a>"],
+        "duration": 90
     },
 
     {
         "title": "Walking into sunset",
         "tags": "health",
-        "details": ["min. 10_000 steps"]
+        "details": ["min. 10_000 steps"],
+        "duration": 180
     },
 
     {
         "title": "Transformers",
-        "tags": "ml",
+        "tags": "theory",
         "details": [
             "<a href=\"https://coggle.it/diagram/Y4YpE2qS3BdYKxu-/t/-\">coggle</a>",
             "<a href=\"https://lena-voita.github.io/posts.html\">Lena Voita's Blog</a>"
-        ]
+        ],
+        "duration": 90
     },
 
     {
         "title": "bass",
         "tags": "music",
-        "details": []
+        "details": [],
+        "duration": 90
+    },
+
+    {
+        "title": "journaling",
+        "tags": "",
+        "details": [],
+        "duration": 10
+    },
+
+    {
+        "title": "carrier",
+        "tags": "",
+        "details": [],
+        "duration": 90
+    },
+
+    {
+        "title": "home improvement",
+        "tags": "",
+        "details": [],
+        "duration": 90
     },
 
     {
         "title": "sleep",
         "tags": "health",
-        "details": []
+        "details": [],
+        "duration": 450
     }
 ]

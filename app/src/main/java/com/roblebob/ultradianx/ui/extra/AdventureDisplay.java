@@ -4,8 +4,11 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.repository.model.Adventure;
@@ -34,6 +37,12 @@ public class AdventureDisplay {
             int fontSize = maxFontSize - 3*i;
             spannableStringBuilder.setSpan( new AbsoluteSizeSpan( max( fontSize , minFontSize), true), i, i + 1, 0);
         }
+
+        final ForegroundColorSpan fcs = new ForegroundColorSpan(getColor());
+        final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
+
+        spannableStringBuilder.setSpan( fcs, 0, mAdventure.getTitle().length(), 0);
+
 
         return spannableStringBuilder;
     }

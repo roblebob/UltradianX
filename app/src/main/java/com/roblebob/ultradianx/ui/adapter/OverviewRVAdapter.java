@@ -82,8 +82,6 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
         Adventure adventure = mAdventureList.get(position);
         AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, mContext);
 
-        int color = adventureDisplay.getColor();
-        holder.textView.setTextColor( color);
         holder.textInputLayout.setVisibility( View.INVISIBLE);
         holder.textView.setVisibility( View.VISIBLE);
         holder.textView.setText( adventureDisplay.titleToSpannableStringBuilder() );
