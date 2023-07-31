@@ -1,26 +1,23 @@
 package com.roblebob.ultradianx.repository.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkContinuation;
 import androidx.work.WorkManager;
 
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.repository.model.AdventureDao;
 import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.AppStateDao;
-import com.roblebob.ultradianx.repository.worker.ActiveProgressionWorker;
 import com.roblebob.ultradianx.repository.worker.AddAdventureWorker;
-import com.roblebob.ultradianx.repository.worker.ClockifyWorker;
-import com.roblebob.ultradianx.repository.worker.HistoryWorker;
-import com.roblebob.ultradianx.repository.worker.InitialRunWorker;
-import com.roblebob.ultradianx.repository.worker.UpdatePassiveAdventureListWorker;
-import com.roblebob.ultradianx.repository.worker.UpdateActiveAdventureWorker;
+import com.roblebob.ultradianx.repository.worker.InitWorker;
+import com.roblebob.ultradianx.repository.worker.RefreshWorker;
+
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
@@ -47,59 +44,32 @@ public class AppViewModel extends ViewModel {
 
 
     public void initialRun() {
-        mWorkManager.enqueue(OneTimeWorkRequest.from(InitialRunWorker.class));
+        mWorkManager.enqueue( OneTimeWorkRequest.from(InitWorker.class));
+    }
+
+
+
+    public void refresh(Data data) {
+        Log.e(TAG, "refresh:");
+        if (data == null) {
+            mWorkManager.enqueue( OneTimeWorkRequest.from( RefreshWorker.class));
+        } else {
+            mWorkManager.enqueue( new OneTimeWorkRequest
+                    .Builder( RefreshWorker.class)
+                    .setInputData(data)
+                    .build()
+            );
+        }
     }
 
 
     public void addAdventure(Data data) {
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( AddAdventureWorker.class);
-        requestBuilder.setInputData(data);
-        mWorkManager.enqueue( requestBuilder.build());
+        mWorkManager.enqueue( new OneTimeWorkRequest
+                .Builder( AddAdventureWorker.class)
+                .setInputData(data)
+                .build()
+        );
     }
 
 
-
-
-
-    public void updatePassiveAdventureList() {
-        OneTimeWorkRequest.Builder requestBuilder = new OneTimeWorkRequest.Builder( UpdatePassiveAdventureListWorker.class);
-        mWorkManager.enqueue( requestBuilder.build());
-    }
-
-
-    public void updateActiveProgression(int id) {
-        Data.Builder builder = new Data.Builder();
-        builder.putInt("id", id);
-        Data data = builder.build();
-
-        OneTimeWorkRequest.Builder updateActiveProgressionRequestBuilder = new OneTimeWorkRequest.Builder( ActiveProgressionWorker.class);
-        updateActiveProgressionRequestBuilder.setInputData( data);
-
-
-        WorkContinuation continuation = mWorkManager.beginWith( updateActiveProgressionRequestBuilder.build());
-
-        OneTimeWorkRequest.Builder historyRequestBuilder = new OneTimeWorkRequest.Builder( HistoryWorker.class);
-
-        continuation = continuation.then(historyRequestBuilder.build());
-
-        continuation.enqueue();
-    }
-
-
-    public void updateActiveAdventure( Data data) {
-        OneTimeWorkRequest.Builder updateActiveAdventureRequestBuilder = new OneTimeWorkRequest.Builder( UpdateActiveAdventureWorker.class);
-        updateActiveAdventureRequestBuilder.setInputData( data);
-
-
-        WorkContinuation continuation = mWorkManager.beginWith( updateActiveAdventureRequestBuilder.build());
-
-        OneTimeWorkRequest.Builder historyRequestBuilder = new OneTimeWorkRequest.Builder( HistoryWorker.class);
-
-        continuation = continuation
-                .then( historyRequestBuilder.build())
-                .then( OneTimeWorkRequest.from( ClockifyWorker.class))
-        ;
-
-        continuation.enqueue();
-    }
 }

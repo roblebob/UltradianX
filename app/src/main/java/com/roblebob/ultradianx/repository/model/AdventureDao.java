@@ -21,6 +21,8 @@ public interface AdventureDao {
     @Delete
     void delete(Adventure adventure);
 
+    @Query("SELECT COUNT(*) FROM Adventure")
+    int countAdventures();
 
     @Query("SELECT COUNT(*) FROM Adventure WHERE title=:title")
     int countAdventuresWithTitle(String title);
@@ -50,10 +52,12 @@ public interface AdventureDao {
     String loadAdventureTitleById(int id);
 
 
-    @Query(value = "UPDATE Adventure SET `last` = :last WHERE id = :id ")
-    void updateLast(int id, String last);
+    @Query(value = "UPDATE Adventure SET `lasttime` = :lasttime WHERE id = :id ")
+    void updateLast(int id, String lasttime);
 
     @Query(value = "UPDATE Adventure SET `priority` = :priority WHERE id = :id ")
     void updatePriority(int id, double priority);
 
+    @Query(value = "UPDATE Adventure SET `active` = :active WHERE id = :id ")
+    void activate(int id, boolean active);
 }

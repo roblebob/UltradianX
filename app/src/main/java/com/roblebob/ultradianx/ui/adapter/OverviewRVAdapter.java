@@ -8,6 +8,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,8 +86,15 @@ public class OverviewRVAdapter extends RecyclerView.Adapter<OverviewRVAdapter.Ov
 
         holder.textInputLayout.setVisibility( View.INVISIBLE);
         holder.textView.setVisibility( View.VISIBLE);
-        holder.textView.setText( adventureDisplay.titleToSpannableStringBuilder() );
+        holder.textView.setText( adventureDisplay.titleToSpannableStringBuilder(3) );
         holder.itemView.setOnClickListener( v -> mCallback.onItemClickListener( adventure, position));
+
+        // displacing the text to the left depending on the priority
+        ConstraintLayout constraintLayout = (ConstraintLayout) holder.itemView;
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone( constraintLayout);
+        constraintSet.setHorizontalBias( R.id.single_item_adventures_tv, 1 - adventure.getPriority().floatValue() / 100);
+        constraintSet.applyTo( constraintLayout);
     }
 
     @Override

@@ -65,28 +65,28 @@ public class ScreenSlidePageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentScreenSlidePageBinding.inflate( inflater, container, false);
 
-        mBinding.fragmentScreenSlideDetailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
-        mBinding.fragmentScreenSlideDetailsRv.setAdapter(mDetailsRVAdapter);
+        mBinding.detailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
+        mBinding.detailsRv.setAdapter(mDetailsRVAdapter);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
 
             AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, this.getContext());
 
-            mBinding.fragmentScreenSlideTitleTv.setText(                        adventureDisplay.titleToSpannableStringBuilder(3));
-            mBinding.fragmentScreenSlideTagsTv.setText(                         adventure.getTags() );
-            mBinding.fragmentScreenSlidePageProgressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
-            mBinding.fragmentScreenSlidePagePriorityTv.setText( String.valueOf( adventure.getPriority().intValue()));
+            mBinding.titleTv.setText(                    adventureDisplay.titleToSpannableStringBuilder());
+            mBinding.tagsTv.setText(                     adventureDisplay.tagToSpannableStringBuilder() );
+            mBinding.progressBar.setProgressCompat(      adventure.getPriority() .intValue(), true);
+            mBinding.priorityTv.setText( String.valueOf( adventure.getPriority().intValue()));
             mDetailsRVAdapter.submit(                                           adventure.getDetails()  );
 
             int color = adventureDisplay.getColor();
-            mBinding.fragmentScreenSlideTitleTv.setTextColor( color);
-            mBinding.fragmentScreenSlideTagsTv.setTextColor( color);
-            mBinding.fragmentScreenSlidePageProgressBar.setIndicatorColor( color);
-            mBinding.fragmentScreenSlidePagePriorityTv.setTextColor( color);
+            mBinding.titleTv.setTextColor( color);
+            mBinding.tagsTv.setTextColor( color);
+            mBinding.progressBar.setIndicatorColor( color);
+            mBinding.priorityTv.setTextColor( color);
 
         });
 
-        mBinding.fragmentScreenSlideTitleTv.setMovementMethod( new ScrollingMovementMethod());
+        mBinding.titleTv.setMovementMethod( new ScrollingMovementMethod());
 
         return mBinding.getRoot();
     }
@@ -95,6 +95,6 @@ public class ScreenSlidePageFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.e(TAG, "---> " + "onPause()");
-        mViewModel.updatePassiveAdventureList();
+        mViewModel.refresh(null);
     }
 }

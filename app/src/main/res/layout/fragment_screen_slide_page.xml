@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_screen_slide_page_content"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ScreenSlidePageFragment"
@@ -15,7 +15,7 @@
 
 
     <TextView
-        android:id="@+id/fragment_screen_slide_title_tv"
+        android:id="@+id/title_tv"
         style="?android:textAppearanceLarge"
 
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         android:padding="16dp"
         android:text="@string/default_msg"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_screen_slide__guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,14 +35,14 @@
 
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/fragment_screen_slide_page_progressBar"
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
         android:progress="50"
         app:trackThickness="4dp"
         app:indicatorColor="#50F00000"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_screen_slide_title_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/title_tv"
         app:layout_constraintVertical_bias="1.0"
         app:trackColor="#00000000"
         tools:layout_editor_absoluteX="16dp"
@@ -53,31 +53,28 @@
 
     <TextView
 
-        android:id="@+id/fragment_screen_slide_page__priority_tv"
+        android:id="@+id/priority_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#50F00000"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_screen_slide_page_progressBar"
-        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide_page_progressBar"
+        android:padding="4dp"
+        app:layout_constraintRight_toRightOf="@id/progressBar"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar"
         />
 
     <TextView
-        android:id="@+id/fragment_screen_slide__tags_tv"
+        android:id="@+id/tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:text="@string/default_msg"
         android:textAlignment="textEnd"
-        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide_page_progressBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.0"
-
-        android:textColor="#50F00000"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_screen_slide_details_rv"
+        android:id="@+id/details_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -85,16 +82,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide__guideline"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragment_screen_slide__guideline"
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/head_height"
-        app:layout_constraintTop_toBottomOf="@id/fragment_screen_slide__tags_tv"
+        app:layout_constraintTop_toBottomOf="@id/tags_tv"
         />
 
 

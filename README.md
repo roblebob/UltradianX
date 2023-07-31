@@ -154,8 +154,10 @@ but can also be used as a widget on the home screen.
 
 <img src="/proposal/ui_mocks_clock.png" width="400">
 
-As the spiral clock only shows the present day, a more precise picture of the mock above would be,
-presuming it is 10:30 am, and the user has been up since 6:00 am:
+As the spiral clock only shows the present day, 
+a more precise picture of the mock above would be,
+presuming it is 10:30 am, 
+and the user has been up since 6:00 am:
 
 <img src="/proposal/ui_mocks_overview_preferences_partial.png">
 
@@ -167,19 +169,29 @@ Ideas presented in the mocks above, are not yet implemented within the prototype
 
 ### Business Logic
 
+The workflow to setup the app is,
+whenever you start, 
+your order the _Adventures_ by their _Priority_ for the entire day cycle, 
+starting now.
+Since their exists a magnitude of different ways to distribute _Priorities_ 
+representing the same ordering, 
+finding out their different experiences while synchronizing as a user to the app, 
+might be interesting.
+
 To have different Strategies for updating the _Priority_, 
 may be key to enable different use cases.
 
 
 ### Clockify API
 
-Although some basics are already implemented within the presented prototype, they need to be 
-generalized to new users, including account management and workspaces within clockify. 
-At present, the communication to the clockify server is only one sided, which might be subject to 
-change. 
+Although some basics are already implemented within the presented prototype, 
+they need to be generalized to new users, 
+including account management and workspaces within clockify. 
+At present, the communication to the clockify server is only one sided, 
+which might be subject to change. 
 
 
-### Paid vs. Free version
+### Paid vs. Free version (_maybe!_)
 
 In the Free version, like in Reaper, 
 when starting the app, 
@@ -188,5 +200,8 @@ in which the trial period is unlimited,
 but the user is presented with a google advertising frame 
 showing until the user touches the screen.
 
- 
+
+### Testing
+
+The app should include not only unit tests, but also UI tests (Instrumented tests). 
 

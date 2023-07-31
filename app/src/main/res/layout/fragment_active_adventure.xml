@@ -11,7 +11,7 @@
     >
 
     <Button
-        android:id="@+id/fragment_active_adventure_passive_switch"
+        android:id="@+id/passive_switch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/head_height"
         android:backgroundTint="@color/active"
@@ -19,12 +19,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_active_adventure_guideline"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
         />
 
     <TextView
-        android:id="@+id/fragment_active_adventure_title_tv"
-        android:layout_width="match_parent"
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:lineSpacingMultiplier="1.2"
@@ -32,69 +32,60 @@
         android:scrollbars="vertical"
         android:text="@string/default_msg"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_active_adventure_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 
 
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/fragment_active_adventure_progressBar"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/progress_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:progress="50"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"
+        android:layoutDirection="rtl"
         app:trackThickness="4dp"
         app:indicatorColor="#50F00000"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_active_adventure_title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
         app:layout_constraintVertical_bias="1.0"
         app:trackColor="#00000000"
         tools:layout_editor_absoluteX="16dp"
-        app:indicatorDirectionLinear="rightToLeft"
         />
 
     <TextView
-        android:id="@+id/fragment_active_adventure_tags_tv"
+        android:id="@+id/tags_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:text="@string/default_msg"
         android:textAlignment="textEnd"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_active_adventure_title_tv"
-        app:layout_constraintStart_toStartOf="@+id/fragment_active_adventure_title_tv"
-        app:layout_constraintTop_toTopOf="@+id/fragment_active_adventure_title_tv" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_active_adventure_details_rv"
+        android:id="@+id/details_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_active_adventure_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/progress_slider"
         app:layout_constraintVertical_bias="1.0"
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragment_active_adventure_guideline"
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/head_height" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit_adventure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/fab_edit_adventure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_edit_24" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_detail"
@@ -109,7 +100,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
+        android:id="@+id/text_input_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"

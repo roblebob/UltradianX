@@ -10,14 +10,14 @@
 
     <TextView
         android:id="@+id/single_item_adventures_tv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+        android:layout_margin="16dp"
         android:text="default"
-        android:textAlignment="textEnd"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,10 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/single_item_adventures_tv"
-        app:layout_constraintEnd_toEndOf="@+id/single_item_adventures_tv"
-        app:layout_constraintTop_toTopOf="@+id/single_item_adventures_tv"
-        app:layout_constraintStart_toStartOf="@+id/single_item_adventures_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/baseline_check_circle_24"
@@ -42,8 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="text"
-            />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -104,7 +104,7 @@ public class ClockifyWorker extends Worker {
                 }
 
                 String result = response.body().string();
-                Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
+                //Log.e(TAG, "---->\n " + result.replace(",", "\n,"));
 
                 historyDao.delete( history);
             }

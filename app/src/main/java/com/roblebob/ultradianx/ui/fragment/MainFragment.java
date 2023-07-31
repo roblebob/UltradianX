@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.work.Data;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,13 +55,7 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
-        mViewModel.getAppStateByKeyLive("initialRun").observe( getViewLifecycleOwner(), value -> {
-            if (value == null) {
-                mViewModel.initialRun();
-            } else {
-                Log.e(TAG, "----> initial: " + value);
-            }
-        });
+        mViewModel.initialRun();
 
 
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {
@@ -71,8 +66,6 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
             mAdventureIdList.clear();
             mAdventureIdList.addAll( adventureIdList);
             diffResult.dispatchUpdatesTo( mPagerAdapter);
-
-
         });
 
 
@@ -98,7 +91,10 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
         MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
                 MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
         action.setPosition( mBinding.pager.getCurrentItem());
-        action.setAdventureId( mAdventureIdList.get(mBinding.pager.getCurrentItem()));
+        int id = mAdventureIdList.get(mBinding.pager.getCurrentItem());
+        action.setAdventureId( id);
+        mViewModel.refresh(null);
+        mViewModel.refresh( new Data.Builder() .putInt("id", id) .putBoolean("active", true) .build());
         NavController navController = NavHostFragment.findNavController( this);
         navController.navigate(action);
     }

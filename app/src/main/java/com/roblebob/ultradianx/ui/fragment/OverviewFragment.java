@@ -39,20 +39,20 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
 
         overviewRVLayoutManager = new GridLayoutManager( this.getContext(), 1, RecyclerView.VERTICAL, false);
         mOverviewRVAdapter = new OverviewRVAdapter(this);
-        mBinding.fragmentOverviewRv.setAdapter( mOverviewRVAdapter);
-        mBinding.fragmentOverviewRv.setLayoutManager( overviewRVLayoutManager);
-        mBinding.fragmentOverviewRv.setOnFlingListener(new RecyclerView.OnFlingListener() {
+        mBinding.recyclerView.setAdapter( mOverviewRVAdapter);
+        mBinding.recyclerView.setLayoutManager( overviewRVLayoutManager);
+        mBinding.recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
             @Override
             public boolean onFling(int velocityX, int velocityY) {
 
-                if (!mBinding.fragmentOverviewRv.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
+                if (!mBinding.recyclerView.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
 
                     mOverviewRVAdapter.setExtended(true);
                     Log.e(TAG, "---->   set to TRUE");
                     return true;
                 }
 
-                if (mBinding.fragmentOverviewRv.canScrollVertically(1) && mOverviewRVAdapter.isExtended()) {
+                if (mBinding.recyclerView.canScrollVertically(1) && mOverviewRVAdapter.isExtended()) {
                     mOverviewRVAdapter.setExtended(false);
                     Log.e(TAG, "---->   set to FALSE");
                     return true;
@@ -69,7 +69,7 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
             mOverviewRVAdapter.submit(mAdventureList);
         });
 
-        mBinding.fragmentOverviewRv.postDelayed( () -> {
+        mBinding.recyclerView.postDelayed( () -> {
             int position = OverviewFragmentArgs.fromBundle( getArguments())  .getPosition();
             overviewRVLayoutManager.scrollToPosition(position);
         }, 100);
