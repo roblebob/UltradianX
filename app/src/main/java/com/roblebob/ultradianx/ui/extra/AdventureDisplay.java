@@ -1,12 +1,9 @@
 package com.roblebob.ultradianx.ui.extra;
 
 import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
@@ -30,8 +27,7 @@ public class AdventureDisplay {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append( mAdventure.getTitle());
 
-        int priority = min(100, mAdventure.getPriority().intValue());
-        int maxFontSize = priority;
+        int maxFontSize = mAdventure.getPriority().intValue();
 
 
         for (int i = 0; i < mAdventure.getTitle().length(); i++) {

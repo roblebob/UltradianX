@@ -29,17 +29,15 @@ import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 
 public class ActiveAdventureFragment extends Fragment {
     public static final String TAG = ActiveAdventureFragment.class.getSimpleName();
+    public static final int PROGRESS_UPDATE_INTERVAL = 2000;
     public ActiveAdventureFragment() { /* Required empty public constructor */ }
     private FragmentActiveAdventureBinding binding;
     private Adventure mAdventure;
     private final ActiveAdventureDetailsRVAdapter mAdapter = new ActiveAdventureDetailsRVAdapter();
-
-
-    int mId;
-
-    AppViewModel viewModel;
-    Handler handler = new Handler();
-    Runnable progressUpdaterRunnable;
+    private int mId;
+    private AppViewModel viewModel;
+    private final Handler handler = new Handler();
+    private Runnable progressUpdaterRunnable;
 
 
     @Override
@@ -52,12 +50,8 @@ public class ActiveAdventureFragment extends Fragment {
         progressUpdaterRunnable = new Runnable() {
             @Override
             public void run() {
-                // Do something here on the main thread
                 viewModel.refresh( new Data.Builder() .putInt("id", mId)  .build());
-                Log.d("Handlers", "Called on main thread");
-                // Repeat this the same runnable code block again another 2 seconds
-                // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 2000);
+                handler.postDelayed(this, PROGRESS_UPDATE_INTERVAL);  // 'this' is referencing the Runnable object
             }
         };
     }
@@ -65,19 +59,8 @@ public class ActiveAdventureFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentActiveAdventureBinding.inflate(inflater, container, false);
-
-
-
-
-
-
-
         binding.detailsRv.setLayoutManager( new LinearLayoutManager( this.getContext(), RecyclerView.VERTICAL, false));
         binding.detailsRv.setAdapter( mAdapter);
-
-
-
-
 
         viewModel.getAdventureByIdLive(mId).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
@@ -86,37 +69,14 @@ public class ActiveAdventureFragment extends Fragment {
                 viewModel.refresh( new Data.Builder() .putInt("id", mId) .putBoolean("active", true) .build());
             } else {
                 Log.e(TAG, "---------->   adventure is active");
-
-                AdventureDisplay adventureDisplay = new AdventureDisplay( mAdventure, getContext());
-                binding.titleTv .setText( adventureDisplay.titleToSpannableStringBuilder());
-                binding.tagsTv .setText( adventureDisplay.tagToSpannableStringBuilder());
-                float value =  mAdventure.getPriority().floatValue() ;
-                binding.progressSlider.setValue( value);
-                Log.e(TAG, "---------->   progressSlider value: " + value);
-                mAdapter.submit( mAdventure.getDetails());
+                bindToAdventure( mAdventure);
             }
         });
 
 
 
 
-        // Define the code block to be executed
-
-        // Start the initial runnable task by posting through the handler
-        handler.post(progressUpdaterRunnable);
-
-
-
-
-
-
-
-
-
-
         binding.passiveSwitch.setOnClickListener( (view) -> {
-
-
             mAdventure.setActive( false);
             viewModel.refresh(mAdventure.toData());
 
@@ -126,6 +86,8 @@ public class ActiveAdventureFragment extends Fragment {
             NavController navController = NavHostFragment.findNavController( this);
             navController.navigate( action);
         });
+
+
 
 
         binding.fabAddDetail.setOnClickListener((v) -> {
@@ -147,17 +109,14 @@ public class ActiveAdventureFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
                 double priority = slider.getValue();
-                Log.e(TAG, "onStopTrackingTouch: " + priority);
                 viewModel.refresh(new Data.Builder() .putInt("id", mId) .putDouble("priority", priority) .build());
             }
         });
-
-//        binding.progressSlider.addOnChangeListener( (slider, value, fromUser) -> {
-//            double priority = slider.getValue() * 100.0;
-//            Log.e(TAG, "onStopTrackingTouch: " + priority);
-//            mAdventure.setPriority( priority);
-//            viewModel.updateActiveAdventure(mAdventure.toData());
-//        });
+        binding.progressSlider.addOnChangeListener( (slider, value, fromUser) -> {
+            double priority = slider.getValue();
+            mAdventure.setPriority( priority);
+            bindToAdventure( mAdventure);
+        });
 
 
 
@@ -166,16 +125,30 @@ public class ActiveAdventureFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(progressUpdaterRunnable);
+
+    private void bindToAdventure(Adventure adventure) {
+        AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, getContext());
+        binding.titleTv.setText( adventureDisplay.titleToSpannableStringBuilder());
+        binding.tagsTv.setText( adventureDisplay.tagToSpannableStringBuilder());
+        binding.progressSlider.setValue( adventure.getPriority().floatValue());
+        mAdapter.submit( adventure.getDetails());
     }
+
+
+
+
+
 
     @Override
     public void onResume() {
         super.onResume();
         handler.post(progressUpdaterRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(progressUpdaterRunnable);
     }
 
     @Override

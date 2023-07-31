@@ -52,8 +52,6 @@ public interface AdventureDao {
     String loadAdventureTitleById(int id);
 
 
-    @Query(value = "UPDATE Adventure SET `lasttime` = :lasttime WHERE id = :id ")
-    void updateLast(int id, String lasttime);
 
     @Query(value = "UPDATE Adventure SET `priority` = :priority WHERE id = :id ")
     void updatePriority(int id, double priority);

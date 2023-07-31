@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -30,22 +31,24 @@ public class Adventure {
     @ColumnInfo(name = "tags"       )       private String  tags;
     @ColumnInfo(name = "details")           private ArrayList<String> details;
     @ColumnInfo(name = "priority")          private Double priority;
-    @ColumnInfo(name = "lasttime")          private String lasttime;
-    @ColumnInfo(name = "lasttimePassive")   private String lasttimePassive;
+    @ColumnInfo(name = "lastTime")          private String lastTime;
+    @ColumnInfo(name = "lastTimePassive")   private String lastTimePassive;
     @ColumnInfo(name = "clockify")          private String clockify;
     @ColumnInfo(name = "targetDuration")    private Integer targetDuration; // in seconds
 
 
 
-    public Adventure(Boolean active, String title, String tags, ArrayList<String> details, String clockify, Double priority, String lasttime, String lasttimePassive, Integer targetDuration) {
+    public Adventure(Boolean active, String title, String tags, ArrayList<String> details,
+                     String clockify, Double priority, String lastTime, String lastTimePassive,
+                     Integer targetDuration) {
         this.active = active;
         this.title = title;
         this.tags = tags;
         this.details = details;
         this.clockify = clockify;
         this.priority = priority;
-        this.lasttime = lasttime;
-        this.lasttimePassive = lasttimePassive;
+        this.lastTime = lastTime;
+        this.lastTimePassive = lastTimePassive;
         this.targetDuration = targetDuration;
     }
 
@@ -59,8 +62,8 @@ public class Adventure {
         this.details = adventure.getDetails();
         this.clockify = adventure.getClockify();
         this.priority = adventure.getPriority();
-        this.lasttime = adventure.getLasttime();
-        this.lasttimePassive = adventure.getLasttimePassive();
+        this.lastTime = adventure.getLastTime();
+        this.lastTimePassive = adventure.getLastTimePassive();
         this.targetDuration = adventure.getTargetDuration();
     }
 
@@ -75,8 +78,8 @@ public class Adventure {
         this.details = new Gson().fromJson( data.getString("details"), new TypeToken<ArrayList<String>>() {}.getType());
         this.clockify = data.getString("clockify");
         this.priority = data.getDouble("priority", Double.NaN);
-        this.lasttime = data.getString("lasttime");
-        this.lasttimePassive = data.getString("lasttimePassive");
+        this.lastTime = data.getString("lastTime");
+        this.lastTimePassive = data.getString("lastTimePassive");
         this.targetDuration = data.getInt("targetDuration", -1);
     }
 
@@ -140,22 +143,22 @@ public class Adventure {
     }
 
 
-    public String getLasttime() {
-        return this.lasttime;
+    public String getLastTime() {
+        return this.lastTime;
     }
-    public void setLasttime(String lasttime) {
-        this.lasttime = lasttime;
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
         if ( !this.active ) {
-            this.lasttimePassive = lasttime;
+            this.lastTimePassive = lastTime;
         }
     }
 
 
-    public String getLasttimePassive() {
-        return lasttimePassive;
+    public String getLastTimePassive() {
+        return lastTimePassive;
     }
-    public void setLasttimePassive(String lasttimePassive) {
-        this.lasttimePassive = lasttimePassive;
+    public void setLastTimePassive(String lastTimePassive) {
+        this.lastTimePassive = lastTimePassive;
     }
 
 
@@ -186,8 +189,8 @@ public class Adventure {
         builder.putString("details", new Gson().toJson(this.details));
         builder.putString("clockify", this.clockify);
         builder.putDouble("priority", this.priority);
-        builder.putString("lasttime", this.lasttime);
-        builder.putString("lasttimePassive", this.lasttimePassive);
+        builder.putString("lastTime", this.lastTime);
+        builder.putString("lastTimePassive", this.lastTimePassive);
         builder.putInt("targetDuration", this.targetDuration);
         return builder.build();
     }
@@ -202,6 +205,7 @@ public class Adventure {
         return 100.0 / this.targetDuration;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Adventure{" +
@@ -211,8 +215,8 @@ public class Adventure {
                 ", tags='" + tags + '\'' +
                 ", details=" + details +
                 ", priority=" + priority +
-                ", lasttime='" + lasttime + '\'' +
-                ", lasttimePassive='" + lasttimePassive + '\'' +
+                ", lastTime='" + lastTime + '\'' +
+                ", lastTimePassive='" + lastTimePassive + '\'' +
                 ", clockify='" + clockify + '\'' +
                 ", targetDuration=" + targetDuration +
                 '}';
@@ -222,7 +226,7 @@ public class Adventure {
     public void refresh() {
 
         Instant now = Instant.parse(UtilKt.getRidOfMillis(Instant.now().toString()));
-        Instant last = Instant.parse(this.lasttime);
+        Instant last = Instant.parse(this.lastTime);
 
         Duration duration = Duration.between( last , now);
 
@@ -230,30 +234,30 @@ public class Adventure {
                 priority - (duration.getSeconds() * getDecay()) :
                 priority + (duration.getSeconds() * getGrow())  );
 
-        setLasttime( now.toString());
+        setLastTime( now.toString());
     }
 
 
 
     @Ignore
-    public void revert() {
+    public void abort() {
         if (isActive()) {
             refresh();
 
             setActive(false);
 
             Duration duration = Duration.between(
-                    Instant.parse( lasttime),
-                    Instant.parse( lasttimePassive)
+                    Instant.parse(lastTime),
+                    Instant.parse(lastTimePassive)
             );
 
-            setPriority( priority + (duration.getSeconds() * getDecay())  +  // reverse (subtract) the active part ...
-                         priority + (duration.getSeconds() * getGrow())  // ... add the passive part, instead
+            setPriority( priority
+                    + (duration.getSeconds() * getDecay()) // reverse the active part ...
+                    + (duration.getSeconds() * getGrow())  // ... add the passive part, instead
             );
 
-            setLasttime(this.lasttimePassive);
         } else {
-            Log.e(this.getClass().getSimpleName(), "revert() called on inactive adventure");
+            Log.e(this.getClass().getSimpleName(), "abort() called on inactive adventure");
         }
     }
 
@@ -279,11 +283,11 @@ public class Adventure {
             if ( data.hasKeyWithValueOfType("priority", Double.class)) {
                 this.priority = data.getDouble("priority", Double.NaN);
             }
-            if ( data.hasKeyWithValueOfType("lasttime", String.class)) {
-                this.lasttime = data.getString("lasttime");
+            if ( data.hasKeyWithValueOfType("lastTime", String.class)) {
+                this.lastTime = data.getString("lastTime");
             }
-            if ( data.hasKeyWithValueOfType("lasttimePassive", String.class)) {
-                this.lasttimePassive = data.getString("lasttimePassive");
+            if ( data.hasKeyWithValueOfType("lastTimePassive", String.class)) {
+                this.lastTimePassive = data.getString("lastTimePassive");
             }
             if ( data.hasKeyWithValueOfType("targetDuration", Integer.class)) {
                 this.targetDuration = data.getInt("targetDuration", -1);

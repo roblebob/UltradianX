@@ -1,7 +1,6 @@
 package com.roblebob.ultradianx.repository.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -21,8 +20,6 @@ import com.roblebob.ultradianx.repository.worker.RefreshWorker;
 import java.util.List;
 
 public class AppViewModel extends ViewModel {
-    public static final String TAG = AppViewModel.class.getSimpleName();
-
     private final WorkManager mWorkManager;
     AdventureDao adventureDao;
     AppStateDao appStateDao;
@@ -35,9 +32,6 @@ public class AppViewModel extends ViewModel {
     }
 
 
-    public LiveData<String> getAppStateByKeyLive(String key) { return appStateDao.loadValueByKeyLive( key); }
-
-
     public LiveData<List<Adventure>> getAdventureListLive() { return adventureDao.loadAdventureListLive(); }
     public LiveData<List<Integer>> getAdventureIdListLive() { return adventureDao.loadAdventureIdListLive(); }
     public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
@@ -48,9 +42,7 @@ public class AppViewModel extends ViewModel {
     }
 
 
-
     public void refresh(Data data) {
-        Log.e(TAG, "refresh:");
         if (data == null) {
             mWorkManager.enqueue( OneTimeWorkRequest.from( RefreshWorker.class));
         } else {
@@ -70,6 +62,5 @@ public class AppViewModel extends ViewModel {
                 .build()
         );
     }
-
 
 }

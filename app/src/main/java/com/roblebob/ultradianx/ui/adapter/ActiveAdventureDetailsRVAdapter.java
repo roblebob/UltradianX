@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.repository.model.Adventure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ActiveAdventureDetailsRVAdapter
 
     List< String> mDetails = new ArrayList<>();
     public void submit( List<String> details) {
-        ListDiffCallback< String> listDiffCallback = new ListDiffCallback<String>(mDetails, details);
+        ListDiffCallback< String> listDiffCallback = new ListDiffCallback<>(mDetails, details);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( listDiffCallback);
         mDetails.clear();
         mDetails.addAll( details);

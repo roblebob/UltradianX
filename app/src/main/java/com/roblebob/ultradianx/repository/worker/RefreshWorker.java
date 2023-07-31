@@ -16,8 +16,6 @@ import com.roblebob.ultradianx.repository.model.AppDatabase;
 import com.roblebob.ultradianx.repository.model.History;
 import com.roblebob.ultradianx.repository.model.HistoryDao;
 
-import java.util.Objects;
-
 /**
  * This worker is used to update the priority of the passive adventures.
  * It checks the last time the adventure was updated, and calculates the new priority, and finally
@@ -42,7 +40,6 @@ public class RefreshWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Log.e(TAG, "doWork: ");
 
         Data data = getInputData();
         int id = data.getInt("id", -1);
@@ -63,13 +60,13 @@ public class RefreshWorker extends Worker {
             adventure.refresh();
 
             // if transition ...
-            if ( adventure.isActive() &&        //  .. from active
+            if ( adventure.isActive() &&        //  .. from active ...
                     !data.getBoolean("active", true) // ... to passive
             ) {
 
                 mHistoryDao.insert( new History( adventure.getId(),
-                        adventure.getLasttimePassive(),
-                        adventure.getLasttime()));
+                        adventure.getLastTimePassive(),
+                        adventure.getLastTime()));
 
                 mWorkManager.enqueue(OneTimeWorkRequest.from(ClockifyWorker.class));
             }

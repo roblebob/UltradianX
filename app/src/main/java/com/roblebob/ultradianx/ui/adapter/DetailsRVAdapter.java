@@ -24,7 +24,7 @@ public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.Deta
 
     public void submit(List<String> details) {
 
-        ListDiffCallback< String> listDiffCallback = new ListDiffCallback<String>(mDetails, details);
+        ListDiffCallback< String> listDiffCallback = new ListDiffCallback<>(mDetails, details);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff( listDiffCallback);
         mDetails.clear();
         mDetails.addAll( details);
