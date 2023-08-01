@@ -88,7 +88,6 @@ public class InitWorker extends Worker {
 
                     // duration in seconds, but getting as minutes
                     int duration = jsonObject.getInt("duration") * 60;
-                    Log.e(TAG, "duration: " + duration);
 
 
                     String now = UtilKt.getRidOfMillis(Instant.now().toString());
