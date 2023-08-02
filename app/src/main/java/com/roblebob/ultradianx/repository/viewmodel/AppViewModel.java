@@ -55,6 +55,20 @@ public class AppViewModel extends ViewModel {
     }
 
 
+    public void refreshAll(Data data) {
+        if (data == null) {
+            mWorkManager.enqueue(OneTimeWorkRequest.from(RefreshWorker.class));
+        } else {
+            mWorkManager.beginWith(OneTimeWorkRequest.from(RefreshWorker.class))
+                    .then(new OneTimeWorkRequest
+                            .Builder(RefreshWorker.class)
+                            .setInputData(data)
+                            .build())
+                    .enqueue();
+        }
+    }
+
+
     public void addAdventure(Data data) {
         mWorkManager.enqueue( new OneTimeWorkRequest
                 .Builder( AddAdventureWorker.class)

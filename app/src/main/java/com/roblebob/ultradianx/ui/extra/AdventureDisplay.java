@@ -107,4 +107,7 @@ public class AdventureDisplay {
     }
 
 
+    public void update(Adventure adventure) {
+        mAdventure = adventure;
+    }
 }

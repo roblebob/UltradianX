@@ -27,12 +27,12 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements MyController.OnCallbackListener {
+public class MainFragment extends Fragment  {
 
     public static final String TAG = MainFragment.class.getSimpleName();
 
     private AppViewModel mViewModel;
-    private FragmentMainBinding mBinding;
+    public FragmentMainBinding mBinding;
     private FragmentStateAdapter mPagerAdapter;
 
     private final List<Integer> mAdventureIdList = new ArrayList<>();
@@ -45,9 +45,6 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
                              @Nullable Bundle savedInstanceState) {
 
         mBinding = FragmentMainBinding.inflate(inflater, container, false);
-
-        mBinding.activeSwitch.setCallBack(this);
-
 
         mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mBinding.pager.setAdapter(mPagerAdapter);
@@ -86,25 +83,4 @@ public class MainFragment extends Fragment implements MyController.OnCallbackLis
 
 
 
-    @Override
-    public void onActivateSelected() {
-        MainFragmentDirections.ActionMainFragmentToActiveAdventureFragment action =
-                MainFragmentDirections.actionMainFragmentToActiveAdventureFragment();
-        action.setPosition( mBinding.pager.getCurrentItem());
-        int id = mAdventureIdList.get(mBinding.pager.getCurrentItem());
-        action.setAdventureId( id);
-        mViewModel.refresh(null);
-        mViewModel.refresh( new Data.Builder() .putInt("id", id) .putBoolean("active", true) .build());
-        NavController navController = NavHostFragment.findNavController( this);
-        navController.navigate(action);
-    }
-
-    @Override
-    public void onOverviewSelected() {
-        MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
-                MainFragmentDirections.actionMainFragmentToOverviewFragment();
-        action.setPosition(mBinding.pager.getCurrentItem());
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(action);
-    }
 }

@@ -129,7 +129,7 @@ public class ActiveAdventureFragment extends Fragment {
     private void bindToAdventure(Adventure adventure) {
         AdventureDisplay adventureDisplay = new AdventureDisplay( adventure, getContext());
         binding.titleTv.setText( adventureDisplay.titleToSpannableStringBuilder());
-        binding.tagsTv.setText( adventureDisplay.tagToSpannableStringBuilder());
+        binding.tagTv.setText( adventureDisplay.tagToSpannableStringBuilder());
         binding.progressSlider.setValue( adventure.getPriority().floatValue());
         mAdapter.submit( adventure.getDetails());
     }

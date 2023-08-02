@@ -38,7 +38,7 @@ public class MyController
     }
 
     public interface OnCallbackListener {
-        void onActivateSelected();
+        void onTransitionSelected();
         void onOverviewSelected();
     }
     OnCallbackListener mOnCallbackListener;
@@ -102,6 +102,8 @@ public class MyController
     @Override
     public boolean onSingleTapUp(MotionEvent event) {
         Log.d(TAG, "onSingleTapUp: " + event.toString());
+
+        mOnCallbackListener.onTransitionSelected();
         return true;
     }
 
@@ -121,7 +123,6 @@ public class MyController
     public boolean onSingleTapConfirmed(MotionEvent event) {
         Log.d(TAG, "onSingleTapConfirmed: " + event.toString());
 
-        mOnCallbackListener.onActivateSelected();
         return true;
     }
 

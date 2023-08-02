@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.MainFragment"
-    android:theme="@style/Theme.UltradianX.passive"
     >
 
 
@@ -25,16 +24,7 @@
 
 
 
-    <com.roblebob.ultradianx.ui.extra.MyController
-        android:id="@+id/active_switch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/head_height"
-        android:elevation="15dp"
-        android:backgroundTint="@color/transparent"
-        android:contentDescription="@string/contentDescription_active_switch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 

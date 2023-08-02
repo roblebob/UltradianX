@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="passive_background">#FF000000</color>
+    <color name="active_background">@color/design_default_color_background</color>
+
     <color name="color_2">#26200D</color>
     <color name="color_3">#594C25</color>
     <color name="color_5">#8C654F</color>

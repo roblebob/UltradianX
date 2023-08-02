@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.OverviewFragment"
-    android:theme="@style/Theme.UltradianX.passive"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -22,6 +21,7 @@
             android:fitsSystemWindows="true"
             >
 
+            <!-- TODO: transparent background not working? -->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,6 +29,7 @@
                 android:scaleType="fitCenter"
                 android:fitsSystemWindows="true"
                 android:contentDescription="tree"
+                android:backgroundTint="@color/transparent"
                 />
 
 
