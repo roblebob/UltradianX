@@ -4,31 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment"
+    app:startDestination="@id/overviewFragment"
     >
 
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.roblebob.ultradianx.ui.fragment.MainFragment"
-        android:label="MainFragment"
-        tools:layout="@layout/fragment_main">
 
-        <action
-            android:id="@+id/action_mainFragment_to_overviewFragment"
-            app:destination="@id/overviewFragment"
-            />
-        <argument
-            android:name="position"
-            app:argType="integer"
-            android:defaultValue="0"
-            />
-
-        <action
-            android:id="@+id/action_mainFragment_to_activeAdventureFragment"
-            app:destination="@id/activeAdventureFragment"
-            />
-
-    </fragment>
 
 
     <fragment
@@ -50,18 +29,10 @@
 
 
     <fragment
-        android:id="@+id/activeAdventureFragment"
-        android:name="com.roblebob.ultradianx.ui.fragment.ActiveAdventureFragment"
-        android:label="ActiveAdventureFragment"
-        tools:layout="@layout/fragment_active_adventure">
-
-        <action
-            android:id="@+id/action_activeAdventureFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@+id/mainFragment"
-            app:popUpToInclusive="true"
-            />
-        <!-- app:popUpToSaveState="true" -->
+        android:id="@+id/mainFragment"
+        android:name="com.roblebob.ultradianx.ui.fragment.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
 
 
         <argument
@@ -69,12 +40,12 @@
             app:argType="integer"
             android:defaultValue="0"
             />
-        <argument
-            android:name="adventureId"
-            app:argType="integer"
-            android:defaultValue="-1"
-            />
+
+
+
     </fragment>
+
+
 
 
 </navigation>

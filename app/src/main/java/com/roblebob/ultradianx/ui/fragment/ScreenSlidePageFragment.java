@@ -130,7 +130,6 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
 
 
-
         mBinding.progressSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {
@@ -149,8 +148,6 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
                 bind();
             }
         });
-
-
 
 
 
@@ -205,13 +202,10 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
     @Override
     public void onOverviewSelected() {
-        MainFragmentDirections.ActionMainFragmentToOverviewFragment action =
-                MainFragmentDirections.actionMainFragmentToOverviewFragment();
-        
-        assert getParentFragment() != null;
-        action.setPosition( ((MainFragment) getParentFragment()).mBinding.pager.getCurrentItem());
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(action);
+
+        assert this.getParentFragment() != null;
+        NavController navController = NavHostFragment.findNavController( this.getParentFragment());
+        navController.navigateUp();
     }
 
 
@@ -241,16 +235,14 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean( "isActive", mIsActive);
-    }
-
-
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mBinding = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean( "isActive", mIsActive);
     }
 }
