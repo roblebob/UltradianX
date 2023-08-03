@@ -30,8 +30,6 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 import com.roblebob.ultradianx.ui.extra.MyController;
 
-import java.util.function.Function;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScreenSlidePageFragment#newInstance} factory method to
@@ -137,9 +135,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
 
     /** elements of user interaction
-     *
-     *  first: progress slider
-     *  seconds target slider
+     *      first:  progress slider
+     *      seconds target slider
      * */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -227,8 +224,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.titleTv.setText(                    mAdventureDisplay.titleToSpannableStringBuilder());
         mBinding.tagTv.setText(                      mAdventureDisplay.tagToSpannableStringBuilder() );
 
-        mBinding.priorityTv.setText( String.valueOf( mAdventure.getPriority().intValue()));
-        mBinding.targetTv.setText(                   mAdventure.getTarget().toString() );
+        mBinding.priorityTv.setText(                 mAdventureDisplay.priorityToTv());
+        mBinding.targetTv.setText(                   mAdventureDisplay.targetToTv());
 
         mBinding.progressBar.setProgressCompat(      mAdventure.getPriority().intValue(), true);
         mBinding.targetBar.setProgressCompat(        mAdventureDisplay.targetToBar(), true);

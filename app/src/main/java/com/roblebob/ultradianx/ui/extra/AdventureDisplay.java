@@ -25,6 +25,7 @@ public class AdventureDisplay {
 
 
 
+
     public SpannableStringBuilder titleToSpannableStringBuilder(int minFontSize) {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append( mAdventure.getTitle());
@@ -113,6 +114,12 @@ public class AdventureDisplay {
         mAdventure = adventure;
     }
 
+
+    public String priorityToTv() {
+        return String.valueOf( mAdventure.getPriority().intValue());
+    }
+
+
     public float targetToSlider() {
         Integer value = mAdventure.getTarget();
         Double x = value.doubleValue();
@@ -127,6 +134,19 @@ public class AdventureDisplay {
         x = x * 25;
         return x.intValue();
     }
+
+    public String targetToTv() {
+        Integer target = mAdventure.getTarget();
+
+        if (target <= 90) {
+            return target.toString();
+        }
+        return String.format("%02d:%02d", mAdventure.getTarget() / 60, mAdventure.getTarget() % 60);
+    }
+
+
+
+
 
 
 
