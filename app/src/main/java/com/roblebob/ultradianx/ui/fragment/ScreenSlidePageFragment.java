@@ -46,7 +46,6 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     private int mId;
     private boolean mIsActive = false;
     private Adventure mAdventure;
-
     private final Handler mHandler = new Handler();
     private Runnable mProgressUpdaterRunnable;
 
@@ -66,15 +65,6 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         fragment.setArguments(args);
         return fragment;
     }
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -102,15 +92,20 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     }
 
 
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentScreenSlidePageBinding.inflate( inflater, container, false);
         mBinding.activeSwitch.setCallBack(this);
         mBinding.detailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
         mBinding.detailsRv.setAdapter(mDetailsRVAdapter);
+        mBinding.titleTv.setMovementMethod( new ScrollingMovementMethod());
+        return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
@@ -120,17 +115,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             }
             bind();
         });
-
-        mBinding.titleTv.setMovementMethod( new ScrollingMovementMethod());
-
-        return mBinding.getRoot();
     }
-
-
-
-
-
-
 
 
 
@@ -140,9 +125,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
      *      second: target slider
      * */
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onStart() {
+        super.onStart();
         mBinding.progressSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {
@@ -160,9 +144,6 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
                 bind();
             }
         });
-
-
-
 
 
         mBinding.targetSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
@@ -184,9 +165,9 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             }
         });
         mBinding.targetSlider.setLabelFormatter( value ->
-            String.valueOf( AdventureDisplay.targetFromSlider.apply( value)));
-
+                String.valueOf( AdventureDisplay.targetFromSlider.apply( value)) + "  min.");
     }
+
 
 
 
