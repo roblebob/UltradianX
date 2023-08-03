@@ -28,7 +28,7 @@ public class Adventure {
     @PrimaryKey(autoGenerate = true )       private int     id;
     @ColumnInfo(name = "active")           private Boolean  active;
     @ColumnInfo(name = "title")             private String  title;
-    @ColumnInfo(name = "tags"       )       private String  tags;
+    @ColumnInfo(name = "tag"       )       private String tag;
     @ColumnInfo(name = "details")           private ArrayList<String> details;
     @ColumnInfo(name = "priority")          private Double priority;
     @ColumnInfo(name = "lastTime")          private String lastTime;
@@ -38,12 +38,12 @@ public class Adventure {
 
 
 
-    public Adventure(Boolean active, String title, String tags, ArrayList<String> details,
+    public Adventure(Boolean active, String title, String tag, ArrayList<String> details,
                      String clockify, Double priority, String lastTime, String lastTimePassive,
                      Integer target) {
         this.active = active;
         this.title = title;
-        this.tags = tags;
+        this.tag = tag;
         this.details = details;
         this.clockify = clockify;
         this.priority = priority;
@@ -58,7 +58,7 @@ public class Adventure {
         this.id = adventure.getId();
         this.active = adventure.isActive();
         this.title = adventure.getTitle();
-        this.tags = adventure.getTags();
+        this.tag = adventure.getTag();
         this.details = adventure.getDetails();
         this.clockify = adventure.getClockify();
         this.priority = adventure.getPriority();
@@ -74,7 +74,7 @@ public class Adventure {
         this.id = data.getInt("id", -1);
         this.active = data.getBoolean("active", false);
         this.title = data.getString("title");
-        this.tags = data.getString("tags");
+        this.tag = data.getString("tags");
         this.details = new Gson().fromJson( data.getString("details"), new TypeToken<ArrayList<String>>() {}.getType());
         this.clockify = data.getString("clockify");
         this.priority = data.getDouble("priority", Double.NaN);
@@ -120,11 +120,11 @@ public class Adventure {
         this.title = title;
     }
 
-    public String getTags() {
-        return tags;
+    public String getTag() {
+        return tag;
     }
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public ArrayList<String> getDetails() {
@@ -185,7 +185,7 @@ public class Adventure {
         builder.putInt("id", this.id);
         builder.putBoolean("active", this.active);
         builder.putString("title", this.title);
-        builder.putString("tags", this.tags);
+        builder.putString("tags", this.tag);
         builder.putString("details", new Gson().toJson(this.details));
         builder.putString("clockify", this.clockify);
         builder.putDouble("priority", this.priority);
@@ -212,7 +212,7 @@ public class Adventure {
                 "id=" + id +
                 ", active=" + active +
                 ", title='" + title + '\'' +
-                ", tags='" + tags + '\'' +
+                ", tags='" + tag + '\'' +
                 ", details=" + details +
                 ", priority=" + priority +
                 ", lastTime='" + lastTime + '\'' +
@@ -272,7 +272,7 @@ public class Adventure {
                 this.title = data.getString("title");
             }
             if ( data.hasKeyWithValueOfType("tags", String.class)) {
-                this.tags = data.getString("tags");
+                this.tag = data.getString("tags");
             }
             if ( data.hasKeyWithValueOfType("details", String.class)) {
                 this.details = new Gson().fromJson( data.getString("details"), new TypeToken<ArrayList<String>>() {}.getType());

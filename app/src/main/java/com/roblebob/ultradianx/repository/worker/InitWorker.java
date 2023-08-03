@@ -77,7 +77,7 @@ public class InitWorker extends Worker {
                     String title = jsonObject.getString("title");
 
                     // tags
-                    String tags = jsonObject.getString("tags");
+                    String tag = jsonObject.getString("tag");
 
                     // details
                     ArrayList<String> details = new ArrayList<>();
@@ -86,12 +86,11 @@ public class InitWorker extends Worker {
                         details.add(jsonArrayDetails.getString(ii));
                     }
 
-                    // duration in  minutes
-                    int duration = jsonObject.getInt("duration");
-
+                    // target in hole minutes
+                    int target = jsonObject.getInt("target");
 
                     String now = UtilKt.getRidOfMillis(Instant.now().toString());
-                    mAdventureDao.insert(new Adventure(false, title, tags, details, null, 17.0, now, now, duration));
+                    mAdventureDao.insert(new Adventure(false, title, tag, details, null, 17.0, now, now, target));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

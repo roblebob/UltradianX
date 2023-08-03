@@ -57,9 +57,9 @@ public class AdventureDisplay {
 
     public SpannableStringBuilder tagToSpannableStringBuilder() {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-        spannableStringBuilder.append( mAdventure.getTags());
+        spannableStringBuilder.append( mAdventure.getTag());
 
-        for (int i = 0; i < mAdventure.getTags().length(); i++) {
+        for (int i = 0; i < mAdventure.getTag().length(); i++) {
             int fontSize = MIN_FONT_SIZE + 3*i;
             spannableStringBuilder.setSpan( new AbsoluteSizeSpan( fontSize, true), i, i + 1, 0);
 
@@ -76,7 +76,7 @@ public class AdventureDisplay {
         final ForegroundColorSpan fcs = new ForegroundColorSpan(getColor());
         final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
 
-        spannableStringBuilder.setSpan( fcs, 0, mAdventure.getTags().length(), 0);
+        spannableStringBuilder.setSpan( fcs, 0, mAdventure.getTag().length(), 0);
 
 
 
@@ -94,7 +94,7 @@ public class AdventureDisplay {
     // TODO: only temporary
     public int getColor() {
         int color = mContext.getColor(R.color.tag_neutral);
-        switch (mAdventure.getTags()) {
+        switch (mAdventure.getTag()) {
             case "health":
                 color = mContext.getColor(R.color.tag_health);
                 break;
