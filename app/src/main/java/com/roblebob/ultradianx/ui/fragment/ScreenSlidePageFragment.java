@@ -115,8 +115,9 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
             mAdventure = new Adventure( adventure);
             // start transition (passive <-> active) if needed
-            if (mIsActive != mAdventure.isActive()) { transition(mAdventure.isActive()); }
-
+            if (mIsActive != mAdventure.isActive()) {
+                transition();
+            }
             bind();
         });
 
@@ -182,10 +183,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
                 bind();
             }
         });
-        mBinding.targetSlider.setLabelFormatter( value -> {
-            int target = AdventureDisplay.targetFromSlider.apply( value);
-            return String.format("%02d:%02d", target / 60, target % 60);
-        });
+        mBinding.targetSlider.setLabelFormatter( value ->
+            String.valueOf( AdventureDisplay.targetFromSlider.apply( value)));
 
     }
 
@@ -196,13 +195,12 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
 
 
-    /** Called when a transition is needed
-     *  @param isActive is the new state parameter of the adventure
+    /** Called when a transition is needed (e.g.: mAdventure has changed)
      */
-    private void transition(boolean isActive) {
-        Log.e(TAG, "transition to " + isActive);
-        mIsActive = isActive;
-        if (isActive) {
+    private void transition() {
+        mIsActive = mAdventure.isActive();
+        Log.e(TAG, "transition to " + mIsActive);
+        if (mIsActive) {
             mBinding.root.setBackgroundColor( this.getResources().getColor(R.color.active_background, null));
             mHandler.postDelayed(mProgressUpdaterRunnable, ACTIVE_PROGRESS_UPDATE_INTERVAL);
         } else {
@@ -244,7 +242,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.targetBar.setIndicatorColor( color);
         mBinding.progressSlider.setThumbTintList( ColorStateList.valueOf( color));
         mBinding.targetSlider.setThumbTintList( ColorStateList.valueOf( color));
-
+        mBinding.detailsRvEndBorder.setBackgroundColor( color);
+        mDetailsRVAdapter.setColor( color);
     }
 
 
@@ -254,15 +253,14 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
 
 
-    /** MyController callBack triggering an active<->passive transition */
+    /** MyController callBack:  triggering an active<->passive transition */
     @Override
     public void onTransitionSelected() {
         mViewModel.refreshAll( new Data.Builder() .putInt("id", mId) .putBoolean("active", !mIsActive) .build());
     }
-
+    /** MyController callBack:  triggering a return to the OverviewFragment */
     @Override
     public void onOverviewSelected() {
-
         assert this.getParentFragment() != null;
         NavController navController = NavHostFragment.findNavController( this.getParentFragment());
         navController.navigateUp();

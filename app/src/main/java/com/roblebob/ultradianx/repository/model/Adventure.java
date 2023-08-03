@@ -290,7 +290,7 @@ public class Adventure {
                 this.lastTimePassive = data.getString("lastTimePassive");
             }
             if ( data.hasKeyWithValueOfType("target", Integer.class)) {
-                this.target = data.getInt("target", -1);
+                this.target = data.getInt("target", 0);
             }
             refresh();
         }

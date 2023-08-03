@@ -1,11 +1,13 @@
 package com.roblebob.ultradianx.ui.adapter;
 
 
+import android.content.res.ColorStateList;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,11 @@ import java.util.List;
 
 
 public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.DetailsRVViewHolder> {
+    private int mColor;
+    public void setColor(int color) {
+        mColor = color;
+    }
+
 
     List<String> mDetails = new ArrayList<>();
 
@@ -42,6 +49,8 @@ public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.Deta
     @Override
     public void onBindViewHolder(@NonNull DetailsRVViewHolder holder, int position) {
         holder.textView.setText(Html.fromHtml( mDetails.get(position), Html.FROM_HTML_MODE_COMPACT));
+        holder.textView.setTextColor( mColor);
+        holder.imageView.setImageTintList( ColorStateList.valueOf( mColor));
     }
 
 
@@ -58,10 +67,12 @@ public class DetailsRVAdapter extends RecyclerView.Adapter<DetailsRVAdapter.Deta
     public static class DetailsRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        ImageView imageView;
 
         public DetailsRVViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.single_item_details_tv);
+            textView = itemView.findViewById(R.id.textView);
+            imageView = itemView.findViewById(R.id.imageView);
             textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }

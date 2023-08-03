@@ -190,26 +190,30 @@
         />
 
 
-
-
-
-
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/details_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_lower"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
 
+        />
 
+    <View
+        android:layout_marginTop="30dp"
+        android:id="@+id/details_rv_end_border"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/tag_neutral"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/details_rv"
+        app:layout_constraintBottom_toBottomOf="@id/details_rv"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
