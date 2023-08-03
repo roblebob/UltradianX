@@ -171,19 +171,19 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                int target = AdventureDisplay.fromSlider.apply(slider.getValue());
+                int target = AdventureDisplay.targetFromSlider.apply(slider.getValue());
                 Log.e(TAG, "onStopTrackingTouch: " + target);
                 mViewModel.refresh(new Data.Builder() .putInt("id", mId) .putInt("target", target) .build());
             }
         });
         mBinding.targetSlider.addOnChangeListener( (slider, value, fromUser) -> {
             if (mAdventure != null) {
-                mAdventure.setTarget(  AdventureDisplay.fromSlider.apply( slider.getValue()) );
+                mAdventure.setTarget(  AdventureDisplay.targetFromSlider.apply( slider.getValue()) );
                 bind();
             }
         });
         mBinding.targetSlider.setLabelFormatter( value -> {
-            int target = AdventureDisplay.fromSlider.apply( value);
+            int target = AdventureDisplay.targetFromSlider.apply( value);
             return String.format("%02d:%02d", target / 60, target % 60);
         });
 

@@ -123,14 +123,14 @@ public class AdventureDisplay {
     public float targetToSlider() {
         Integer value = mAdventure.getTarget();
         Double x = value.doubleValue();
-        x = toSlider.apply(x);
+        x = targetToSlider.apply(x);
         return x.floatValue();
     }
 
     public int targetToBar() {
         Integer value = mAdventure.getTarget();
         Double x = value.doubleValue();
-        x = toSlider.apply(x);
+        x = targetToSlider.apply(x);
         x = x * 25;
         return x.intValue();
     }
@@ -150,7 +150,7 @@ public class AdventureDisplay {
 
 
 
-    public final static Function<Float, Integer> fromSlider = (in) -> {
+    public final static Function<Float, Integer> targetFromSlider = (in) -> {
         Double x = in.doubleValue();
         x = x * (x + 1.0);
         x = x / 2.0;
@@ -158,7 +158,7 @@ public class AdventureDisplay {
         x = 10.0 * x;
         return x.intValue();
     };
-    public final static Function<Double, Double> toSlider = (in) -> {
+    public final static Function<Double, Double> targetToSlider = (in) -> {
         Double x = in;
         x = x / 10.0;
         x = Math.pow(x, 0.5);
