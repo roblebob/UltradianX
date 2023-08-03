@@ -136,7 +136,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
     /** elements of user interaction
      *      first:  progress slider
-     *      seconds target slider
+     *      second: target slider
      * */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

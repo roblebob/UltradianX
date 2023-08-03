@@ -14,13 +14,16 @@ import com.roblebob.ultradianx.repository.model.Adventure;
 import java.util.function.Function;
 
 public class AdventureDisplay {
-
     Adventure mAdventure;
     Context mContext;
 
     public AdventureDisplay(Adventure adventure, Context context) {
         mAdventure = adventure;
         mContext = context;
+    }
+
+    public void update(Adventure adventure) {
+        mAdventure = adventure;
     }
 
 
@@ -97,7 +100,6 @@ public class AdventureDisplay {
                 break;
             case "theory":
                 color = mContext.getColor(R.color.tag_theory);
-
                 break;
             case "coding":
                 color = mContext.getColor(R.color.tag_coding);
@@ -110,9 +112,6 @@ public class AdventureDisplay {
     }
 
 
-    public void update(Adventure adventure) {
-        mAdventure = adventure;
-    }
 
 
     public String priorityToTv() {
@@ -121,17 +120,12 @@ public class AdventureDisplay {
 
 
     public float targetToSlider() {
-        Integer value = mAdventure.getTarget();
-        Double x = value.doubleValue();
-        x = targetToSlider.apply(x);
-        return x.floatValue();
+        return targetToSlider.apply(mAdventure.getTarget());
     }
 
     public int targetToBar() {
-        Integer value = mAdventure.getTarget();
-        Double x = value.doubleValue();
-        x = targetToSlider.apply(x);
-        x = x * 25;
+        Float x = targetToSlider.apply(mAdventure.getTarget());
+        x = x * 25.0f;   // mapping 0..4 to 0..100
         return x.intValue();
     }
 
@@ -145,11 +139,9 @@ public class AdventureDisplay {
     }
 
 
-
-
-
-
-
+    /**
+     * maps  0..1..2..3..4  to  0..10..90..360..1000
+     */
     public final static Function<Float, Integer> targetFromSlider = (in) -> {
         Double x = in.doubleValue();
         x = x * (x + 1.0);
@@ -158,12 +150,15 @@ public class AdventureDisplay {
         x = 10.0 * x;
         return x.intValue();
     };
-    public final static Function<Double, Double> targetToSlider = (in) -> {
-        Double x = in;
+    /**
+     * maps  0..10..90..360..1000  to  0..1..2..3..4
+     */
+    private final static Function<Integer, Float> targetToSlider = (in) -> {
+        Double x = in.doubleValue();
         x = x / 10.0;
         x = Math.pow(x, 0.5);
         x = x * 2.0;
         x = 0.5 * (-1.0 + Math.pow(1.0 + 4.0 * x, 0.5));
-        return x;
+        return x.floatValue();
     };
 }
