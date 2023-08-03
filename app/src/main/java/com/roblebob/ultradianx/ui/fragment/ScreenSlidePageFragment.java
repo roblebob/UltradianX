@@ -144,6 +144,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
                 bind();
             }
         });
+        mBinding.progressSlider.setLabelFormatter( value -> "priority");
 
 
         mBinding.targetSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
