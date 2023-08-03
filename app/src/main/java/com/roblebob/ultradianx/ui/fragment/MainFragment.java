@@ -6,11 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.work.Data;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.roblebob.ultradianx.databinding.FragmentMainBinding;
 import com.roblebob.ultradianx.ui.adapter.ListDiffCallback;
-import com.roblebob.ultradianx.ui.extra.MyController;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
@@ -31,7 +27,6 @@ public class MainFragment extends Fragment  {
 
     public static final String TAG = MainFragment.class.getSimpleName();
 
-    private AppViewModel mViewModel;
     public FragmentMainBinding mBinding;
     private FragmentStateAdapter mPagerAdapter;
 
@@ -50,7 +45,7 @@ public class MainFragment extends Fragment  {
         mBinding.pager.setAdapter(mPagerAdapter);
 
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
+        AppViewModel mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
 
 
@@ -77,9 +72,4 @@ public class MainFragment extends Fragment  {
         super.onDestroyView();
         mBinding = null;
     }
-
-
-
-
-
 }

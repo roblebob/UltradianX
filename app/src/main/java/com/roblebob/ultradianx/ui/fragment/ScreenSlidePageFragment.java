@@ -165,7 +165,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             }
         });
         mBinding.targetSlider.setLabelFormatter( value ->
-                String.valueOf( AdventureDisplay.targetFromSlider.apply( value)) + "  min.");
+                AdventureDisplay.targetFromSlider.apply( value) + "  min.");
     }
 
 

@@ -69,10 +69,6 @@ public class AdventureDisplay {
 
         }
 
-
-
-
-
         final ForegroundColorSpan fcs = new ForegroundColorSpan(getColor());
         final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
 
