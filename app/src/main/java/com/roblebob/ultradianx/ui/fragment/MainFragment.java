@@ -52,7 +52,6 @@ public class MainFragment extends Fragment  {
         AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
         mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
 
-        mViewModel.initialRun();
 
 
         mViewModel.getAdventureIdListLive().observe( getViewLifecycleOwner(), adventureIdList -> {

@@ -3,6 +3,7 @@ package com.roblebob.ultradianx.ui.fragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -33,6 +34,16 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
     private OverviewRVAdapter mOverviewRVAdapter;
     AppViewModel mViewModel;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
+        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
+
+        mViewModel.initialRun();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentOverviewBinding.inflate(inflater, container, false);
@@ -62,8 +73,6 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
             }
         });
 
-        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
         mViewModel.getAdventureListLive().observe( getViewLifecycleOwner(), adventureList -> {
             mAdventureList = new ArrayList<>(adventureList);
             mOverviewRVAdapter.submit(mAdventureList);

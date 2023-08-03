@@ -11,6 +11,8 @@ import android.text.style.StyleSpan;
 import com.roblebob.ultradianx.R;
 import com.roblebob.ultradianx.repository.model.Adventure;
 
+import java.util.function.Function;
+
 public class AdventureDisplay {
 
     Adventure mAdventure;
@@ -110,4 +112,38 @@ public class AdventureDisplay {
     public void update(Adventure adventure) {
         mAdventure = adventure;
     }
+
+    public float targetToSlider() {
+        Integer value = mAdventure.getTarget();
+        Double x = value.doubleValue();
+        x = toSlider.apply(x);
+        return x.floatValue();
+    }
+
+    public int targetToBar() {
+        Integer value = mAdventure.getTarget();
+        Double x = value.doubleValue();
+        x = toSlider.apply(x);
+        x = x * 25;
+        return x.intValue();
+    }
+
+
+
+    public final static Function<Float, Integer> fromSlider = (in) -> {
+        Double x = in.doubleValue();
+        x = x * (x + 1.0);
+        x = x / 2.0;
+        x = Math.pow(x, 2.0);
+        x = 10.0 * x;
+        return x.intValue();
+    };
+    public final static Function<Double, Double> toSlider = (in) -> {
+        Double x = in;
+        x = x / 10.0;
+        x = Math.pow(x, 0.5);
+        x = x * 2.0;
+        x = 0.5 * (-1.0 + Math.pow(1.0 + 4.0 * x, 0.5));
+        return x;
+    };
 }

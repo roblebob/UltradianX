@@ -1,10 +1,10 @@
 package com.roblebob.ultradianx.ui.fragment;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -30,6 +30,8 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 import com.roblebob.ultradianx.ui.extra.MyController;
 
+import java.util.function.Function;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScreenSlidePageFragment#newInstance} factory method to
@@ -46,7 +48,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     private int mId;
     private boolean mIsActive = false;
     private Adventure mAdventure;
-    private AdventureDisplay mAdventureDisplay;
+
     private final Handler mHandler = new Handler();
     private Runnable mProgressUpdaterRunnable;
 
@@ -108,27 +110,40 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentScreenSlidePageBinding.inflate( inflater, container, false);
-
         mBinding.activeSwitch.setCallBack(this);
-
         mBinding.detailsRv.setLayoutManager( new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
         mBinding.detailsRv.setAdapter(mDetailsRVAdapter);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
-
             mAdventure = new Adventure( adventure);
-            mAdventureDisplay = new AdventureDisplay( adventure, this.getContext());
-
-            if (mIsActive != mAdventure.isActive()) {
-                transition(mAdventure.isActive());
-            }
+            // start transition (passive <-> active) if needed
+            if (mIsActive != mAdventure.isActive()) { transition(mAdventure.isActive()); }
 
             bind();
         });
 
         mBinding.titleTv.setMovementMethod( new ScrollingMovementMethod());
 
+        return mBinding.getRoot();
+    }
 
+
+
+
+
+
+
+
+
+
+    /** elements of user interaction
+     *
+     *  first: progress slider
+     *  seconds target slider
+     * */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         mBinding.progressSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
             @Override
@@ -144,16 +159,49 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.progressSlider.addOnChangeListener( (slider, value, fromUser) -> {
             if (mAdventure != null) {
                 mAdventure.setPriority((double) slider.getValue());
-                mAdventureDisplay.update( mAdventure);
                 bind();
             }
         });
 
 
 
-        return mBinding.getRoot();
+
+
+        mBinding.targetSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(@NonNull Slider slider) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(@NonNull Slider slider) {
+                int target = AdventureDisplay.fromSlider.apply(slider.getValue());
+                Log.e(TAG, "onStopTrackingTouch: " + target);
+                mViewModel.refresh(new Data.Builder() .putInt("id", mId) .putInt("target", target) .build());
+            }
+        });
+        mBinding.targetSlider.addOnChangeListener( (slider, value, fromUser) -> {
+            if (mAdventure != null) {
+                mAdventure.setTarget(  AdventureDisplay.fromSlider.apply( slider.getValue()) );
+                bind();
+            }
+        });
+        mBinding.targetSlider.setLabelFormatter( value -> {
+            int target = AdventureDisplay.fromSlider.apply( value);
+            return String.format("%02d:%02d", target / 60, target % 60);
+        });
+
     }
 
+
+
+
+
+
+
+
+    /** Called when a transition is needed
+     *  @param isActive is the new state parameter of the adventure
+     */
     private void transition(boolean isActive) {
         Log.e(TAG, "transition to " + isActive);
         mIsActive = isActive;
@@ -166,25 +214,40 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         }
     }
 
+
+    /** Called whenever the ui should be updated (e.g.: mAdventure has changed) */
     private void bind() {
 
-        if (mAdventure == null || mAdventureDisplay == null) {
+        if (mAdventure == null) {
             return;
         }
 
+        AdventureDisplay mAdventureDisplay = new AdventureDisplay( mAdventure, this.getContext());
+
         mBinding.titleTv.setText(                    mAdventureDisplay.titleToSpannableStringBuilder());
         mBinding.tagTv.setText(                      mAdventureDisplay.tagToSpannableStringBuilder() );
-        mBinding.progressBar.setProgressCompat(      mAdventure.getPriority().intValue(), true);
-        mBinding.progressSlider.setValue(            mAdventure.getPriority().intValue());
+
         mBinding.priorityTv.setText( String.valueOf( mAdventure.getPriority().intValue()));
+        mBinding.targetTv.setText(                   mAdventure.getTarget().toString() );
+
+        mBinding.progressBar.setProgressCompat(      mAdventure.getPriority().intValue(), true);
+        mBinding.targetBar.setProgressCompat(        mAdventureDisplay.targetToBar(), true);
+
+        mBinding.progressSlider.setValue(            mAdventure.getPriority().intValue());
+        mBinding.targetSlider.setValue(              mAdventureDisplay.targetToSlider());
+
         mDetailsRVAdapter.submit(                    mAdventure.getDetails()  );
 
         int color = mAdventureDisplay.getColor();
         mBinding.titleTv.setTextColor( color);
         mBinding.tagTv.setTextColor( color);
-        mBinding.progressBar.setIndicatorColor( color);
-        mBinding.progressSlider.setThumbTintList( ColorStateList.valueOf( color));
         mBinding.priorityTv.setTextColor( color);
+        mBinding.targetTv.setTextColor( color);
+        mBinding.progressBar.setIndicatorColor( color);
+        mBinding.targetBar.setIndicatorColor( color);
+        mBinding.progressSlider.setThumbTintList( ColorStateList.valueOf( color));
+        mBinding.targetSlider.setThumbTintList( ColorStateList.valueOf( color));
+
     }
 
 
@@ -194,7 +257,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
 
 
-
+    /** MyController callBack triggering an active<->passive transition */
     @Override
     public void onTransitionSelected() {
         mViewModel.refreshAll( new Data.Builder() .putInt("id", mId) .putBoolean("active", !mIsActive) .build());

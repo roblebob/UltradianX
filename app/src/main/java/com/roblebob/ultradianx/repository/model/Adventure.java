@@ -34,13 +34,13 @@ public class Adventure {
     @ColumnInfo(name = "lastTime")          private String lastTime;
     @ColumnInfo(name = "lastTimePassive")   private String lastTimePassive;
     @ColumnInfo(name = "clockify")          private String clockify;
-    @ColumnInfo(name = "targetDuration")    private Integer targetDuration; // in seconds
+    @ColumnInfo(name = "target")          private Integer target; // in minutes
 
 
 
     public Adventure(Boolean active, String title, String tags, ArrayList<String> details,
                      String clockify, Double priority, String lastTime, String lastTimePassive,
-                     Integer targetDuration) {
+                     Integer target) {
         this.active = active;
         this.title = title;
         this.tags = tags;
@@ -49,7 +49,7 @@ public class Adventure {
         this.priority = priority;
         this.lastTime = lastTime;
         this.lastTimePassive = lastTimePassive;
-        this.targetDuration = targetDuration;
+        this.target = target;
     }
 
 
@@ -64,7 +64,7 @@ public class Adventure {
         this.priority = adventure.getPriority();
         this.lastTime = adventure.getLastTime();
         this.lastTimePassive = adventure.getLastTimePassive();
-        this.targetDuration = adventure.getTargetDuration();
+        this.target = adventure.getTarget();
     }
 
 
@@ -80,7 +80,7 @@ public class Adventure {
         this.priority = data.getDouble("priority", Double.NaN);
         this.lastTime = data.getString("lastTime");
         this.lastTimePassive = data.getString("lastTimePassive");
-        this.targetDuration = data.getInt("targetDuration", -1);
+        this.target = data.getInt("target", -1);
     }
 
     @Ignore
@@ -170,12 +170,12 @@ public class Adventure {
     }
 
 
-    public Integer getTargetDuration() {
-        return targetDuration;
+    public Integer getTarget() {
+        return target;
     }
 
-    public void setTargetDuration(Integer targetDuration) {
-        this.targetDuration = targetDuration;
+    public void setTarget(Integer target) {
+        this.target = target;
     }
 
 
@@ -191,7 +191,7 @@ public class Adventure {
         builder.putDouble("priority", this.priority);
         builder.putString("lastTime", this.lastTime);
         builder.putString("lastTimePassive", this.lastTimePassive);
-        builder.putInt("targetDuration", this.targetDuration);
+        builder.putInt("target", this.target);  // !!!!!!  in MINUTES
         return builder.build();
     }
 
@@ -202,7 +202,7 @@ public class Adventure {
 
     @Ignore
     public double getDecay() {
-        return 100.0 / this.targetDuration;
+        return 100.0 / (this.target * 60.0);  // since we need it in secs
     }
 
     @NonNull
@@ -218,7 +218,7 @@ public class Adventure {
                 ", lastTime='" + lastTime + '\'' +
                 ", lastTimePassive='" + lastTimePassive + '\'' +
                 ", clockify='" + clockify + '\'' +
-                ", targetDuration=" + targetDuration +
+                ", target=" + target +
                 '}';
     }
 
@@ -231,8 +231,8 @@ public class Adventure {
         Duration duration = Duration.between( last , now);
 
         setPriority( active ?
-                priority - (duration.getSeconds() * getDecay()) :
-                priority + (duration.getSeconds() * getGrow())  );
+                priority - (duration.getSeconds() * getDecay()):
+                priority + (duration.getSeconds() * getGrow()));
 
         setLastTime( now.toString());
     }
@@ -289,8 +289,8 @@ public class Adventure {
             if ( data.hasKeyWithValueOfType("lastTimePassive", String.class)) {
                 this.lastTimePassive = data.getString("lastTimePassive");
             }
-            if ( data.hasKeyWithValueOfType("targetDuration", Integer.class)) {
-                this.targetDuration = data.getInt("targetDuration", -1);
+            if ( data.hasKeyWithValueOfType("target", Integer.class)) {
+                this.target = data.getInt("target", -1);
             }
             refresh();
         }

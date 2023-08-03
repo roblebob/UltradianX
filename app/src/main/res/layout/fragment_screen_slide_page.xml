@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ScreenSlidePageFragment"
+    android:background="@color/passive_background"
     >
 
     <com.roblebob.ultradianx.ui.extra.MyController
@@ -66,6 +67,20 @@
         app:layout_constraintTop_toBottomOf="@id/tag_tv"
         />
 
+
+
+
+
+    <TextView
+
+        android:id="@+id/priority_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#50F00000"
+        android:padding="4dp"
+        app:layout_constraintRight_toRightOf="@id/progressBar"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar"
+        />
     <com.google.android.material.slider.Slider
         android:id="@+id/progress_slider"
         android:layout_width="match_parent"
@@ -84,10 +99,6 @@
         app:trackColor="#00000000"
         tools:layout_editor_absoluteX="16dp"
         />
-
-
-
-
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
@@ -108,23 +119,61 @@
         android:elevation="2dp"
         />
 
-    <TextView
 
-        android:id="@+id/priority_tv"
+
+
+
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/target_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:valueFrom="0.0"
+        android:valueTo="4.0"
+        android:layoutDirection="rtl"
+        android:layout_margin="8dp"
+        app:trackThickness="4dp"
+        app:indicatorColor="#50F00000"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_lower"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:trackColor="#00000000"
+        tools:layout_editor_absoluteX="16dp"
+        />
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/target_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:valueFrom="0.0"
+        android:valueTo="4.0"
+        android:progress="50"
+        app:trackThickness="4dp"
+        app:indicatorColor="#50F00000"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_lower"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:trackColor="#00000000"
+        tools:layout_editor_absoluteX="16dp"
+        app:indicatorDirectionLinear="rightToLeft"
+        android:layout_margin="8dp"
+
+        android:elevation="2dp"
+        />
+
+    <TextView
+        android:id="@+id/target_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#50F00000"
         android:padding="4dp"
-        app:layout_constraintRight_toRightOf="@id/progressBar"
-        app:layout_constraintBottom_toBottomOf="@id/progressBar"
+        android:text="100"
+        app:layout_constraintRight_toRightOf="@id/target_bar"
+        app:layout_constraintTop_toBottomOf="@id/target_bar"
         />
-
-
-
-
-
-
-
 
 
 
