@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+    <!-- TODO: reverse -->
+    <string-array name="inner_path_cycles">
+        <item>1271,1416</item> <!-- 0 -->
+        <item>1457,1451</item> <!-- 1 -->
+        <item>1652,1268</item> <!-- 2 -->
+        <item>1558, 984</item> <!-- 3 -->
+        <item>1271, 824</item> <!-- 4 -->
+        <item>1013,1009</item> <!-- 5 -->
+        <item> 930,1267</item> <!-- 6 -->
+        <item>1023,1513</item> <!-- 7 -->
+        <item>1271,1734</item> <!-- 8 -->
+        <item>1711,1719</item> <!-- 9 -->
+        <item>2139,1268</item> <!-- 10 -->
+        <item>1851, 674</item> <!-- 11 -->
+        <item>1271, 379</item> <!-- 12 -->
+        <item> 658, 643</item> <!-- 13 -->
+        <item> 382,1268</item> <!-- 14 -->
+        <item> 634,1912</item> <!-- 15 -->
+        <item>1271,2221</item> <!-- 16 -->
+    </string-array>
+
+
+
+
+
+
+
+    <string-array name="outer_path_cycles">
+        <item>1271,2538</item> <!-- 0 -->
+        <item> 329,2197</item> <!-- 1 -->
+        <item>   1,1268</item> <!-- 2 -->
+        <item> 355, 342</item> <!-- 3 -->
+        <item>1271,   1</item> <!-- 4 -->
+        <item>2171, 358</item> <!-- 5 -->
+        <item>2541,1268</item> <!-- 6 -->
+        <item>2036,2030</item> <!-- 7 -->
+        <item>1271,2073</item> <!-- 8 -->
+        <item> 728,1811</item> <!-- 9 -->
+        <item> 538,1268</item> <!-- 10 -->
+        <item> 753, 733</item> <!-- 11 -->
+        <item>1271, 549</item> <!-- 12 -->
+        <item>1750, 789</item> <!-- 13 -->
+        <item>1842,1268</item> <!-- 14 -->
+        <item>1590,1585</item> <!-- 15 -->
+        <item>1271,1586</item> <!-- 16 -->
+    </string-array>
+
+
+
+
+
+    <string-array name="inner_path_hours">
+        <item>1271,2221</item> <!-- 0 -->
+        <item> 826,2052</item> <!-- 1 -->
+        <item> 509,1713</item> <!-- 2 -->
+        <item> 382,1268</item> <!-- 3 -->
+        <item> 488, 824</item> <!-- 4 -->
+        <item> 805, 485</item> <!-- 5 -->
+        <item>1271, 379</item> <!-- 6 -->
+        <item>1698, 519</item> <!-- 7 -->
+        <item>2004, 824</item> <!-- 8 -->
+        <item>2139,1268</item> <!-- 9 -->
+        <item>1927,1628</item> <!-- 10 -->
+        <item>1567,1776</item> <!-- 11 -->
+        <item>1271,1734</item> <!-- 12 -->
+        <item>1087,1593</item> <!-- 13 -->
+        <item> 983,1440</item> <!-- 14 -->
+        <item> 930,1267</item> <!-- 15 -->
+        <item> 953,1078</item> <!-- 16 -->
+        <item>1082, 929</item> <!-- 17 -->
+        <item>1271, 824</item> <!-- 18 -->
+        <item>1483, 887</item> <!-- 19 -->
+        <item>1631,1078</item> <!-- 20 -->
+        <item>1652,1268</item> <!-- 21 -->
+        <item>1546,1438</item> <!-- 22 -->
+        <item>1377,1459</item> <!-- 23 -->
+        <item>1271,1416</item> <!-- 24 -->
+    </string-array>
+
+
+
+
+
+
+
+    <string-array name="outer_path_hours">
+        <item>1271,2538</item> <!-- 0 -->
+        <item> 636,2369</item> <!-- 1 -->
+        <item> 170,1903</item> <!-- 2 -->
+        <item>   1,1268</item> <!-- 3 -->
+        <item> 170, 633</item> <!-- 4 -->
+        <item> 636, 168</item> <!-- 5 -->
+        <item>1271,   1</item> <!-- 6 -->
+        <item>1885, 189</item> <!-- 7 -->
+        <item>2329, 655</item> <!-- 8 -->
+        <item>2541,1268</item> <!-- 9 -->
+        <item>2266,1840</item> <!-- 10 -->
+        <item>1758,2094</item> <!-- 11 -->
+        <item>1271,2073</item> <!-- 12 -->
+        <item> 900,1929</item> <!-- 13 -->
+        <item> 615,1649</item> <!-- 14 -->
+        <item> 538,1268</item> <!-- 15 -->
+        <item> 636, 909</item> <!-- 16 -->
+        <item> 911, 655</item> <!-- 17 -->
+        <item>1271, 549</item> <!-- 18 -->
+        <item>1610, 676</item> <!-- 19 -->
+        <item>1821, 951</item> <!-- 20 -->
+        <item>1842,1268</item> <!-- 21 -->
+        <item>1694,1522</item> <!-- 22 -->
+        <item>1461,1607</item> <!-- 23 -->
+        <item>1271,1586</item> <!-- 24 -->
+    </string-array>
+
+
+</resources>

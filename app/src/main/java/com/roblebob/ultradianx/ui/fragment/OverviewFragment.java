@@ -83,7 +83,20 @@ public class OverviewFragment extends Fragment implements OverviewRVAdapter.Call
             overviewRVLayoutManager.scrollToPosition(position);
         }, 100);
 
+
+
+
+        mBinding.spiralClock.setup();
+
+
         return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBinding.spiralClock.submit( null, null);
     }
 
     @Override

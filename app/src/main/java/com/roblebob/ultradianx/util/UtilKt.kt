@@ -14,7 +14,7 @@ object UtilKt {
     }
 
     @JvmStatic
-    fun list2String(list: List<String>): String = list.joinToString("\n")
+    fun list2String(list: List<String>): String = list.joinToString(" ")
 
 
     @JvmStatic
