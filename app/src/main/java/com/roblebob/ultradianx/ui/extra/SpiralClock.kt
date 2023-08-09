@@ -1,350 +1,272 @@
-package com.roblebob.ultradianx.ui.extra;
+package com.roblebob.ultradianx.ui.extra
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.PathShape;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.PathShape
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
+import androidx.core.graphics.PathParser
+import com.roblebob.ultradianx.R
+import com.roblebob.ultradianx.ui.extra.SpiralClock
+import com.roblebob.ultradianx.util.UtilKt.list2String
+import java.time.Duration
+import java.time.Instant
+import java.time.ZoneOffset
+import java.util.Arrays
+import java.util.Collections
+import kotlin.math.cos
+import kotlin.math.sin
 
-import androidx.annotation.Nullable;
-import androidx.core.graphics.PathParser;
+class SpiralClock : View {
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
-import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.util.UtilKt;
+    constructor(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+    private val mOuterHoursList = mutableListOf(*resources.getStringArray(R.array.outer_path_hours))
+    private val mInnerHoursList = mutableListOf(*resources.getStringArray(R.array.inner_path_hours))
 
-public class SpiralClock extends View {
-    public static final String TAG = SpiralClock.class.getSimpleName();
-    public SpiralClock(Context context) {
-        super(context);
-    }
-    public SpiralClock(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-    public SpiralClock(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-    public SpiralClock(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-
-
-    public static final int L = 2540;
-    public static final int C = L / 2;
-
-    public List<ShapeDrawable> mShapeDrawablesCoreList = new ArrayList<>();
-    public List<ShapeDrawable> mShapeDrawablesExtraList = new ArrayList<>();
-
-
-    public MyDataLists myDataLists;
-    public MyPathStore myPathStore;
-    public void setup() {
-        myDataLists = new MyDataLists();
-        myPathStore = new MyPathStore();
-        mShapeDrawablesCoreList.clear();
-        mShapeDrawablesCoreList.add(getHoursTrackShape());
-        refresh();
-    }
-    public void refresh() {
-
-        List<ShapeDrawable> shapeDrawablesList = new ArrayList<>(mShapeDrawablesCoreList);
-        shapeDrawablesList.addAll(mShapeDrawablesExtraList);
-        LayerDrawable layerDrawable = new LayerDrawable( shapeDrawablesList.toArray(new ShapeDrawable[0]));
-        setBackground( layerDrawable );
+    private val mShapeDrawablesCoreList = mutableListOf<ShapeDrawable>()
+    private val mShapeDrawablesExtraList = mutableListOf<ShapeDrawable>()
+    private val myPathStore  = MyPathStore()
+    fun setup() {
+        mShapeDrawablesCoreList.clear()
+        mShapeDrawablesCoreList.add(hoursTrackShape)
+        refresh()
     }
 
+    private fun refresh() {
+        val shapeDrawablesList: MutableList<ShapeDrawable> = ArrayList(mShapeDrawablesCoreList)
+        shapeDrawablesList.addAll(mShapeDrawablesExtraList)
+        val layerDrawable = LayerDrawable(shapeDrawablesList.toTypedArray())
+        background = layerDrawable
+    }
 
-    public void submit(Instant start, Instant end) {
-        Instant now = Instant.now();
-        mShapeDrawablesExtraList.clear();
+    fun submit(start: Instant?, end: Instant?) {
+        val now = Instant.now()
+        mShapeDrawablesExtraList.clear()
 
         //mShapeDrawablesExtraList.add( getRayShape(now) );
         //mShapeDrawablesExtraList.add( getRelevantTileShape(now) );
-        mShapeDrawablesExtraList.add( getArmShape(now) );
+        mShapeDrawablesExtraList.add(getArmShape(now))
         if (start != null && end != null) {
-            mShapeDrawablesExtraList.add( getHighlights(start, end) );
+            mShapeDrawablesExtraList.add(getHighlights(start, end))
         }
-
-        refresh();
+        refresh()
     }
 
+    private fun getHighlights(start: Instant, end: Instant): ShapeDrawable {
+        val startPoints = solve(start)
+        val endPoints = solve(end)
+        val startHour = getHour(start)
+        val endHour = getHour(end)
+        Log.e(TAG, "startHour: $startHour  endHour: $endHour")
 
-    public ShapeDrawable getHighlights(Instant start, Instant end) {
-
-        List<String> startPoints = solve(start);
-        List<String> endPoints = solve(end);
-
-        int startHour = getHour(start);
-        int endHour = getHour(end);
-        Log.e(TAG, "startHour: " + startHour  + "  endHour: " + endHour);
-
-
-        List<String> outerPoints = new ArrayList<>();
-        List<String> innerPoints = new ArrayList<>();
-
-        outerPoints.add(startPoints.get(0));
-        innerPoints.add(startPoints.get(1));
-
-
+        val outerPoints = mutableListOf<String>()
+        val innerPoints = mutableListOf<String>()
+        outerPoints.add(startPoints[0])
+        innerPoints.add(startPoints[1])
         if (startHour != endHour) {
-            for (int i = startHour + 1; i <= endHour; i++) {
-
-                outerPoints.add( myDataLists.mOuterHoursList.get(i));
-                Log.e(TAG, "outerPoints: " + myDataLists.mOuterHoursList.get(i));
-                innerPoints.add( myDataLists.mInnerHoursList.get(i));
+            for (i in startHour + 1..endHour) {
+                outerPoints.add( mOuterHoursList[i])
+                Log.e(TAG, "outerPoints: " + mOuterHoursList[i])
+                innerPoints.add(mInnerHoursList[i])
             }
         }
-
-        outerPoints.add(endPoints.get(0));
-        innerPoints.add(endPoints.get(1));
-
-
-        Collections.reverse(innerPoints);
-
-        outerPoints.addAll(innerPoints);
-
-
-        Path path = new Path();
-        path.addPath( genPathFromList(outerPoints));
-        path.setFillType(Path.FillType.EVEN_ODD);
-        ShapeDrawable shapeHigh = new ShapeDrawable( new PathShape(path, L, L));
-        shapeHigh.getPaint().setColor(Color.YELLOW);
-        shapeHigh.setAlpha((int) (0.1 * 255));
-        shapeHigh.getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-        shapeHigh.getPaint().setStrokeWidth(12.0f);
-        shapeHigh.getPaint().setStrokeCap(Paint.Cap.ROUND);
-        shapeHigh.getPaint().setStrokeJoin(Paint.Join.ROUND);
-        return shapeHigh;
+        outerPoints.add(endPoints[0])
+        innerPoints.add(endPoints[1])
+        innerPoints.reverse()
+        outerPoints.addAll(innerPoints)
+        val path = Path()
+        path.addPath(genPathFromList(outerPoints))
+        path.fillType = Path.FillType.EVEN_ODD
+        val shapeHigh = ShapeDrawable(PathShape(path, L.toFloat(), L.toFloat()))
+        shapeHigh.paint.color = Color.YELLOW
+        shapeHigh.alpha = (0.1 * 255).toInt()
+        shapeHigh.paint.style = Paint.Style.FILL_AND_STROKE
+        shapeHigh.paint.strokeWidth = 12.0f
+        shapeHigh.paint.strokeCap = Paint.Cap.ROUND
+        shapeHigh.paint.strokeJoin = Paint.Join.ROUND
+        return shapeHigh
     }
 
+    private val rootInstant: Instant
+        get() = Instant
+            .now()
+            .atZone(ZoneOffset.of("+02:00"))
+            .withHour(6).withMinute(0).withSecond(0).withNano(0)
+            .toInstant()
 
-
-
-    public Instant getRootInstant() {
-        return Instant
-                .now()
-                .atZone(ZoneOffset.of("+02:00"))
-                .withHour(6).withMinute(0).withSecond(0).withNano(0)
-                .toInstant();
-    }
-    public int getHour(Instant instant) {
-        Duration duration = Duration.between(getRootInstant(), instant);
-        int hour = (int) duration.toHours();
+    private fun getHour(instant: Instant): Int {
+        val duration = Duration.between(rootInstant, instant)
+        var hour = duration.toHours().toInt()
         if (hour < 0) {
-            hour = 24 + hour + 1;
+            hour += 24 + 1
         }
-        return hour;
-    }
-    public double getAngle(Instant instant) {
-        Duration duration = Duration.between(getRootInstant(), instant);
-        double angle = duration.toMinutes() / 2.0;  // 1 degree  ==== 2 minutes
-        angle = 360 - (angle % 360);      // counterclockwise
-        angle = angle * (Math.PI / 180.0);  // convert from degree to radians
-        return angle;
+        return hour
     }
 
-
-
-
-
-    public List<String> solve(Instant instant) {
-
-        int hour = getHour(instant);
-        double angle = getAngle(instant);
-
-        double z1_x = C;
-        double z1_y = C;
-        double z2_x = (int) (C + (C * Math.sin(angle)));
-        double z2_y = (int) (C + (C * Math.cos(angle)));
-
-        String[] arg;
-        arg = myDataLists.mOuterHoursList.get(hour).split("[\\s]*,[\\s]*");
-        double p1_x = Integer.parseInt(arg[0]);
-        double p1_y = Integer.parseInt(arg[1]);
-        arg = myDataLists.mOuterHoursList.get(hour + 1).split("[\\s]*,[\\s]*");
-        double p2_x = Integer.parseInt(arg[0]);
-        double p2_y = Integer.parseInt(arg[1]);
-
-        arg = myDataLists.mInnerHoursList.get(hour).split("[\\s]*,[\\s]*");
-        double q1_x = Integer.parseInt(arg[0]);
-        double q1_y = Integer.parseInt(arg[1]);
-        arg = myDataLists.mInnerHoursList.get(hour + 1).split("[\\s]*,[\\s]*");
-        double q2_x = Integer.parseInt(arg[0]);
-        double q2_y = Integer.parseInt(arg[1]);
-
-        int x1 = (int) (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x)));
-        int y1 = (int) (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x)));
-
-        int x2 = (int) (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x)));
-        int y2 = (int) (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x)));
-
-
-
-        ArrayList<String> list = new ArrayList<>();
-        list.add(x1 + "," + y1);
-        list.add(x2 + "," + y2);
-        return list;
+    private fun getAngle(instant: Instant): Double {
+        val duration = Duration.between(rootInstant, instant)
+        var angle = duration.toMinutes() / 2.0 // 1 degree  ==== 2 minutes
+        angle = 360 - angle % 360 // counterclockwise
+        angle *= (Math.PI / 180.0) // convert from degree to radians
+        return angle
     }
 
+    private fun solve(instant: Instant): List<String> {
+        val hour = getHour(instant)
+        val angle = getAngle(instant)
+        val z1_x = C.toDouble()
+        val z1_y = C.toDouble()
+        val z2_x = (C + C * sin(angle)).toInt()
+            .toDouble()
+        val z2_y = (C + C * cos(angle)).toInt()
+            .toDouble()
 
+        var arg = mOuterHoursList[hour].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val p1_x = arg[0].toDouble()
+        val p1_y = arg[1].toDouble()
 
+        arg = mOuterHoursList[hour + 1].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val p2_x = arg[0].toDouble()
+        val p2_y = arg[1].toDouble()
 
-    public ShapeDrawable getArmShape(Instant instant) {
+        arg = mInnerHoursList[hour].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val q1_x = arg[0].toDouble()
+        val q1_y = arg[1].toDouble()
+
+        arg = mInnerHoursList[hour + 1].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val q2_x = arg[0].toInt().toDouble()
+        val q2_y = arg[1].toInt().toDouble()
+        val x1 =
+            (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val y1 =
+            (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val x2 =
+            (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val y2 =
+            (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val list = ArrayList<String>()
+        list.add("$x1,$y1")
+        list.add("$x2,$y2")
+        return list
+    }
+
+    fun getArmShape(instant: Instant): ShapeDrawable {
         // create a path basic path
-        List<String> intersectionPoints = solve( instant);
-
-
-        String s = "M " + intersectionPoints.get(0)  +  " L " + intersectionPoints.get(1);
-        Path path = new Path();
-        path.addPath(PathParser.createPathFromPathData(s));
-        ShapeDrawable shapePath = new ShapeDrawable(new PathShape(path, L, L));
-        shapePath.getPaint().setColor(Color.BLUE);
-        shapePath.setAlpha((int) (1.0 * 255));
-        shapePath.getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-        shapePath.getPaint().setStrokeWidth(20.0f);
-        shapePath.getPaint().setStrokeCap(Paint.Cap.ROUND);
-        shapePath.getPaint().setStrokeJoin(Paint.Join.ROUND);
-        return shapePath;
-
+        val intersectionPoints = solve(instant)
+        val s = "M " + intersectionPoints[0] + " L " + intersectionPoints[1]
+        val path = Path()
+        path.addPath(PathParser.createPathFromPathData(s))
+        val shapePath = ShapeDrawable(PathShape(path, L.toFloat(), L.toFloat()))
+        shapePath.paint.color = Color.BLUE
+        shapePath.alpha = (1.0 * 255).toInt()
+        shapePath.paint.style = Paint.Style.FILL_AND_STROKE
+        shapePath.paint.strokeWidth = 20.0f
+        shapePath.paint.strokeCap = Paint.Cap.ROUND
+        shapePath.paint.strokeJoin = Paint.Join.ROUND
+        return shapePath
     }
 
-
-
-    public ShapeDrawable getRayShape(Instant instant) {
-
-        double angle = getAngle( instant);
-
-
-        int x = (int) (C + (C * Math.sin(angle)));
-        int y = (int) (C + (C * Math.cos(angle)));
-
-        String s = "M " + C + "," + C + " L " + x + "," + y;
-        Log.e(TAG, "getArm: " + s);
-        Path path = new Path();
-        path.addPath( PathParser.createPathFromPathData(s));
-        ShapeDrawable shapePath = new ShapeDrawable( new PathShape(path, L, L));
-        shapePath.getPaint().setColor(Color.RED);
-        shapePath.setAlpha((int) (1.0 * 255));
-        shapePath.getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-        shapePath.getPaint().setStrokeWidth(12.0f);
-        shapePath.getPaint().setStrokeCap(Paint.Cap.ROUND);
-        shapePath.getPaint().setStrokeJoin(Paint.Join.ROUND);
-        return shapePath;
+    fun getRayShape(instant: Instant): ShapeDrawable {
+        val angle = getAngle(instant)
+        val x = (C + C * Math.sin(angle)).toInt()
+        val y = (C + C * Math.cos(angle)).toInt()
+        val s = "M $C,$C L $x,$y"
+        Log.e(TAG, "getArm: $s")
+        val path = Path()
+        path.addPath(PathParser.createPathFromPathData(s))
+        val shapePath = ShapeDrawable(PathShape(path, L.toFloat(), L.toFloat()))
+        shapePath.paint.color = Color.RED
+        shapePath.alpha = (1.0 * 255).toInt()
+        shapePath.paint.style = Paint.Style.FILL_AND_STROKE
+        shapePath.paint.strokeWidth = 12.0f
+        shapePath.paint.strokeCap = Paint.Cap.ROUND
+        shapePath.paint.strokeJoin = Paint.Join.ROUND
+        return shapePath
     }
 
+    private val hoursTrackShape: ShapeDrawable
+        get() {
+            // create a path basic path
+            val shapePath =
+                ShapeDrawable(PathShape(myPathStore!!.mHoursTrack, L.toFloat(), L.toFloat()))
+            shapePath.paint.color = Color.WHITE
+            shapePath.alpha = (0.1 * 255).toInt()
+            shapePath.paint.style = Paint.Style.FILL
+            shapePath.paint.strokeWidth = 12.0f
+            shapePath.paint.strokeCap = Paint.Cap.ROUND
+            shapePath.paint.strokeJoin = Paint.Join.ROUND
+            return shapePath
+        }
 
-
-
-    public ShapeDrawable getHoursTrackShape() {
-        // create a path basic path
-
-        ShapeDrawable shapePath = new ShapeDrawable( new PathShape(myPathStore.mHoursTrack, L, L));
-        shapePath.getPaint().setColor(Color.WHITE);
-        shapePath.setAlpha((int) (0.1 * 255));
-        shapePath.getPaint().setStyle(Paint.Style.FILL);
-        shapePath.getPaint().setStrokeWidth(12.0f);
-        shapePath.getPaint().setStrokeCap(Paint.Cap.ROUND);
-        shapePath.getPaint().setStrokeJoin(Paint.Join.ROUND);
-        return shapePath;
-    }
-
-
-
-
-
-
-    public ShapeDrawable getRelevantTileShape(Instant instant) {
-
-        int hour = getHour(instant);
-
-        Path path = new Path();
-        path.addPath( PathParser.createPathFromPathData("M " + myDataLists.mOuterHoursList.get(hour) + " L " + myDataLists.mOuterHoursList.get(hour + 1)));
-        path.addPath( PathParser.createPathFromPathData("M " + myDataLists.mInnerHoursList.get(hour) + " L " + myDataLists.mInnerHoursList.get(hour + 1)));
+    fun getRelevantTileShape(instant: Instant): ShapeDrawable {
+        val hour = getHour(instant)
+        val path = Path()
+        path.addPath(PathParser.createPathFromPathData("M " + mOuterHoursList[hour] + " L " + mOuterHoursList[hour + 1]))
+        path.addPath(PathParser.createPathFromPathData("M " + mInnerHoursList[hour] + " L " + mInnerHoursList[hour + 1]))
         //path.addPath( PathParser.createPathFromPathData("M " + myDataLists.mOuterHoursList.get(hour) + " L " + myDataLists.mInnerHoursList.get(hour)));
         //path.addPath( PathParser.createPathFromPathData("M " + myDataLists.mOuterHoursList.get(hour+ 1) + " L " + myDataLists.mInnerHoursList.get(hour + 1)));
-
-        path.setFillType(Path.FillType.EVEN_ODD);
-
-        ShapeDrawable shapePath = new ShapeDrawable( new PathShape(path, L, L));
-        shapePath.getPaint().setColor(Color.RED);
-        shapePath.setAlpha((int) (1.0 * 255));
-        shapePath.getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
-        shapePath.getPaint().setStrokeWidth(12.0f);
-        shapePath.getPaint().setStrokeCap(Paint.Cap.ROUND);
-        shapePath.getPaint().setStrokeJoin(Paint.Join.ROUND);
-        return shapePath;
+        path.fillType = Path.FillType.EVEN_ODD
+        val shapePath = ShapeDrawable(PathShape(path, L.toFloat(), L.toFloat()))
+        shapePath.paint.color = Color.RED
+        shapePath.alpha = (1.0 * 255).toInt()
+        shapePath.paint.style = Paint.Style.FILL_AND_STROKE
+        shapePath.paint.strokeWidth = 12.0f
+        shapePath.paint.strokeCap = Paint.Cap.ROUND
+        shapePath.paint.strokeJoin = Paint.Join.ROUND
+        return shapePath
     }
 
+    inner class MyPathStore {
+        var mHoursTrack: Path
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    class MyPathStore {
-        public Path mHoursTrack;
-        public MyPathStore() {
-            List<String> track = new ArrayList<>();
-            track.addAll( myDataLists.mOuterHoursList);
-            track.addAll( myDataLists.mInnerHoursList);
-            mHoursTrack = genPathFromList( track);
-            mHoursTrack.setFillType(Path.FillType.EVEN_ODD);
+        init {
+            val track =  mutableListOf<String>()
+            track.addAll(mOuterHoursList)
+            track.addAll(mInnerHoursList)
+            mHoursTrack = genPathFromList(track)
+            mHoursTrack.fillType = Path.FillType.EVEN_ODD
         }
     }
 
-    public Path genPathFromList(List<String> inputList) {
-        List<String> list = new ArrayList<>( inputList);
-        list.add(0, "M");
-        list.add(2, "L");
-        Path path = new Path();
-        path.addPath( PathParser.createPathFromPathData( UtilKt.list2String(list)));
-        return path;
-    }
-
-    public class MyDataLists {
-        public List<String> mOuterHoursList = new ArrayList<>();
-        public List<String> mInnerHoursList = new ArrayList<>();
-
-        public MyDataLists() {
-            Resources res = getResources();
-            mOuterHoursList .addAll( Arrays.asList( res.getStringArray( R.array.outer_path_hours)));
-            mInnerHoursList .addAll( Arrays.asList( res.getStringArray( R.array.inner_path_hours)));
-        }
+    fun genPathFromList(inputList: List<String>): Path {
+        val list = mutableListOf<String>()
+        list.addAll( inputList)
+        list.add(0, "M")
+        list.add(2, "L")
+        return PathParser.createPathFromPathData(list.joinToString(" "))
     }
 
 
 
-
-
-
-
-
-
+    companion object {
+        val TAG = SpiralClock::class.java.simpleName
+        const val L = 2540
+        const val C = L / 2
+    }
 }
