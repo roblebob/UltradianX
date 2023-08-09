@@ -19,11 +19,15 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter
 
 class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
-    private var mBinding: FragmentOverviewBinding? = null
+    private var _binding: FragmentOverviewBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
+
     private var mAdventureList: List<Adventure> = ArrayList()
-    private var overviewRVLayoutManager: GridLayoutManager? = null
-    private var mOverviewRVAdapter: OverviewRVAdapter? = null
-    var mViewModel: AppViewModel? = null
+    private lateinit var overviewRVLayoutManager: GridLayoutManager
+    private lateinit var mOverviewRVAdapter: OverviewRVAdapter
+    private lateinit var mViewModel: AppViewModel
     val args: OverviewFragmentArgs  by navArgs()
 
 
@@ -31,7 +35,7 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         super.onCreate(savedInstanceState)
         val appViewModelFactory = AppViewModelFactory(requireActivity().application)
         mViewModel = ViewModelProvider(this, appViewModelFactory).get(AppViewModel::class.java)
-        mViewModel!!.initialRun()
+        mViewModel.initialRun()
     }
 
     override fun onCreateView(
@@ -39,19 +43,19 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding = FragmentOverviewBinding.inflate(inflater, container, false)
+        _binding = FragmentOverviewBinding.inflate(inflater, container, false)
         overviewRVLayoutManager = GridLayoutManager(this.context, 1, RecyclerView.VERTICAL, false)
         mOverviewRVAdapter = OverviewRVAdapter(this)
-        mBinding!!.recyclerView.adapter = mOverviewRVAdapter
-        mBinding!!.recyclerView.layoutManager = overviewRVLayoutManager
-        mBinding!!.recyclerView.onFlingListener = object : OnFlingListener() {
+        binding.recyclerView.adapter = mOverviewRVAdapter
+        binding.recyclerView.layoutManager = overviewRVLayoutManager
+        binding.recyclerView.onFlingListener = object : OnFlingListener() {
             override fun onFling(velocityX: Int, velocityY: Int): Boolean {
-                if (!mBinding!!.recyclerView.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
+                if (!binding.recyclerView.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
                     mOverviewRVAdapter!!.isExtended = true
                     Log.e(TAG, "---->   set to TRUE")
                     return true
                 }
-                if (mBinding!!.recyclerView.canScrollVertically(1) && mOverviewRVAdapter!!.isExtended) {
+                if (binding.recyclerView.canScrollVertically(1) && mOverviewRVAdapter!!.isExtended) {
                     mOverviewRVAdapter!!.isExtended = false
                     Log.e(TAG, "---->   set to FALSE")
                     return true
@@ -59,26 +63,26 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
                 return false
             }
         }
-        mViewModel!!.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure>? ->
+        mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure>? ->
             mAdventureList = ArrayList(adventureList)
             mOverviewRVAdapter!!.submit(mAdventureList)
         }
-        mBinding!!.recyclerView.postDelayed({
+        binding.recyclerView.postDelayed({
             val position: Int = args.position
             overviewRVLayoutManager!!.scrollToPosition(position)
         }, 100)
-        mBinding!!.spiralClock.setup()
-        return mBinding!!.root
+        binding.spiralClock.setup()
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        mBinding!!.spiralClock.submit(null, null)
+        binding.spiralClock.submit(null, null)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        _binding = null
     }
 
     override fun onItemClickListener(adventure: Adventure, position: Int) {
@@ -90,8 +94,8 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
     }
 
     override fun onNewAdventureCreated(title: String) {
-        mViewModel!!.addAdventure(Adventure.newAdventure(title).toData())
-        mOverviewRVAdapter!!.isExtended = false
+        mViewModel.addAdventure(Adventure.newAdventure(title).toData())
+        mOverviewRVAdapter.isExtended = false
     }
 
     companion object {
