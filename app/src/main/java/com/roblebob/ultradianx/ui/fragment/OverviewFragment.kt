@@ -34,7 +34,7 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appViewModelFactory = AppViewModelFactory(requireActivity().application)
-        mViewModel = ViewModelProvider(this, appViewModelFactory).get(AppViewModel::class.java)
+        mViewModel = ViewModelProvider(this, appViewModelFactory)[AppViewModel::class.java]
         mViewModel.initialRun()
     }
 
@@ -51,12 +51,12 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         binding.recyclerView.onFlingListener = object : OnFlingListener() {
             override fun onFling(velocityX: Int, velocityY: Int): Boolean {
                 if (!binding.recyclerView.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
-                    mOverviewRVAdapter!!.isExtended = true
+                    mOverviewRVAdapter.isExtended = true
                     Log.e(TAG, "---->   set to TRUE")
                     return true
                 }
-                if (binding.recyclerView.canScrollVertically(1) && mOverviewRVAdapter!!.isExtended) {
-                    mOverviewRVAdapter!!.isExtended = false
+                if (binding.recyclerView.canScrollVertically(1) && mOverviewRVAdapter.isExtended) {
+                    mOverviewRVAdapter.isExtended = false
                     Log.e(TAG, "---->   set to FALSE")
                     return true
                 }
@@ -65,11 +65,11 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         }
         mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure>? ->
             mAdventureList = ArrayList(adventureList)
-            mOverviewRVAdapter!!.submit(mAdventureList)
+            mOverviewRVAdapter.submit(mAdventureList)
         }
         binding.recyclerView.postDelayed({
             val position: Int = args.position
-            overviewRVLayoutManager!!.scrollToPosition(position)
+            overviewRVLayoutManager.scrollToPosition(position)
         }, 100)
         binding.spiralClock.setup()
         return binding.root
