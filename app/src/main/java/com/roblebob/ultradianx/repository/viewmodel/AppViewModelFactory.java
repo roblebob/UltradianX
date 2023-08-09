@@ -18,6 +18,6 @@ public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
     @Override
     public <T extends ViewModel> T create (@NonNull Class<T> modelClass) {
         //noinspection unchecked
-        return (T) new AppViewModel(mApplication);
+        return (T) new AppViewModel(mApplication, null);
     }
 }

@@ -1,80 +1,104 @@
-package com.roblebob.ultradianx.repository.viewmodel;
+package com.roblebob.ultradianx.repository.viewmodel
 
-import android.app.Application;
+import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.roblebob.ultradianx.repository.model.Adventure
+import com.roblebob.ultradianx.repository.model.AdventureDao
+import com.roblebob.ultradianx.repository.model.AppDatabase
+import com.roblebob.ultradianx.repository.model.AppStateDao
+import com.roblebob.ultradianx.repository.worker.AddAdventureWorker
+import com.roblebob.ultradianx.repository.worker.InitWorker
+import com.roblebob.ultradianx.repository.worker.RefreshWorker
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
+class AppViewModel(application: Application, private val savedStateHandle: SavedStateHandle?) : ViewModel() {
+    private val mWorkManager: WorkManager
+    private val adventureDao: AdventureDao
+    private val appStateDao: AppStateDao
 
-import com.roblebob.ultradianx.repository.model.Adventure;
-import com.roblebob.ultradianx.repository.model.AdventureDao;
-import com.roblebob.ultradianx.repository.model.AppDatabase;
-import com.roblebob.ultradianx.repository.model.AppStateDao;
-import com.roblebob.ultradianx.repository.worker.AddAdventureWorker;
-import com.roblebob.ultradianx.repository.worker.InitWorker;
-import com.roblebob.ultradianx.repository.worker.RefreshWorker;
+    init {
+        adventureDao = AppDatabase.getInstance(application.applicationContext).adventureDao()
+        appStateDao = AppDatabase.getInstance(application.applicationContext).appStateDao()
+        mWorkManager = WorkManager.getInstance(application)
+    }
 
-import java.util.List;
+    companion object {
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                // Get the Application object from extras
+                val application = checkNotNull(extras[APPLICATION_KEY])
+                // Create a SavedStateHandle for this ViewModel from extras
+                val savedStateHandle = extras.createSavedStateHandle()
 
-public class AppViewModel extends ViewModel {
-    private final WorkManager mWorkManager;
-    AdventureDao adventureDao;
-    AppStateDao appStateDao;
-
-    public AppViewModel(@NonNull Application application) {
-        super();
-        adventureDao = AppDatabase.getInstance(application.getApplicationContext()).adventureDao();
-        appStateDao = AppDatabase.getInstance(application.getApplicationContext()).appStateDao();
-        mWorkManager = WorkManager.getInstance(application);
+                return AppViewModel(
+                    application,
+                    savedStateHandle
+                ) as T
+            }
+        }
     }
 
 
-    public LiveData<List<Adventure>> getAdventureListLive() { return adventureDao.loadAdventureListLive(); }
-    public LiveData<List<Integer>> getAdventureIdListLive() { return adventureDao.loadAdventureIdListLive(); }
-    public LiveData<Adventure> getAdventureByIdLive(int id) { return adventureDao.loadAdventureByIdLive( id); }
+    val adventureListLive: LiveData<List<Adventure>>
+        get() = adventureDao.loadAdventureListLive()
+    val adventureIdListLive: LiveData<List<Int>>
+        get() = adventureDao.loadAdventureIdListLive()
 
-
-    public void initialRun() {
-        mWorkManager.enqueue( OneTimeWorkRequest.from(InitWorker.class));
+    fun getAdventureByIdLive(id: Int): LiveData<Adventure> {
+        return adventureDao.loadAdventureByIdLive(id)
     }
 
+    fun initialRun() {
+        mWorkManager.enqueue(OneTimeWorkRequest.from(InitWorker::class.java))
+    }
 
-    public void refresh(Data data) {
+    fun refresh(data: Data?) {
         if (data == null) {
-            mWorkManager.enqueue( OneTimeWorkRequest.from( RefreshWorker.class));
+            mWorkManager.enqueue(OneTimeWorkRequest.from(RefreshWorker::class.java))
         } else {
-            mWorkManager.enqueue( new OneTimeWorkRequest
-                    .Builder( RefreshWorker.class)
+            mWorkManager.enqueue(
+                OneTimeWorkRequest.Builder(RefreshWorker::class.java)
                     .setInputData(data)
                     .build()
-            );
+            )
         }
     }
 
-
-    public void refreshAll(Data data) {
+    fun refreshAll(data: Data?) {
         if (data == null) {
-            mWorkManager.enqueue(OneTimeWorkRequest.from(RefreshWorker.class));
+            mWorkManager.enqueue(OneTimeWorkRequest.from(RefreshWorker::class.java))
         } else {
-            mWorkManager.beginWith(OneTimeWorkRequest.from(RefreshWorker.class))
-                    .then(new OneTimeWorkRequest
-                            .Builder(RefreshWorker.class)
-                            .setInputData(data)
-                            .build())
-                    .enqueue();
+            mWorkManager.beginWith(OneTimeWorkRequest.from(RefreshWorker::class.java))
+                .then(
+                    OneTimeWorkRequest.Builder(RefreshWorker::class.java)
+                        .setInputData(data)
+                        .build()
+                )
+                .enqueue()
         }
     }
 
-
-    public void addAdventure(Data data) {
-        mWorkManager.enqueue( new OneTimeWorkRequest
-                .Builder( AddAdventureWorker.class)
-                .setInputData(data)
+    fun addAdventure(data: Data?) {
+        mWorkManager.enqueue(
+            OneTimeWorkRequest.Builder(AddAdventureWorker::class.java)
+                .setInputData(data!!)
                 .build()
-        );
+        )
     }
+
 
 }

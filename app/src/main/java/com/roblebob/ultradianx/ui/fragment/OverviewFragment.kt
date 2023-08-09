@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
@@ -29,14 +30,12 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
     private lateinit var overviewRVLayoutManager: GridLayoutManager
     private lateinit var mOverviewRVAdapter: OverviewRVAdapter
-    private lateinit var mViewModel: AppViewModel
+    private val mViewModel: AppViewModel by viewModels { AppViewModel.Factory }
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val appViewModelFactory = AppViewModelFactory(requireActivity().application)
-        mViewModel = ViewModelProvider(this, appViewModelFactory)[AppViewModel::class.java]
         mViewModel.initialRun()
     }
 
