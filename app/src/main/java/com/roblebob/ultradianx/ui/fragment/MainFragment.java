@@ -18,7 +18,6 @@ import com.roblebob.ultradianx.databinding.FragmentMainBinding;
 import com.roblebob.ultradianx.ui.adapter.ListDiffCallback;
 import com.roblebob.ultradianx.ui.adapter.ScreenSlidePagerAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
-import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +43,7 @@ public class MainFragment extends Fragment  {
         mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mBinding.pager.setAdapter(mPagerAdapter);
 
-        AppViewModelFactory appViewModelFactory = new AppViewModelFactory(requireActivity().getApplication());
-        AppViewModel mViewModel = new ViewModelProvider(this, appViewModelFactory).get(AppViewModel.class);
+        AppViewModel mViewModel = new ViewModelProvider(this, AppViewModel.Companion.getFactory()).get(AppViewModel.class);
 
 
 

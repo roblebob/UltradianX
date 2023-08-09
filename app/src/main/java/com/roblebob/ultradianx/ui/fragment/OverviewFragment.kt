@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView.OnFlingListener
 import com.roblebob.ultradianx.databinding.FragmentOverviewBinding
 import com.roblebob.ultradianx.repository.model.Adventure
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel
-import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter
 
 class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {

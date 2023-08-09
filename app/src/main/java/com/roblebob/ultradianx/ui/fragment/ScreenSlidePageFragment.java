@@ -26,7 +26,6 @@ import com.roblebob.ultradianx.databinding.FragmentScreenSlidePageBinding;
 import com.roblebob.ultradianx.repository.model.Adventure;
 import com.roblebob.ultradianx.ui.adapter.DetailsRVAdapter;
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
-import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory;
 import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 import com.roblebob.ultradianx.ui.extra.MyController;
 
@@ -79,7 +78,9 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         }
 
         mViewModel = new ViewModelProvider(this,
-                new AppViewModelFactory( requireActivity().getApplication())  ).get(AppViewModel.class);
+                //new AppViewModelFactory( requireActivity().getApplication())
+                AppViewModel.Companion.getFactory()
+        ).get(AppViewModel.class);
 
         mProgressUpdaterRunnable = new Runnable() {
             @Override
