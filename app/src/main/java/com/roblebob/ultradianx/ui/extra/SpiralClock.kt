@@ -70,6 +70,113 @@ class SpiralClock : View {
         refresh()
     }
 
+
+    /**
+     * wakeup time, assuming you woke up at 6:00 am. :)
+     */
+
+    private val rootInstant: Instant
+        get() = Instant
+            .now()
+            .atZone(ZoneOffset.of("+02:00"))
+            .withHour(6).withMinute(0).withSecond(0).withNano(0)
+            .toInstant()
+
+
+    /**
+     * Given an instant, this method returns the hour of the day.
+     * The hour is used as the index of the list of points that define the spiral.
+     * @param instant : Instant
+     * @return int : hour of the day
+     **/
+    private fun getHour(instant: Instant): Int {
+        val duration = Duration.between(rootInstant, instant)
+        var hour = duration.toHours().toInt()
+        if (hour < 0) {
+            hour += 24 + 1
+        }
+        return hour
+    }
+
+    /**
+     * Assuming the spiral is a clock,
+     * this method returns the angle of the instant's arm,
+     * and that of rootInstant's
+     * @param instant : Instant
+     * @return double : angle in radians
+     */
+    private fun getAngle(instant: Instant): Double {
+        val duration = Duration.between(rootInstant, instant)
+        var angle = duration.toMinutes() / 2.0 // 1 degree  ==== 2 minutes
+        angle = 360 - angle % 360 // counterclockwise
+        angle *= (Math.PI / 180.0) // convert from degree to radians
+        return angle
+    }
+
+
+    /**
+     * Given an instant, this method returns the intersection points of the ray and the spiral
+     * @param instant : Instant
+     * @return List<String> : list of intersection points
+     **/
+    private fun solve(instant: Instant): List<String> {
+        val hour = getHour(instant)
+        val angle = getAngle(instant)
+        val z1_x = C.toDouble()
+        val z1_y = C.toDouble()
+        val z2_x = (C + C * sin(angle)).toInt()
+            .toDouble()
+        val z2_y = (C + C * cos(angle)).toInt()
+            .toDouble()
+
+        var arg = mOuterHoursList[hour].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val p1_x = arg[0].toDouble()
+        val p1_y = arg[1].toDouble()
+
+        arg = mOuterHoursList[hour + 1].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val p2_x = arg[0].toDouble()
+        val p2_y = arg[1].toDouble()
+
+        arg = mInnerHoursList[hour].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val q1_x = arg[0].toDouble()
+        val q1_y = arg[1].toDouble()
+
+        arg = mInnerHoursList[hour + 1].split("\\s*,\\s*".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        val q2_x = arg[0].toDouble()
+        val q2_y = arg[1].toDouble()
+        val x1 =
+            (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val y1 =
+            (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val x2 =
+            (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val y2 =
+            (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val list = ArrayList<String>()
+        list.add("$x1,$y1")
+        list.add("$x2,$y2")
+        return list
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     private fun getHighlights(start: Instant, end: Instant): ShapeDrawable {
         val startPoints = solve(start)
         val endPoints = solve(end)
@@ -103,77 +210,6 @@ class SpiralClock : View {
         shapeHigh.paint.strokeCap = Paint.Cap.ROUND
         shapeHigh.paint.strokeJoin = Paint.Join.ROUND
         return shapeHigh
-    }
-
-    private val rootInstant: Instant
-        get() = Instant
-            .now()
-            .atZone(ZoneOffset.of("+02:00"))
-            .withHour(6).withMinute(0).withSecond(0).withNano(0)
-            .toInstant()
-
-    private fun getHour(instant: Instant): Int {
-        val duration = Duration.between(rootInstant, instant)
-        var hour = duration.toHours().toInt()
-        if (hour < 0) {
-            hour += 24 + 1
-        }
-        return hour
-    }
-
-    private fun getAngle(instant: Instant): Double {
-        val duration = Duration.between(rootInstant, instant)
-        var angle = duration.toMinutes() / 2.0 // 1 degree  ==== 2 minutes
-        angle = 360 - angle % 360 // counterclockwise
-        angle *= (Math.PI / 180.0) // convert from degree to radians
-        return angle
-    }
-
-    private fun solve(instant: Instant): List<String> {
-        val hour = getHour(instant)
-        val angle = getAngle(instant)
-        val z1_x = C.toDouble()
-        val z1_y = C.toDouble()
-        val z2_x = (C + C * sin(angle)).toInt()
-            .toDouble()
-        val z2_y = (C + C * cos(angle)).toInt()
-            .toDouble()
-
-        var arg = mOuterHoursList[hour].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val p1_x = arg[0].toDouble()
-        val p1_y = arg[1].toDouble()
-
-        arg = mOuterHoursList[hour + 1].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val p2_x = arg[0].toDouble()
-        val p2_y = arg[1].toDouble()
-
-        arg = mInnerHoursList[hour].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val q1_x = arg[0].toDouble()
-        val q1_y = arg[1].toDouble()
-
-        arg = mInnerHoursList[hour + 1].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val q2_x = arg[0].toInt().toDouble()
-        val q2_y = arg[1].toInt().toDouble()
-        val x1 =
-            (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
-        val y1 =
-            (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
-        val x2 =
-            (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
-        val y2 =
-            (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
-        val list = ArrayList<String>()
-        list.add("$x1,$y1")
-        list.add("$x2,$y2")
-        return list
     }
 
     fun getArmShape(instant: Instant): ShapeDrawable {
@@ -214,7 +250,7 @@ class SpiralClock : View {
         get() {
             // create a path basic path
             val shapePath =
-                ShapeDrawable(PathShape(myPathStore!!.mHoursTrack, L.toFloat(), L.toFloat()))
+                ShapeDrawable(PathShape(myPathStore.mHoursTrack, L.toFloat(), L.toFloat()))
             shapePath.paint.color = Color.WHITE
             shapePath.alpha = (0.1 * 255).toInt()
             shapePath.paint.style = Paint.Style.FILL
