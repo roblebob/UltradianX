@@ -19,16 +19,18 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModelFactory
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter
 
 class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
+
+    private val args: OverviewFragmentArgs  by navArgs()
+
     private var _binding: FragmentOverviewBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
 
-    private var mAdventureList: List<Adventure> = ArrayList()
     private lateinit var overviewRVLayoutManager: GridLayoutManager
     private lateinit var mOverviewRVAdapter: OverviewRVAdapter
     private lateinit var mViewModel: AppViewModel
-    val args: OverviewFragmentArgs  by navArgs()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +66,7 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
             }
         }
         mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure>? ->
-            mAdventureList = ArrayList(adventureList)
-            mOverviewRVAdapter.submit(mAdventureList)
+            mOverviewRVAdapter.submit(adventureList)
         }
         binding.recyclerView.postDelayed({
             val position: Int = args.position
