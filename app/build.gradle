@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -5,6 +6,16 @@ plugins {
 }
 
 
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
 
 android {
     compileSdk 33
@@ -30,9 +41,7 @@ android {
     }
 
     namespace 'com.roblebob.ultradianx'
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
 }
 
 dependencies {
@@ -40,19 +49,20 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
 
-    implementation 'androidx.room:room-common:2.5.1'
-    implementation 'androidx.room:room-runtime:2.5.1'
-    annotationProcessor 'androidx.room:room-compiler:2.5.1'
+    implementation 'androidx.room:room-common:2.5.2'
+    implementation 'androidx.room:room-runtime:2.5.2'
+    annotationProcessor 'androidx.room:room-compiler:2.5.2'
+    implementation 'androidx.room:room-ktx:2.5.2'
 
 
 
-    def nav_version = "2.5.3"
+    def nav_version = "2.6.0"
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
@@ -100,6 +110,6 @@ dependencies {
     implementation "androidx.work:work-multiprocess:$work_version"
 
 
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.20'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
 }
