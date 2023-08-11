@@ -21,15 +21,15 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
     private val args: OverviewFragmentArgs  by navArgs()
 
+
     private var _binding: FragmentOverviewBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
 
-    private lateinit var overviewRVLayoutManager: GridLayoutManager
-    private lateinit var mOverviewRVAdapter: OverviewRVAdapter
+    private val overviewRVLayoutManager = GridLayoutManager(this.context, 1, RecyclerView.VERTICAL, false)
+    private val mOverviewRVAdapter = OverviewRVAdapter(this)
     private val mViewModel: AppViewModel by viewModels { AppViewModel.Factory }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +37,14 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         mViewModel.initialRun()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
-        overviewRVLayoutManager = GridLayoutManager(this.context, 1, RecyclerView.VERTICAL, false)
-        mOverviewRVAdapter = OverviewRVAdapter(this)
+
         binding.recyclerView.adapter = mOverviewRVAdapter
         binding.recyclerView.layoutManager = overviewRVLayoutManager
         binding.recyclerView.onFlingListener = object : OnFlingListener() {
@@ -62,7 +62,7 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
                 return false
             }
         }
-        mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure>? ->
+        mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure> ->
             mOverviewRVAdapter.submit(adventureList)
         }
         binding.recyclerView.postDelayed({
@@ -83,13 +83,7 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         _binding = null
     }
 
-    override fun onItemClickListener(adventure: Adventure, position: Int) {
-        val action: OverviewFragmentDirections.ActionOverviewFragmentToMainFragment =
-            OverviewFragmentDirections.actionOverviewFragmentToMainFragment()
-        action.setPosition(position)
-        val navController = NavHostFragment.findNavController(this)
-        navController.navigate(action)
-    }
+
 
     override fun onNewAdventureCreated(title: String) {
         mViewModel.addAdventure(Adventure.newAdventure(title).toData())
@@ -99,4 +93,19 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
     companion object {
         val TAG = OverviewFragment::class.java.simpleName
     }
+
+
+
+
+
+
+    override fun onItemClickListener(adventure: Adventure, position: Int) {
+        val action: OverviewFragmentDirections.ActionOverviewFragmentToMainFragment =
+            OverviewFragmentDirections.actionOverviewFragmentToMainFragment()
+        action.setPosition(position)
+        val navController = NavHostFragment.findNavController(this)
+        navController.navigate(action)
+    }
+
+
 }

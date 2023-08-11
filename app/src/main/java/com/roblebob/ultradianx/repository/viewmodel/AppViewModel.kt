@@ -92,10 +92,10 @@ class AppViewModel(application: Application, private val savedStateHandle: Saved
         }
     }
 
-    fun addAdventure(data: Data?) {
+    fun addAdventure(data: Data) {
         mWorkManager.enqueue(
             OneTimeWorkRequest.Builder(AddAdventureWorker::class.java)
-                .setInputData(data!!)
+                .setInputData(data)
                 .build()
         )
     }
