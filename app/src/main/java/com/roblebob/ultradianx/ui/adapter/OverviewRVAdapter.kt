@@ -39,7 +39,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         }
 
     interface Callback {
-        fun onItemClickListener(adventure: Adventure, integer: Int)
+        fun onItemClickListener(id: Int, position: Int)
         fun onNewAdventureCreated(title: String)
     }
 
@@ -77,7 +77,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         holder.textInputLayout.visibility = View.INVISIBLE
         holder.textView.visibility = View.VISIBLE
         holder.textView.text = adventureDisplay.titleToSpannableStringBuilder(3)
-        holder.itemView.setOnClickListener { v: View? -> mCallback.onItemClickListener( adventure, position) }
+        holder.itemView.setOnClickListener { v: View? -> mCallback.onItemClickListener( adventure.id, position) }
 
         // displacing the text to the left depending on the priority
         val constraintLayout = holder.itemView as ConstraintLayout

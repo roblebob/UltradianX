@@ -20,11 +20,19 @@
             android:id="@+id/action_overviewFragment_to_mainFragment"
             app:destination="@id/mainFragment"
             />
+
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
+
         <argument
             android:name="position"
             app:argType="integer"
             android:defaultValue="0"
             />
+
     </fragment>
 
 
@@ -34,6 +42,12 @@
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
 
+
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
 
         <argument
             android:name="position"

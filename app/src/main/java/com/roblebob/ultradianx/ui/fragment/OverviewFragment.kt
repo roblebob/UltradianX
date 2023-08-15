@@ -27,8 +27,8 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
     private val binding get() = _binding!!
 
 
-    private val overviewRVLayoutManager = GridLayoutManager(this.context, 1, RecyclerView.VERTICAL, false)
-    private val mOverviewRVAdapter = OverviewRVAdapter(this)
+
+
     private val mViewModel: AppViewModel by viewModels { AppViewModel.Factory }
 
 
@@ -45,17 +45,17 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
     ): View {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
 
-        binding.recyclerView.adapter = mOverviewRVAdapter
-        binding.recyclerView.layoutManager = overviewRVLayoutManager
+        binding.recyclerView.adapter = OverviewRVAdapter(this)
+        binding.recyclerView.layoutManager = GridLayoutManager(this.context, 1, RecyclerView.VERTICAL, false)
         binding.recyclerView.onFlingListener = object : OnFlingListener() {
             override fun onFling(velocityX: Int, velocityY: Int): Boolean {
                 if (!binding.recyclerView.canScrollVertically(1) && velocityY > velocityX && velocityY > 0) {
-                    mOverviewRVAdapter.isExtended = true
+                    (binding.recyclerView.adapter as OverviewRVAdapter).isExtended = true
                     Log.e(TAG, "---->   set to TRUE")
                     return true
                 }
-                if (binding.recyclerView.canScrollVertically(1) && mOverviewRVAdapter.isExtended) {
-                    mOverviewRVAdapter.isExtended = false
+                if (binding.recyclerView.canScrollVertically(1) && (binding.recyclerView.adapter as OverviewRVAdapter).isExtended) {
+                    (binding.recyclerView.adapter as OverviewRVAdapter).isExtended = false
                     Log.e(TAG, "---->   set to FALSE")
                     return true
                 }
@@ -63,11 +63,11 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
             }
         }
         mViewModel.adventureListLive.observe(viewLifecycleOwner) { adventureList: List<Adventure> ->
-            mOverviewRVAdapter.submit(adventureList)
+            (binding.recyclerView.adapter as OverviewRVAdapter).submit(adventureList)
         }
         binding.recyclerView.postDelayed({
             val position: Int = args.position
-            overviewRVLayoutManager.scrollToPosition(position)
+            (binding.recyclerView.layoutManager as GridLayoutManager).scrollToPosition(position)
         }, 100)
         binding.spiralClock.setup()
         return binding.root
@@ -87,11 +87,11 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
     override fun onNewAdventureCreated(title: String) {
         mViewModel.addAdventure(Adventure.newAdventure(title).toData())
-        mOverviewRVAdapter.isExtended = false
+        (binding.recyclerView.adapter as OverviewRVAdapter).isExtended = false
     }
 
     companion object {
-        val TAG = OverviewFragment::class.java.simpleName
+        val TAG: String = OverviewFragment::class.java.simpleName
     }
 
 
@@ -99,10 +99,11 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
 
 
-    override fun onItemClickListener(adventure: Adventure, position: Int) {
+    override fun onItemClickListener(id: Int, position: Int) {
         val action: OverviewFragmentDirections.ActionOverviewFragmentToMainFragment =
             OverviewFragmentDirections.actionOverviewFragmentToMainFragment()
-        action.setPosition(position)
+        action.position = position
+        action.id = id
         val navController = NavHostFragment.findNavController(this)
         navController.navigate(action)
     }
