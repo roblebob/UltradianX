@@ -1,47 +1,27 @@
-package com.roblebob.ultradianx.ui.adapter;
+package com.roblebob.ultradianx.ui.adapter
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil
 
-import java.util.List;
-
-public class ListDiffCallback<T> extends DiffUtil.Callback {
-
-    private final List<T> mOld;
-    private final List<T> mNew;
-
-    public ListDiffCallback(List<T> oldList , List<T> newList ) {
-        super();
-        mOld = oldList;
-        mNew = newList;
+class ListDiffCallback<T>(private val mOld: List<T>, private val mNew: List<T>) :
+    DiffUtil.Callback() {
+    override fun getOldListSize(): Int {
+        return mOld.size
     }
 
-
-    @Override
-    public int getOldListSize() {
-        return mOld.size();
+    override fun getNewListSize(): Int {
+        return mNew.size
     }
 
-    @Override
-    public int getNewListSize() {
-        return mNew.size();
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return mOld[oldItemPosition] == mNew[newItemPosition]
     }
 
-    @Override
-    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOld.get(oldItemPosition).equals( mNew.get(newItemPosition));
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return mOld[oldItemPosition] == mNew[newItemPosition]
     }
 
-    @Override
-    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOld.get(oldItemPosition).equals( mNew.get(newItemPosition));
-    }
-
-    @Nullable
-    @Override
-    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         //you can return particular field for changed item.
-        return super.getChangePayload(oldItemPosition, newItemPosition);
+        return super.getChangePayload(oldItemPosition, newItemPosition)
     }
-
 }
