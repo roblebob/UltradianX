@@ -1,108 +1,89 @@
-package com.roblebob.ultradianx.repository.worker;
+package com.roblebob.ultradianx.repository.worker
 
-import android.content.Context;
-import android.util.Log;
+import android.content.Context
+import android.util.Log
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import com.roblebob.ultradianx.R
+import com.roblebob.ultradianx.repository.model.Adventure
+import com.roblebob.ultradianx.repository.model.AdventureDao
+import com.roblebob.ultradianx.repository.model.AppDatabase
+import com.roblebob.ultradianx.repository.model.AppState
+import com.roblebob.ultradianx.repository.model.AppStateDao
+import com.roblebob.ultradianx.util.UtilKt.getRidOfMillis
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Request.Builder
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.IOException
+import java.time.Instant
 
-import androidx.annotation.NonNull;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
+class InitWorker internal constructor(appContext: Context, workerParameters: WorkerParameters) :
+    Worker(appContext, workerParameters) {
+    private val mAdventureDao: AdventureDao
+    private val mAppStateDao: AppStateDao
+    private val mSrcUrl: String
 
-import com.roblebob.ultradianx.R;
-import com.roblebob.ultradianx.repository.model.Adventure;
-import com.roblebob.ultradianx.repository.model.AdventureDao;
-import com.roblebob.ultradianx.repository.model.AppDatabase;
-import com.roblebob.ultradianx.repository.model.AppState;
-import com.roblebob.ultradianx.repository.model.AppStateDao;
-import com.roblebob.ultradianx.util.UtilKt;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.time.Instant;
-import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class InitWorker extends Worker {
-    public static final String TAG = InitWorker.class.getSimpleName();
-    private final AdventureDao mAdventureDao;
-    private final AppStateDao mAppStateDao;
-    private final String mSrcUrl;
-
-    InitWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParameters) {
-        super(appContext, workerParameters);
-        mAdventureDao = AppDatabase.getInstance(appContext).adventureDao();
-        mAppStateDao = AppDatabase.getInstance( appContext).appStateDao();
-        mSrcUrl = appContext.getString(R.string.src_url);
+    init {
+        mAdventureDao = AppDatabase.getInstance(appContext).adventureDao()
+        mAppStateDao = AppDatabase.getInstance(appContext).appStateDao()
+        mSrcUrl = appContext.getString(R.string.src_url)
     }
 
-
-    @NonNull
-    @Override
-    public Result doWork() {
-
+    override fun doWork(): Result {
         if (mAdventureDao.countAdventures() == 0) {
 
-            String result;
+            val result: String = try {
 
-            try {
-                final OkHttpClient client = new OkHttpClient();
+                val client = OkHttpClient()
+                val request: Request = Builder() .url( mSrcUrl) .build()
+                val response = client .newCall( request) .execute()
+                
+                response.body.string()
 
-                Request request = new Request.Builder()
-                        .url(mSrcUrl)
-                        .build();
-
-                Response response = client.newCall(request).execute();
-
-
-                result = response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e(TAG, "Error, while gathering request's response", e);
-                return Result.failure();
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Log.e(TAG, "Error, while gathering request's response", e)
+                return Result.failure()
             }
-
-
+            
             try {
-                JSONArray jsonArray = new JSONArray(result);
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                val jsonArray = JSONArray(result)
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.getJSONObject(i)
 
                     // title
-                    String title = jsonObject.getString("title");
+                    val title = jsonObject.getString("title")
 
                     // tags
-                    String tag = jsonObject.getString("tag");
+                    val tag = jsonObject.getString("tag")
 
                     // details
-                    ArrayList<String> details = new ArrayList<>();
-                    JSONArray jsonArrayDetails = jsonObject.getJSONArray("details");
-                    for (int ii = 0; ii < jsonArrayDetails.length(); ii++) {
-                        details.add(jsonArrayDetails.getString(ii));
+                    val details = ArrayList<String>()
+                    val jsonArrayDetails = jsonObject.getJSONArray("details")
+                    for (ii in 0 until jsonArrayDetails.length()) {
+                        details.add(jsonArrayDetails.getString(ii))
                     }
 
                     // target in hole minutes
-                    int target = jsonObject.getInt("target");
-
-                    String now = UtilKt.getRidOfMillis(Instant.now().toString());
-                    mAdventureDao.insert(new Adventure(false, title, tag, details, "", 17.0, now, now, target));
+                    val target = jsonObject.getInt("target")
+                    val now = getRidOfMillis(Instant.now().toString())
+                    mAdventureDao.insert( Adventure(false, title, tag, details, "", 17.0, now!!, now, target))
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.e(TAG, "Error, while gathering json data", e);
-                return Result.failure();
+            } catch (e: JSONException) {
+                e.printStackTrace()
+                Log.e(TAG, "Error, while gathering json data", e)
+                return Result.failure()
             }
-
-            mAppStateDao.insert(new AppState("initialRun", "run before"));
+            mAppStateDao.insert(AppState("initialRun", "run before"))
         } else {
-            Log.e(TAG, "Already have data, not running");
+            Log.e(TAG, "Already have data, not running")
         }
+        return Result.success()
+    }
 
-        return Result.success();
+    companion object {
+        val TAG: String = InitWorker::class.java.simpleName
     }
 }
