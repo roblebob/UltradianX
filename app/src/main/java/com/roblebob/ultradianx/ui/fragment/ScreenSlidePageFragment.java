@@ -29,6 +29,8 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 import com.roblebob.ultradianx.ui.extra.MyController;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScreenSlidePageFragment#newInstance} factory method to
@@ -109,7 +111,16 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel.getAdventureByIdLive( mId).observe( getViewLifecycleOwner(), adventure -> {
-            mAdventure = new Adventure( adventure);
+            if (adventure == null) {
+                return;
+            }
+            try {
+                mAdventure = new Adventure( adventure);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "---------> " + adventure.toString());
+            }
+
             // start transition (passive <-> active) if needed
             if (mIsActive != mAdventure.isActive()) {
                 transition();
@@ -141,7 +152,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         });
         mBinding.progressSlider.addOnChangeListener( (slider, value, fromUser) -> {
             if (mAdventure != null) {
-                mAdventure.setPriority((double) slider.getValue());
+                mAdventure.priority = slider.getValue();
                 bind();
             }
         });
@@ -162,7 +173,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         });
         mBinding.targetSlider.addOnChangeListener( (slider, value, fromUser) -> {
             if (mAdventure != null) {
-                mAdventure.setTarget(  AdventureDisplay.targetFromSlider.apply( slider.getValue()) );
+                mAdventure.target = AdventureDisplay.targetFromSlider.apply( slider.getValue());
                 bind();
             }
         });
@@ -200,7 +211,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             return;
         }
 
-        AdventureDisplay mAdventureDisplay = new AdventureDisplay( mAdventure, this.getContext());
+        AdventureDisplay mAdventureDisplay = new AdventureDisplay( mAdventure, this.requireContext());
 
         mBinding.titleTv.setText(                    mAdventureDisplay.titleToSpannableStringBuilder());
         mBinding.tagTv.setText(                      mAdventureDisplay.tagToSpannableStringBuilder() );
@@ -208,13 +219,13 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.priorityTv.setText(                 mAdventureDisplay.priorityToTv());
         mBinding.targetTv.setText(                   mAdventureDisplay.targetToTv());
 
-        mBinding.progressBar.setProgressCompat(      mAdventure.getPriority().intValue(), true);
+        mBinding.progressBar.setProgressCompat((    (int) mAdventure.priority), true);
         mBinding.targetBar.setProgressCompat(        mAdventureDisplay.targetToBar(), true);
 
-        mBinding.progressSlider.setValue(            mAdventure.getPriority().intValue());
+        mBinding.progressSlider.setValue((float) mAdventure.priority);
         mBinding.targetSlider.setValue(              mAdventureDisplay.targetToSlider());
 
-        mDetailsRVAdapter.submit(                    mAdventure.getDetails()  );
+        mDetailsRVAdapter.submit(mAdventure.details);
 
         int color = mAdventureDisplay.getColor();
         mBinding.titleTv.setTextColor( color);
@@ -263,7 +274,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         super.onResume();
         Log.e(TAG, "---> " + "onResume()   " + mIsActive);
         if (mIsActive) {
-            mHandler.postDelayed(mProgressUpdaterRunnable, ACTIVE_PROGRESS_UPDATE_INTERVAL);
+            mHandler.postDelayed( mProgressUpdaterRunnable, ACTIVE_PROGRESS_UPDATE_INTERVAL);
         }
     }
 
@@ -272,7 +283,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         super.onPause();
         Log.e(TAG, "---> " + "onPause()");
         mViewModel.refresh(null);
-        mHandler.removeCallbacks(mProgressUpdaterRunnable);
+        mHandler.removeCallbacks( mProgressUpdaterRunnable);
     }
 
     @Override

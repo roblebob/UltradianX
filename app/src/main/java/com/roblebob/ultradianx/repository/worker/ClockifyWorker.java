@@ -86,7 +86,7 @@ public class ClockifyWorker extends Worker {
                                         "  \"start\": \"" + history.getStart() + "\",\n" +
                                         //"  \"billable\": \"false\",\n" +
                                         //"  \"description\": \"Writing documentation\",\n" +
-                                        "  \"projectId\": \"" + adventure.getClockify() + "\",\n" +
+                                        "  \"projectId\": \"" + adventure.clockify + "\",\n" +
                                         //"  \"taskId\": \"5b1e6b160cb8793dd93ec120\",\n" +
                                         "  \"end\": \"" + history.getEnd() + "\"" +
                                         //"  \"tagIds\": [],\n" +
@@ -127,7 +127,7 @@ public class ClockifyWorker extends Worker {
     private Adventure validate( Adventure adventure) {
 
         // check if adventure has a clockify entry
-        if (adventure.getClockify() != null) { return adventure; }
+        if (!adventure.clockify.isEmpty()) { return adventure; }
 
 
         // check if clockify has a project corresponding to the adventure title
@@ -145,9 +145,9 @@ public class ClockifyWorker extends Worker {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                if (jsonObject.getString("name") .equals( adventure.getTitle())) {
+                if (jsonObject.getString("name") .equals(adventure.title)) {
 
-                    adventure.setClockify( jsonObject.getString("id"));
+                    adventure.clockify = jsonObject.getString("id");
                     adventureDao.update( adventure);
                     return adventure;
                 }
@@ -160,16 +160,16 @@ public class ClockifyWorker extends Worker {
                             .addHeader("content-type", "application/json")
                             .addHeader("X-Api-Key", getApplicationContext().getString(R.string.clockify_api_key))
                             .url(API_BASE_ENDPOINT + "/workspaces" + "/" + appStateDao.loadValueByKey(CLOCKIFY_WORKSPACE) + "/projects")
-                            .post( RequestBody.create(MEDIA_TYPE, "{\"name\": \"" + adventure.getTitle() +"\"}"))
+                            .post( RequestBody.create(MEDIA_TYPE, "{\"name\": \"" + adventure.title +"\"}"))
                             .build()
             ).execute();
 
-            adventure.setClockify( new JSONObject( response.body().string()) .getString("id"));
+            adventure.clockify = new JSONObject( response.body().string()) .getString("id");
             adventureDao.update( adventure);
             return adventure;
         }
         catch (IOException | JSONException e) {
-            Log.e(TAG,  "Error validating adventure " + adventure.getTitle(), e);
+            Log.e(TAG,  "Error validating adventure " + adventure.title, e);
             return adventure;
         }
     }

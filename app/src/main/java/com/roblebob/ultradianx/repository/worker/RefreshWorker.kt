@@ -34,15 +34,16 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         val data = inputData
         val id = data.getInt("id", -1)
-        
+
+        Log.e(TAG, "---->  RefreshWorker.doWork: id = $id \n " + data.keyValueMap.toString() + "\n\n");
 
         if (id < 1) {
             // case: no valid id => refresh all instead
             
             
-            mAdventureDao.loadAdventureList().forEach(Consumer { adventure1: Adventure? ->
+            mAdventureDao.loadAdventureList().forEach(Consumer { adventure: Adventure ->
                 // TODO
-                val adventure = Adventure(adventure1)
+                //val adventure = Adventure(adventure1)
                 adventure.refresh()
                 mAdventureDao.update(adventure)
                 if (adventure.isActive) {
@@ -74,6 +75,8 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) :
             }
             
             adventure.update(data)
+
+            Log.e(TAG, "---->  RefreshWorker.doWork: adventure.priority = ${adventure.priority} \n " + data.keyValueMap.toString() + "\n\n");
             mAdventureDao.update(adventure)
         }
         return Result.success()

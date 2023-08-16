@@ -90,7 +90,7 @@ public class InitWorker extends Worker {
                     int target = jsonObject.getInt("target");
 
                     String now = UtilKt.getRidOfMillis(Instant.now().toString());
-                    mAdventureDao.insert(new Adventure(false, title, tag, details, null, 17.0, now, now, target));
+                    mAdventureDao.insert(new Adventure(false, title, tag, details, "", 17.0, now, now, target));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

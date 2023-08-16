@@ -18,6 +18,7 @@ import com.roblebob.ultradianx.repository.model.AdventureDao
 import com.roblebob.ultradianx.repository.model.AppDatabase
 import com.roblebob.ultradianx.repository.model.AppStateDao
 import com.roblebob.ultradianx.repository.worker.AddAdventureWorker
+import com.roblebob.ultradianx.repository.worker.DeleteAdventureWorker
 import com.roblebob.ultradianx.repository.worker.InitWorker
 import com.roblebob.ultradianx.repository.worker.RefreshWorker
 
@@ -96,6 +97,14 @@ class AppViewModel(application: Application, private val savedStateHandle: Saved
         mWorkManager.enqueue(
             OneTimeWorkRequest.Builder(AddAdventureWorker::class.java)
                 .setInputData(data)
+                .build()
+        )
+    }
+
+    fun deleteAdventure(id: Int) {
+        mWorkManager.enqueue(
+            OneTimeWorkRequest.Builder(DeleteAdventureWorker::class.java)
+                .setInputData(Data.Builder().putInt("id", id).build())
                 .build()
         )
     }

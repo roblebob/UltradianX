@@ -21,6 +21,11 @@ import java.util.Objects
 
 class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVViewHolder>() {
 
+    fun getAdventureId(position: Int): Int {
+        return mAdventureList[position].id
+    }
+
+
     private val mAdventureList = mutableListOf<Adventure>()
     fun submit(adventureList: List<Adventure>) {
         val listDiffCallback = ListDiffCallback(mAdventureList, adventureList)
@@ -78,6 +83,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         holder.textView.visibility = View.VISIBLE
         holder.textView.text = adventureDisplay.titleToSpannableStringBuilder(3)
         holder.itemView.setOnClickListener { v: View? -> mCallback.onItemClickListener( adventure.id, position) }
+
 
         // displacing the text to the left depending on the priority
         val constraintLayout = holder.itemView as ConstraintLayout

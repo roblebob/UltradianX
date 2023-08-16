@@ -34,7 +34,7 @@ public class AddAdventureWorker extends Worker {
 
         Adventure candidate = new Adventure( getInputData());
 
-        if (mAdventureDao.countAdventuresWithTitle(candidate.getTitle()) != 0) {
+        if (mAdventureDao.countAdventuresWithTitle(candidate.title) != 0) {
 
             Toast.makeText(getApplicationContext(), "Failed, title already exists!"  , Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Failed, title already exists!");
