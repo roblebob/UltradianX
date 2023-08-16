@@ -13,7 +13,6 @@ import android.view.View
 import androidx.core.graphics.PathParser
 import com.roblebob.ultradianx.R
 import com.roblebob.ultradianx.ui.extra.SpiralClock
-import com.roblebob.ultradianx.util.UtilKt.list2String
 import java.time.Duration
 import java.time.Instant
 import java.time.ZoneOffset
@@ -25,18 +24,8 @@ import kotlin.math.sin
 class SpiralClock : View {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     private val mOuterHoursList = mutableListOf(*resources.getStringArray(R.array.outer_path_hours))
     private val mInnerHoursList = mutableListOf(*resources.getStringArray(R.array.inner_path_hours))

@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey
 import androidx.work.Data
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.roblebob.ultradianx.util.UtilKt.getRidOfMillis
 import java.time.Duration
 import java.time.Instant
 
@@ -155,7 +154,7 @@ class Adventure {
 
     @Ignore
     fun refresh() {
-        val now = Instant.parse(getRidOfMillis(Instant.now().toString()))
+        val now = Instant.parse(Instant.now().toString())
         val last = Instant.parse(lastTime)
         val duration = Duration.between(last, now)
         priority = (priority + ( duration.seconds * (if (isActive) -decay else grow))).coerceAtLeast(0.0).coerceAtMost(100.0)
@@ -228,8 +227,8 @@ class Adventure {
                 ArrayList(),
                 "",
                 0.0,
-                getRidOfMillis(Instant.now().toString())!!,
-                getRidOfMillis(Instant.now().toString())!!,
+                Instant.now().toString(),
+                Instant.now().toString(),
                 0
             )
         }

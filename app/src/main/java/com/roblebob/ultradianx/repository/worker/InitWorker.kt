@@ -10,7 +10,6 @@ import com.roblebob.ultradianx.repository.model.AdventureDao
 import com.roblebob.ultradianx.repository.model.AppDatabase
 import com.roblebob.ultradianx.repository.model.AppState
 import com.roblebob.ultradianx.repository.model.AppStateDao
-import com.roblebob.ultradianx.util.UtilKt.getRidOfMillis
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Request.Builder
@@ -68,8 +67,8 @@ class InitWorker internal constructor(appContext: Context, workerParameters: Wor
 
                     // target in hole minutes
                     val target = jsonObject.getInt("target")
-                    val now = getRidOfMillis(Instant.now().toString())
-                    mAdventureDao.insert( Adventure(false, title, tag, details, "", 17.0, now!!, now, target))
+                    val now = Instant.now().toString()
+                    mAdventureDao.insert( Adventure(false, title, tag, details, "", 17.0, now, now, target))
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
