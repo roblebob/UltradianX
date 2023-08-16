@@ -1,8 +1,6 @@
 package com.roblebob.ultradianx.ui.fragment
 
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,12 +14,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnFlingListener
-import com.roblebob.ultradianx.R
+import androidx.work.Data
 import com.roblebob.ultradianx.databinding.FragmentOverviewBinding
 import com.roblebob.ultradianx.repository.model.Adventure
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter
-import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
@@ -35,7 +32,6 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
 
     private lateinit var dragHelper: ItemTouchHelper
-    private lateinit var swipeHelper: ItemTouchHelper
 
 
 
@@ -88,20 +84,15 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         super.onViewCreated(view, savedInstanceState)
 
 
-        swipeHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        dragHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
             0
         ) {
-
-
+            var active = false
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position: Int = viewHolder.adapterPosition
-                val id: Int = (binding.recyclerView.adapter as OverviewRVAdapter).getAdventureId(position)
-                //mViewModel.deleteAdventure(id)
+                TODO("Not yet implemented")
             }
-
 
             override fun onChildDraw(
                 canvas: Canvas,
@@ -112,28 +103,67 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
+
                 val position: Int = viewHolder.adapterPosition
+                if (position == RecyclerView.NO_POSITION) {
+                    return
+                }
+
                 val id: Int = (binding.recyclerView.adapter as OverviewRVAdapter).getAdventureId(position)
+                val priority = (binding.recyclerView.adapter as OverviewRVAdapter).getAdventurePriority(position)
+                var newPriority: Double = priority
+
+                if (isCurrentlyActive) {
+                    active = true
+
+                    newPriority = (priority - (dX / 100f)).coerceAtLeast(0.0).coerceAtMost(100.0)
+
+                    (recyclerView.adapter as OverviewRVAdapter).setAdventurePriority(position, newPriority )
+
+                    Log.e(TAG, "$position ($id)        ${newPriority.roundToInt()} ")
 
 
-                Log.e(TAG, "$position ($id)    ${if (isCurrentlyActive) " " else "          " }   ${- (dX / 10).roundToInt()} ")
 
-                super.onChildDraw(
-                    canvas,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
+
+                } else if (active) {
+                    active = false
+
+                    /* Force RecyclerView to redraw its items */
+                    val adapter = recyclerView.adapter as OverviewRVAdapter
+                    val layoutManager = recyclerView.layoutManager as GridLayoutManager
+
+                    recyclerView.adapter = null;
+                    recyclerView.layoutManager = null;
+                    recyclerView.adapter = adapter;
+                    recyclerView.layoutManager = layoutManager;
+                    adapter.notifyDataSetChanged();
+
+
+                    val data = Data.Builder()
+                        .putInt("id", id)
+                        .putDouble("priority", newPriority)
+                        .build()
+                    mViewModel.refresh(data)
+
+                    Log.e(TAG, "------->  onChildDraw: $position ($id)   $priority")
+                }
+
+
+
+
+
+
+
+
+
+                //super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
 
 
 
         })
 
-        swipeHelper.attachToRecyclerView(binding.recyclerView)
+        dragHelper.attachToRecyclerView(binding.recyclerView)
     }
 
 

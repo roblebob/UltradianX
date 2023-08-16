@@ -20,10 +20,18 @@ import com.roblebob.ultradianx.ui.extra.AdventureDisplay
 import java.util.Objects
 
 class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVViewHolder>() {
-
     fun getAdventureId(position: Int): Int {
         return mAdventureList[position].id
     }
+    fun getAdventurePriority(position: Int): Double {
+        return mAdventureList[position].priority
+    }
+    fun setAdventurePriority(position: Int, priority: Double) {
+        mAdventureList[position].priority = priority
+        notifyItemChanged(position)
+    }
+
+
 
 
     private val mAdventureList = mutableListOf<Adventure>()
