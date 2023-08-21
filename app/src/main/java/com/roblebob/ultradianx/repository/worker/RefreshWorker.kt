@@ -68,7 +68,8 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) :
                     History(
                         adventure.id,
                         adventure.lastTimePassive,
-                        adventure.lastTime
+                        adventure.lastTime,
+                        false
                     )
                 )
                 mWorkManager.enqueue(OneTimeWorkRequest.from(ClockifyWorker::class.java))

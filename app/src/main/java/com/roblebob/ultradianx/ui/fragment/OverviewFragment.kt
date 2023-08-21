@@ -19,6 +19,7 @@ import com.roblebob.ultradianx.databinding.FragmentOverviewBinding
 import com.roblebob.ultradianx.repository.model.Adventure
 import com.roblebob.ultradianx.repository.viewmodel.AppViewModel
 import com.roblebob.ultradianx.ui.adapter.OverviewRVAdapter
+import java.time.Instant
 import kotlin.math.roundToInt
 
 class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
@@ -170,7 +171,9 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
 
     override fun onResume() {
         super.onResume()
-        binding.spiralClock.submit(null, null)
+        val start = Instant.now()
+        val end = Instant.now().plusSeconds(60 * 60 )
+        binding.spiralClock.submit(start, end)
     }
 
     override fun onDestroyView() {

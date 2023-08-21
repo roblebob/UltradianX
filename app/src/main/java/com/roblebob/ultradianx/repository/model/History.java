@@ -21,10 +21,13 @@ public class History {
     @ColumnInfo(name = "start")             private String  start;
     @ColumnInfo(name = "end")               private String  end;
 
-    public History(int adventureId, String start, String end) {
+    @ColumnInfo(name = "uploaded")          private boolean uploaded;
+
+    public History(int adventureId, String start, String end, boolean uploaded) {
         this.adventureId = adventureId;
         this.start = start;
         this.end = end;
+        this.uploaded = uploaded;
     }
 
 
@@ -56,6 +59,13 @@ public class History {
         this.end = end;
     }
 
+    public boolean isUploaded() {
+        return uploaded;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        this.uploaded = uploaded;
+    }
 
     @NonNull
     @Override
@@ -65,6 +75,7 @@ public class History {
                 ", adventureId=" + adventureId +
                 ", start='" + start + '\'' +
                 ", end='" + end + '\'' +
+                ", uploaded=" + uploaded +
                 '}';
     }
 }

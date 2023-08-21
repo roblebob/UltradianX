@@ -109,46 +109,41 @@ class SpiralClock : View {
      * @return List<String> : list of intersection points
      **/
     private fun solve(instant: Instant): List<String> {
-        val hour = getHour(instant)
+        val hour  = getHour( instant)
         val angle = getAngle(instant)
         val z1_x = C.toDouble()
         val z1_y = C.toDouble()
-        val z2_x = (C + C * sin(angle)).toInt()
-            .toDouble()
-        val z2_y = (C + C * cos(angle)).toInt()
-            .toDouble()
+        val z2_x = (C + C * sin(angle)).toInt().toDouble()
+        val z2_y = (C + C * cos(angle)).toInt().toDouble()
 
-        var arg = mOuterHoursList[hour].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val p1_x = arg[0].toDouble()
-        val p1_y = arg[1].toDouble()
+        var arg: Array<String>
 
-        arg = mOuterHoursList[hour + 1].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val p2_x = arg[0].toDouble()
-        val p2_y = arg[1].toDouble()
+//        arg = mOuterHoursList[hour] .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray()
+//        val p1_x = arg[0].toDouble()
+//        val p1_y = arg[1].toDouble()
+//        val (p1_x, p1_y) = arg.toList().map { it.toDouble() }
+//        arg = mOuterHoursList[hour + 1] .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray()
+//        val p2_x = arg[0].toDouble()
+//        val p2_y = arg[1].toDouble()
+//        arg = mInnerHoursList[hour] .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray()
+//        val q1_x = arg[0].toDouble()
+//        val q1_y = arg[1].toDouble()
+//        arg = mInnerHoursList[hour + 1].split("\\s*,\\s*".toRegex())
+//            .dropLastWhile { it.isEmpty() }
+//            .toTypedArray()
+//        val q2_x = arg[0].toDouble()
+//        val q2_y = arg[1].toDouble()
 
-        arg = mInnerHoursList[hour].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val q1_x = arg[0].toDouble()
-        val q1_y = arg[1].toDouble()
 
-        arg = mInnerHoursList[hour + 1].split("\\s*,\\s*".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        val q2_x = arg[0].toDouble()
-        val q2_y = arg[1].toDouble()
-        val x1 =
-            (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
-        val y1 =
-            (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
-        val x2 =
-            (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
-        val y2 =
-            (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val (p1_x, p1_y) = mOuterHoursList[hour]     .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray().toList().map { it.toDouble() }
+        val (p2_x, p2_y) = mOuterHoursList[hour + 1] .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray().toList().map { it.toDouble() }
+        val (q1_x, q1_y) = mInnerHoursList[hour]     .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray().toList().map { it.toDouble() }
+        val (q2_x, q2_y) = mInnerHoursList[hour + 1] .split("\\s*,\\s*".toRegex()) .dropLastWhile { it.isEmpty() } .toTypedArray().toList().map { it.toDouble() }
+
+        val x1 = (((z2_x - z1_x) * (p2_x * p1_y - p1_x * p2_y) - (p2_x - p1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val y1 = (((z2_y - z1_y) * (p2_x * p1_y - p1_x * p2_y) - (p2_y - p1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (p2_x - p1_x) - (p2_y - p1_y) * (z2_x - z1_x))).toInt()
+        val x2 = (((z2_x - z1_x) * (q2_x * q1_y - q1_x * q2_y) - (q2_x - q1_x) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
+        val y2 = (((z2_y - z1_y) * (q2_x * q1_y - q1_x * q2_y) - (q2_y - q1_y) * (z2_x * z1_y - z1_x * z2_y)) / ((z2_y - z1_y) * (q2_x - q1_x) - (q2_y - q1_y) * (z2_x - z1_x))).toInt()
         val list = ArrayList<String>()
         list.add("$x1,$y1")
         list.add("$x2,$y2")
