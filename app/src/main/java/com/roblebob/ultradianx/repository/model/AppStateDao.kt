@@ -9,11 +9,11 @@ import androidx.room.Query
 @Dao
 interface AppStateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(appState: AppState?)
+    fun insert(appState: AppState)
 
-    @Query("SELECT value FROM AppState WHERE `key` = :arg0")
+    @Query("SELECT value FROM AppState WHERE `key` = :key")
     fun loadValueByKeyLive(key: String): LiveData<String>
 
-    @Query("SELECT value FROM AppState WHERE `key` = :arg0")
+    @Query("SELECT value FROM AppState WHERE `key` = :key")
     fun loadValueByKey(key: String): String?
 }

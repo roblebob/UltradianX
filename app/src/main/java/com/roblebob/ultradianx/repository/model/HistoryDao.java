@@ -1,5 +1,6 @@
 package com.roblebob.ultradianx.repository.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,13 +14,13 @@ import java.util.List;
 public interface HistoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert( History history);
+    void insert(History history);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update( History history);
+    void update(History history);
 
     @Delete
-    void delete( History history);
+    void delete(History history);
 
 
     @Query("SELECT * FROM History WHERE :adventureId = adventureId ORDER BY `end` DESC")

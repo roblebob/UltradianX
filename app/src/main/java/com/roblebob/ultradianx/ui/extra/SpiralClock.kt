@@ -285,7 +285,7 @@ class SpiralClock : View {
 
 
     companion object {
-        val TAG = SpiralClock::class.java.simpleName
+        val TAG: String = SpiralClock::class.java.simpleName
         const val L = 2540
         const val C = L / 2
     }

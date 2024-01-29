@@ -1,6 +1,7 @@
 package com.roblebob.ultradianx.repository.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -18,19 +17,26 @@ import com.roblebob.ultradianx.repository.model.AdventureDao
 import com.roblebob.ultradianx.repository.model.AppDatabase
 import com.roblebob.ultradianx.repository.model.AppStateDao
 import com.roblebob.ultradianx.repository.worker.AddAdventureWorker
+import com.roblebob.ultradianx.repository.worker.CleanupWorker
 import com.roblebob.ultradianx.repository.worker.DeleteAdventureWorker
 import com.roblebob.ultradianx.repository.worker.InitWorker
 import com.roblebob.ultradianx.repository.worker.RefreshWorker
 
 class AppViewModel(application: Application, private val savedStateHandle: SavedStateHandle?) : ViewModel() {
+    private val TAG = Companion::class.java.simpleName
+
     private val mWorkManager: WorkManager
     private val adventureDao: AdventureDao
     private val appStateDao: AppStateDao
+
+
 
     init {
         adventureDao = AppDatabase.getInstance(application.applicationContext).adventureDao()
         appStateDao = AppDatabase.getInstance(application.applicationContext).appStateDao()
         mWorkManager = WorkManager.getInstance(application)
+        Log.e(TAG, "---------------->  VM _----------")
+        mWorkManager.enqueue(OneTimeWorkRequest.from(CleanupWorker::class.java))
     }
 
     companion object {

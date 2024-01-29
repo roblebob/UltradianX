@@ -36,10 +36,10 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
 
     private val mAdventureList = mutableListOf<Adventure>()
     fun submit(adventureList: List<Adventure>) {
-        val listDiffCallback = ListDiffCallback(mAdventureList, adventureList)
-        val diffResult = DiffUtil.calculateDiff(listDiffCallback)
+        val listDiffCallback = ListDiffCallback( mAdventureList, adventureList)
+        val diffResult = DiffUtil.calculateDiff( listDiffCallback)
         mAdventureList.clear()
-        mAdventureList.addAll(adventureList)
+        mAdventureList.addAll( adventureList)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -78,7 +78,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
             holder.textView.visibility = View.INVISIBLE
             holder.textInputLayout.setEndIconOnClickListener { v: View? ->
                 val title = Objects.requireNonNull(holder.textInputEditText.text).toString()
-                if (!title.isEmpty()) {
+                if (title.isNotEmpty()) {
                     mCallback.onNewAdventureCreated(title)
                     holder.textInputEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
                 }
