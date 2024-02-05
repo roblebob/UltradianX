@@ -229,7 +229,7 @@ class Adventure {
                 0.0,
                 Instant.now().toString(),
                 Instant.now().toString(),
-                0
+                1
             )
         }
     }
