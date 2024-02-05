@@ -17,12 +17,15 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
     private var mContext: Context
 
     init {
-        mAdventure = Adventure(adventure)
+        //mAdventure = Adventure(adventure)
+        mAdventure = adventure
+
         mContext = context
     }
     
     fun update(adventure: Adventure) {
-        mAdventure = Adventure(adventure)
+        //mAdventure = Adventure(adventure)
+        mAdventure = adventure
     }
 
     @JvmOverloads
@@ -68,7 +71,7 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
                 "health" -> color = mContext.getColor(R.color.tag_health)
                 "theory" -> color = mContext.getColor(R.color.tag_theory)
                 "coding" -> color = mContext.getColor(R.color.tag_coding)
-                "music" -> color = mContext.getColor(R.color.tag_music)
+                "music"  -> color = mContext.getColor(R.color.tag_music)
             }
             return color
         }
