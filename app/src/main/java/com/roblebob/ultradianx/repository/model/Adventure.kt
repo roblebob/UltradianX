@@ -14,51 +14,21 @@ import java.time.Instant
 
 @Entity(tableName = "Adventure", indices = [Index(value = ["title"], unique = true)])
 class Adventure {
-    @JvmField
-    @PrimaryKey(autoGenerate = true)
-    var id = 0
+    @JvmField @PrimaryKey(autoGenerate = true)  var id = 0
+    @ColumnInfo(name = "active")                var active: Boolean
+    @JvmField @ColumnInfo(name = "title")       var title: String
+    @JvmField @ColumnInfo(name = "tag")         var tag: String
+    @JvmField @ColumnInfo(name = "details")     var details: ArrayList<String>
+    @JvmField @ColumnInfo(name = "priority")    var priority: Double
+    @JvmField @ColumnInfo(name = "lastTime")    var lastTime: String
+    @JvmField @ColumnInfo(name = "lastTimePassive") var lastTimePassive: String
+    @JvmField @ColumnInfo(name = "clockify")    var clockify: String
+    @JvmField @ColumnInfo(name = "target")      var target : Int  // in minutes
 
-    @ColumnInfo(name = "active")
-    var isActive: Boolean
-
-    @JvmField
-    @ColumnInfo(name = "title")
-    var title: String
-
-    @JvmField
-    @ColumnInfo(name = "tag")
-    var tag: String
-
-    @JvmField
-    @ColumnInfo(name = "details")
-    var details: ArrayList<String>
-
-    @JvmField
-    @ColumnInfo(name = "priority")
-    var priority: Double
-
-    @JvmField
-    @ColumnInfo(name = "lastTime")
-    var lastTime: String
-
-    @JvmField
-    @ColumnInfo(name = "lastTimePassive")
-    var lastTimePassive: String
-
-    @JvmField
-    @ColumnInfo(name = "clockify")
-    var clockify: String
-
-    @JvmField
-    @ColumnInfo(name = "target")
-    var target : Int  // in minutes
-
-    constructor(
-        active: Boolean, title: String, tag: String, details: ArrayList<String>,
-        clockify: String, priority: Double, lastTime: String, lastTimePassive: String,
-        target: Int
-    ) {
-        isActive = active
+    constructor(active: Boolean, title: String, tag: String, details: ArrayList<String>,
+                clockify: String, priority: Double, lastTime: String, lastTimePassive: String,
+                target: Int) {
+        this.active = active
         this.title = title
         this.tag = tag
         this.details = details
@@ -68,11 +38,9 @@ class Adventure {
         this.lastTimePassive = lastTimePassive
         this.target = target
     }
-
-    @Ignore
-    constructor(adventure: Adventure) {
+    @Ignore constructor(adventure: Adventure) {
         id = adventure.id
-        isActive = adventure.isActive
+        active = adventure.active
         title = adventure.title
         tag = adventure.tag
         details = adventure.details
@@ -82,11 +50,9 @@ class Adventure {
         lastTimePassive = adventure.lastTimePassive
         target = adventure.target
     }
-
-    @Ignore
-    constructor(data: Data) {
+    @Ignore constructor(data: Data) {
         id = data.getInt("id", -1)
-        isActive = data.getBoolean("active", false)
+        active = data.getBoolean("active", false)
         title = data.getString("title")!!
         tag = data.getString("tags")!!
         details = Gson().fromJson(
@@ -101,34 +67,6 @@ class Adventure {
     }
 
 
-
-    fun getLastTime(): String {
-        return lastTime
-    }
-
-    fun setLastTime(lastTime: String) {
-        this.lastTime = lastTime
-        if (!isActive) {
-            lastTimePassive = lastTime
-        }
-    }
-
-    @Ignore
-    fun toData(): Data {
-        val builder = Data.Builder()
-        builder.putInt("id", id)
-        builder.putBoolean("active", isActive)
-        builder.putString("title", title)
-        builder.putString("tags", tag)
-        builder.putString("details", Gson().toJson(details))
-        builder.putString("clockify", clockify)
-        builder.putDouble("priority", priority)
-        builder.putString("lastTime", lastTime)
-        builder.putString("lastTimePassive", lastTimePassive)
-        builder.putInt("target", target) // !!!!!!  in MINUTES
-        return builder.build()
-    }
-
     @get:Ignore
     val grow: Double
         get() = if (target == 0) 0.0 else 100.0 / (24.0 * 60.0 * 60.0) // 1 day
@@ -137,40 +75,39 @@ class Adventure {
     val decay: Double
         get() = if (target == 0) 0.0 else 100.0 / (target * 60.0) // since we need it in secs
 
-    override fun toString(): String {
-        return "Adventure{" +
-                "id=" + id +
-                ", active=" + isActive +
-                ", title='" + title + '\'' +
-                ", tags='" + tag + '\'' +
-                ", details=" + details +
-                ", priority=" + priority +
-                ", lastTime='" + lastTime + '\'' +
-                ", lastTimePassive='" + lastTimePassive + '\'' +
-                ", clockify='" + clockify + '\'' +
-                ", target=" + target +
-                '}'
-    }
+
 
     @Ignore
     fun refresh() {
-        val now = Instant.parse(Instant.now().toString())
-        val last = Instant.parse(lastTime)
-        val duration = Duration.between(last, now)
-        priority = (priority + ( duration.seconds * (if (isActive) -decay else grow))).coerceAtLeast(0.0).coerceAtMost(100.0)
-        setLastTime(now.toString())
+        val now = Instant.now()
+        val duration = Duration.between(Instant.parse(lastTime), now)
+
+        priority = (priority + ( duration.seconds * (if (active) -decay else grow)))
+            .coerceAtLeast(0.0).coerceAtMost(100.0)
+
+        this.lastTime = now.toString().also {
+            if (!active) {
+                lastTimePassive = it
+            }
+        }
     }
+
+
+
+
+
 
     @Ignore
     fun abort() {
-        if (isActive) {
+        if (active) {
             refresh()
-            isActive = false
+            active = false
             val duration = Duration.between(
                 Instant.parse(lastTime),
                 Instant.parse(lastTimePassive)
             )
-            priority +=  duration.seconds * decay + duration.seconds * grow // ... add the passive part, instead
+            priority +=  duration.seconds * decay // reverse that was subtracted while being active
+            + duration.seconds * grow // ...and add the passive part, instead
 
         } else {
             Log.e(this.javaClass.simpleName, "abort() called on inactive adventure")
@@ -183,7 +120,7 @@ class Adventure {
         if (data.getInt("id", -1) == id) {
 
             if (data.hasKeyWithValueOfType("active", Boolean::class.javaObjectType)) {
-                isActive = data.getBoolean("active", false)
+                active = data.getBoolean("active", false)
             }
             if (data.hasKeyWithValueOfType("title", String::class.javaObjectType)) {
                 title = data.getString("title")!!
@@ -216,6 +153,21 @@ class Adventure {
             refresh()
         }
     }
+
+    override fun toString(): String = "Adventure{ id=$id, active=$active, title=$title, tags=$tag details=$details, priority=$priority, lastTime='$lastTime', lastTimePassive='$lastTimePassive', clockify='$clockify', target=$target }"
+
+    @Ignore fun toData(): Data = Data.Builder()
+        .putInt("id", id)
+        .putBoolean("active", active)
+        .putString("title", title)
+        .putString("tags", tag)
+        .putString("details", Gson().toJson(details))
+        .putString("clockify", clockify)
+        .putDouble("priority", priority)
+        .putString("lastTime", lastTime)
+        .putString("lastTimePassive", lastTimePassive)
+        .putInt("target", target)
+        .build()
 
     companion object {
         @Ignore

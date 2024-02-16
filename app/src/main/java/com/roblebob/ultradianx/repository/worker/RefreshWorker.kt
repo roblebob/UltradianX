@@ -46,7 +46,7 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) :
                 //val adventure = Adventure(adventure1)
                 adventure.refresh()
                 mAdventureDao.update(adventure)
-                if (adventure.isActive) {
+                if (adventure.active) {
                     mActiveCount++
                 }
             })
@@ -61,7 +61,7 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) :
             adventure.refresh()
 
             // if transition ...
-            if (adventure.isActive &&  //  .. from active ...
+            if (adventure.active &&  //  .. from active ...
                 !data.getBoolean("active", true) // ... to passive
             ) {
                 mHistoryDao.insert(

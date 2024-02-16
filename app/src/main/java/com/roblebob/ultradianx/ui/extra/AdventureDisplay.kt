@@ -17,10 +17,10 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
     private var mContext: Context
 
     init {
+        mContext = context
+
         //mAdventure = Adventure(adventure)
         mAdventure = adventure
-
-        mContext = context
     }
     
     fun update(adventure: Adventure) {

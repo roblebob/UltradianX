@@ -49,7 +49,7 @@ interface AdventureDao {
     @Query(value = "UPDATE Adventure SET `priority` = :priority WHERE id = :id ")
     fun updatePriority(id: Int, priority: Double)
 
-    @Query(value = "UPDATE Adventure SET `active` = :active WHERE id = :id ")
+    @Query(value = "UPDATE Adventure SET active = :active WHERE id = :id ")
     fun activate(id: Int, active: Boolean)
 
     @Query(value = "DELETE FROM Adventure WHERE `priority` <= 0.0 AND `target` <= 0")

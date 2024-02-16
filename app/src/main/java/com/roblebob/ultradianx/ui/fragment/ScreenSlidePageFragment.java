@@ -29,8 +29,6 @@ import com.roblebob.ultradianx.repository.viewmodel.AppViewModel;
 import com.roblebob.ultradianx.ui.extra.AdventureDisplay;
 import com.roblebob.ultradianx.ui.extra.MyController;
 
-import java.util.Objects;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScreenSlidePageFragment#newInstance} factory method to
@@ -56,7 +54,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param id Parameter 1
+     * @param id Parameter
      * @return A new instance of fragment ScreenSlidePageFragment.
      */
     public static ScreenSlidePageFragment newInstance(int id) {
@@ -122,7 +120,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             }
 
             // start transition (passive <-> active) if needed
-            if (mIsActive != mAdventure.isActive()) {
+            if (mIsActive != mAdventure.getActive()) {
                 transition();
             }
             bind();
@@ -192,7 +190,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     /** Called when a transition is needed (e.g.: mAdventure has changed)
      */
     private void transition() {
-        mIsActive = mAdventure.isActive();
+        mIsActive = mAdventure.getActive();
         Log.e(TAG, "transition to " + mIsActive);
         if (mIsActive) {
             mBinding.root.setBackgroundColor( this.getResources().getColor(R.color.active_background, null));
