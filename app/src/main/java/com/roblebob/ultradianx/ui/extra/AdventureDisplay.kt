@@ -33,8 +33,11 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
         val spannableStringBuilder = SpannableStringBuilder()
         spannableStringBuilder.append(mAdventure.title)
         val maxFontSize: Int = mAdventure.priority.toInt()
+
         for (i in 0 until mAdventure.title.length) {
+
             val fontSize = maxFontSize - 3 * i
+
             spannableStringBuilder.setSpan(
                 AbsoluteSizeSpan(fontSize.coerceAtLeast(minFontSize), true),
                 i,
@@ -65,24 +68,23 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
 
     val color: Int
         // TODO: only temporary
-        get() {
-            var color = mContext.getColor(R.color.tag_neutral)
-            when (mAdventure.tag) {
-                "health" -> color = mContext.getColor(R.color.tag_health)
-                "theory" -> color = mContext.getColor(R.color.tag_theory)
-                "coding" -> color = mContext.getColor(R.color.tag_coding)
-                "music"  -> color = mContext.getColor(R.color.tag_music)
-            }
-            return color
+        get() = when (mAdventure.tag) {
+            "health" -> mContext.getColor(R.color.tag_health)
+            "theory" -> mContext.getColor(R.color.tag_theory)
+            "coding" -> mContext.getColor(R.color.tag_coding)
+            "music"  -> mContext.getColor(R.color.tag_music)
+            else     -> mContext.getColor(R.color.tag_neutral)
         }
 
-    fun priorityToTv(): String {
-        return java.lang.String.valueOf(mAdventure.priority.toInt())
-    }
 
-    fun targetToSlider(): Float {
-        return targetToSlider.apply(mAdventure.target)
-    }
+
+
+
+
+    fun priorityToTv(): String = java.lang.String.valueOf(mAdventure.priority.toInt())
+
+    fun targetToSlider(): Float = targetToSlider.apply(mAdventure.target)
+
 
     fun targetToBar(): Int {
         var x = targetToSlider.apply(mAdventure.target)

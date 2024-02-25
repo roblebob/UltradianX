@@ -115,8 +115,8 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
             try {
                 mAdventure = new Adventure( adventure);
             } catch (Exception e) {
+                Log.e(TAG, "---------> " + adventure);
                 e.printStackTrace();
-                Log.e(TAG, "---------> " + adventure.toString());
             }
 
             // start transition (passive <-> active) if needed
@@ -217,7 +217,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.priorityTv.setText(                 mAdventureDisplay.priorityToTv());
         mBinding.targetTv.setText(                   mAdventureDisplay.targetToTv());
 
-        mBinding.progressBar.setProgressCompat((    (int) mAdventure.priority), true);
+        mBinding.progressBar.setProgressCompat(     (int) mAdventure.priority, true);
         mBinding.targetBar.setProgressCompat(        mAdventureDisplay.targetToBar(), true);
 
         mBinding.progressSlider.setValue((float) mAdventure.priority);

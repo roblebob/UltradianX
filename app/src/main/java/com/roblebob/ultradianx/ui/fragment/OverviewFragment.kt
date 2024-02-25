@@ -174,6 +174,8 @@ class OverviewFragment : Fragment(), OverviewRVAdapter.Callback {
         val start = Instant.now()
         val end = Instant.now().plusSeconds(60 * 60 )
         binding.spiralClock.submit(start, end)
+
+        mViewModel.refreshAll(null)
     }
 
     override fun onDestroyView() {

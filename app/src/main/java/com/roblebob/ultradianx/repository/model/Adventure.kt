@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.Duration
 import java.time.Instant
+import kotlin.math.exp
 
 @Entity(tableName = "Adventure", indices = [Index(value = ["title"], unique = true)])
 class Adventure {
@@ -92,7 +93,7 @@ class Adventure {
         }
     }
 
-
+    //fun Double.bound() = 100.0 / (1 + exp(this / -100.0))
 
 
 
