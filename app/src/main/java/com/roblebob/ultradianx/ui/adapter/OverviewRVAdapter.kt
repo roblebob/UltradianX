@@ -99,7 +99,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         constraintSet.clone(constraintLayout)
         constraintSet.setHorizontalBias(
             R.id.single_item_adventures_tv,
-            1 - adventure.priority.toFloat() / 100
+            1.0f - adventure.priority.toFloat()
         )
         constraintSet.applyTo(constraintLayout)
     }

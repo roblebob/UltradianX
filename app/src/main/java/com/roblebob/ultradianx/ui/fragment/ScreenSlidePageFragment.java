@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -137,7 +138,7 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
     @Override
     public void onStart() {
         super.onStart();
-        mBinding.progressSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
+        mBinding.prioritySlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {
             }
@@ -148,13 +149,13 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
                 mViewModel.refresh(new Data.Builder() .putInt("id", mId) .putDouble("priority", priority) .build());
             }
         });
-        mBinding.progressSlider.addOnChangeListener( (slider, value, fromUser) -> {
+        mBinding.prioritySlider.addOnChangeListener( (slider, value, fromUser) -> {
             if (mAdventure != null) {
-                mAdventure.priority = slider.getValue();
+                mAdventure.priority = slider.getValue() ;
                 bind();
             }
         });
-        mBinding.progressSlider.setLabelFormatter( value -> "priority");
+        mBinding.prioritySlider.setLabelFormatter( value -> "priority");
 
 
         mBinding.targetSlider.addOnSliderTouchListener( new Slider.OnSliderTouchListener() {
@@ -204,24 +205,26 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
 
     /** Called whenever the ui should be updated (e.g.: mAdventure has changed) */
     private void bind() {
-
-        if (mAdventure == null) {
-            return;
-        }
-
+        if (mAdventure == null) { return; }
         AdventureDisplay mAdventureDisplay = new AdventureDisplay( mAdventure, this.requireContext());
 
-        mBinding.titleTv.setText(                    mAdventureDisplay.titleToSpannableStringBuilder());
-        mBinding.tagTv.setText(                      mAdventureDisplay.tagToSpannableStringBuilder() );
 
-        mBinding.priorityTv.setText(                 mAdventureDisplay.priorityToTv());
-        mBinding.targetTv.setText(                   mAdventureDisplay.targetToTv());
+        // displacing the text to the left depending on the priority
+        // ConstraintLayout constraintLayout = mBinding.root;
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(mBinding.root);
+        constraintSet.setHorizontalBias(R.id.title_tv, mAdventureDisplay.priorityToHorizontalBias());
+        constraintSet.applyTo(mBinding.root);
 
-        mBinding.progressBar.setProgressCompat(     (int) mAdventure.priority, true);
-        mBinding.targetBar.setProgressCompat(        mAdventureDisplay.targetToBar(), true);
 
-        mBinding.progressSlider.setValue((float) mAdventure.priority);
-        mBinding.targetSlider.setValue(              mAdventureDisplay.targetToSlider());
+        mBinding.titleTv.setText(               mAdventureDisplay.titleToSpannableStringBuilder());
+        mBinding.tagTv.setText(                 mAdventureDisplay.tagToSpannableStringBuilder() );
+        mBinding.priorityTv.setText(            mAdventureDisplay.priorityToTv());
+        mBinding.targetTv.setText(              mAdventureDisplay.targetToTv());
+        mBinding.priorityBar.setProgressCompat( mAdventureDisplay.priorityToBar() , true);
+        mBinding.targetBar.setProgressCompat(   mAdventureDisplay.targetToBar(), true);
+        mBinding.prioritySlider.setValue(       mAdventureDisplay.priorityToSlider());
+        mBinding.targetSlider.setValue(         mAdventureDisplay.targetToSlider());
 
         mDetailsRVAdapter.submit(mAdventure.details);
 
@@ -230,12 +233,15 @@ public class ScreenSlidePageFragment extends Fragment  implements MyController.O
         mBinding.tagTv.setTextColor( color);
         mBinding.priorityTv.setTextColor( color);
         mBinding.targetTv.setTextColor( color);
-        mBinding.progressBar.setIndicatorColor( color);
+        mBinding.priorityBar.setIndicatorColor( color);
         mBinding.targetBar.setIndicatorColor( color);
-        mBinding.progressSlider.setThumbTintList( ColorStateList.valueOf( color));
+        mBinding.prioritySlider.setThumbTintList( ColorStateList.valueOf( color));
         mBinding.targetSlider.setThumbTintList( ColorStateList.valueOf( color));
         mBinding.detailsRvEndBorder.setBackgroundColor( color);
         mDetailsRVAdapter.setColor( color);
+
+
+
     }
 
 

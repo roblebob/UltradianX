@@ -70,11 +70,11 @@ class Adventure {
 
     @get:Ignore
     val grow: Double
-        get() = if (target == 0) 0.0 else 100.0 / (24.0 * 60.0 * 60.0) // 1 day
+        get() = if (target == 0) 0.0 else 1.0 / (24.0 * 60.0 * 60.0) // 1 day
 
     @get:Ignore
     val decay: Double
-        get() = if (target == 0) 0.0 else 100.0 / (target * 60.0) // since we need it in secs
+        get() = if (target == 0) 0.0 else 1.0 / (target * 60.0) // since we need it in secs
 
 
 
@@ -84,7 +84,8 @@ class Adventure {
         val duration = Duration.between(Instant.parse(lastTime), now)
 
         priority = (priority + ( duration.seconds * (if (active) -decay else grow)))
-            .coerceAtLeast(0.0).coerceAtMost(100.0)
+            .coerceAtLeast(0.0).coerceAtMost(1.0)
+            //.bound()
 
         this.lastTime = now.toString().also {
             if (!active) {
@@ -93,7 +94,7 @@ class Adventure {
         }
     }
 
-    //fun Double.bound() = 100.0 / (1 + exp(this / -100.0))
+    fun Double.bound() = 1.0 / (1.0 + exp((-1.0) * this))
 
 
 

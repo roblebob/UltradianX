@@ -30,24 +30,33 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
 
     @JvmOverloads
     fun titleToSpannableStringBuilder(minFontSize: Int = MIN_FONT_SIZE): SpannableStringBuilder {
-        val spannableStringBuilder = SpannableStringBuilder()
-        spannableStringBuilder.append(mAdventure.title)
-        val maxFontSize: Int = mAdventure.priority.toInt()
+        val spannableStringBuilder = SpannableStringBuilder().append(mAdventure.title)
 
         for (i in 0 until mAdventure.title.length) {
 
-            val fontSize = maxFontSize - 3 * i
-
             spannableStringBuilder.setSpan(
-                AbsoluteSizeSpan(fontSize.coerceAtLeast(minFontSize), true),
-                i,
-                i + 1,
+                AbsoluteSizeSpan(
+                    /*font-size*/
+                    (mAdventure.priority * PRIORITY_SCALE_FACTOR - i.toDouble().pow(2.5)) .toInt()
+                        .coerceAtLeast(minFontSize),
+                    false
+                ),
+                /*start*/ i, i + 1,
                 0
             )
         }
-        val fcs = ForegroundColorSpan(color)
+
+        // TODO: find a way to include it
         val bss = StyleSpan(Typeface.BOLD)
-        spannableStringBuilder.setSpan(fcs, 0, mAdventure.title.length, 0)
+
+        spannableStringBuilder.setSpan(
+            ForegroundColorSpan(color),
+            0,
+            mAdventure.title.length,
+            0
+        )
+
+
         return spannableStringBuilder
     }
 
@@ -78,19 +87,11 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
 
 
 
+    fun priorityToTv(): String = java.lang.String.valueOf("%f".format(mAdventure.priority))
+    fun priorityToSlider(): Float = mAdventure.priority.toFloat()
+    fun priorityToBar(): Int = (mAdventure.priority * 100).toInt()
+    fun priorityToHorizontalBias(): Float = 1.0f - mAdventure.priority.toFloat()
 
-
-
-    fun priorityToTv(): String = java.lang.String.valueOf(mAdventure.priority.toInt())
-
-    fun targetToSlider(): Float = targetToSlider.apply(mAdventure.target)
-
-
-    fun targetToBar(): Int {
-        var x = targetToSlider.apply(mAdventure.target)
-        x *= 25.0f // mapping 0..4 to 0..100
-        return x.toInt()
-    }
 
     fun targetToTv(): String {
         val target = mAdventure.target
@@ -102,12 +103,21 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
             mAdventure.target % 60
         )
     }
+    fun targetToSlider(): Float = targetToSlider.apply(mAdventure.target)
+    fun targetToBar(): Int {
+        var x = targetToSlider.apply(mAdventure.target)
+        x *= 25.0f // mapping 0..4 to 0..100
+        return x.toInt()
+    }
+
+
 
 
 
     companion object {
         val TAG: String = AdventureDisplay::class.java.simpleName
         const val MIN_FONT_SIZE = 12
+        const val PRIORITY_SCALE_FACTOR = 300.0
 
         /**
          * maps  0..1..2..3..4  to  0..10..90..360..1000
@@ -133,5 +143,7 @@ class AdventureDisplay(adventure: Adventure, context: Context) {
             x = 0.5 * (-1.0 + (1.0 + 4.0 * x).pow(0.5))
             x.toFloat()
         }
+
+
     }
 }

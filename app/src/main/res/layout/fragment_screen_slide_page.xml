@@ -39,19 +39,25 @@
         android:id="@+id/title_tv"
         style="?android:textAppearanceLarge"
 
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:lineSpacingMultiplier="1.2"
-        android:padding="16dp"
-        android:text="@string/default_msg"
+        android:layout_marginBottom="0dp"
+
+
+        android:text="de"
         android:scrollbars="vertical"
+        android:textSize="300px"
+        android:textColor="@color/tag_neutral"
         app:layout_constraintBottom_toTopOf="@+id/guideline_upper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         />
-
+        <!--
+        android:letterSpacing="0.07"
+        android:padding="0dp"
+        android:lineSpacingMultiplier="0.0"
+        -->
 
 
 
@@ -68,31 +74,29 @@
         />
 
 
-
-
-
     <TextView
 
         android:id="@+id/priority_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#50F00000"
-        android:padding="4dp"
-        app:layout_constraintRight_toRightOf="@id/progressBar"
-        app:layout_constraintBottom_toBottomOf="@id/progressBar"
-        />
+        android:padding="0dp"
+        android:text="0.009992"
+        android:textColor="@color/tag_neutral"
+        app:layout_constraintTop_toTopOf="@id/priority_slider"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.slider.Slider
-        android:id="@+id/progress_slider"
+        android:id="@+id/priority_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
         android:valueFrom="0.0"
-        android:valueTo="100.0"
+        android:valueTo="1.0"
         android:layoutDirection="rtl"
         android:layout_margin="8dp"
         app:trackThickness="4dp"
         app:indicatorColor="#50F00000"
-        app:layout_constraintTop_toBottomOf="@id/guideline_upper"
+        app:layout_constraintTop_toTopOf="@id/guideline_upper"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="1.0"
@@ -100,7 +104,7 @@
         tools:layout_editor_absoluteX="16dp"
         />
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar"
+        android:id="@+id/priority_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
@@ -115,7 +119,8 @@
         tools:layout_editor_absoluteX="16dp"
         app:indicatorDirectionLinear="rightToLeft"
         android:layout_margin="8dp"
-
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
         android:elevation="2dp"
         />
 
