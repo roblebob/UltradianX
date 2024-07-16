@@ -20,12 +20,9 @@ import com.roblebob.ultradianx.ui.extra.AdventureDisplay
 import java.util.Objects
 
 class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVViewHolder>() {
-    fun getAdventureId(position: Int): Int {
-        return mAdventureList[position].id
-    }
-    fun getAdventurePriority(position: Int): Double {
-        return mAdventureList[position].priority
-    }
+    fun getAdventureId(position: Int): Int = mAdventureList[position].id
+    fun getAdventurePriority(position: Int): Double = mAdventureList[position].priority
+
     fun setAdventurePriority(position: Int, priority: Double) {
         mAdventureList[position].priority = priority
         notifyItemChanged(position)
@@ -97,16 +94,12 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         val constraintLayout = holder.itemView as ConstraintLayout
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
-        constraintSet.setHorizontalBias(
-            R.id.single_item_adventures_tv,
-            1.0f - adventure.priority.toFloat()
-        )
+        constraintSet.setHorizontalBias(R.id.single_item_adventures_tv, 1.0f - adventure.priority.toFloat())
         constraintSet.applyTo(constraintLayout)
     }
 
-    override fun getItemCount(): Int {
-        return if (mExtended) mAdventureList.size + 1 else mAdventureList.size
-    }
+    override fun getItemCount(): Int = mAdventureList.size + (if (isExtended) 1 else 0)
+
 
     class OverviewRVViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textView: TextView
@@ -116,8 +109,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         init {
             textView = itemView.findViewById(R.id.single_item_adventures_tv)
             textInputLayout = itemView.findViewById(R.id.single_item_adventures_text_input_layout)
-            textInputEditText =
-                itemView.findViewById(R.id.single_item_adventures_text_input_edit_text)
+            textInputEditText = itemView.findViewById(R.id.single_item_adventures_text_input_edit_text)
         }
     }
 }
