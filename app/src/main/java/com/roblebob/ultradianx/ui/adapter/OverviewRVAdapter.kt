@@ -53,13 +53,8 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         fun onNewAdventureCreated(title: String)
     }
 
-    private val mCallback: Callback
-    private val mContext: Context
-
-    init {
-        mCallback = fragment as Callback
-        mContext = fragment.requireContext()
-    }
+    private val mCallback: Callback = fragment as Callback
+    private val mContext: Context = fragment.requireContext()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewRVViewHolder {
         return OverviewRVViewHolder(
@@ -87,7 +82,7 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
         holder.textInputLayout.visibility = View.INVISIBLE
         holder.textView.visibility = View.VISIBLE
         holder.textView.text = adventureDisplay.titleToSpannableStringBuilder(3)
-        holder.itemView.setOnClickListener { v: View? -> mCallback.onItemClickListener( adventure.id, position) }
+        holder.itemView.setOnClickListener { _: View? -> mCallback.onItemClickListener( adventure.id, position) }
 
 
         // displacing the text to the left depending on the priority
@@ -102,14 +97,8 @@ class OverviewRVAdapter(fragment: Fragment) : RecyclerView.Adapter<OverviewRVVie
 
 
     class OverviewRVViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var textView: TextView
-        var textInputLayout: TextInputLayout
-        var textInputEditText: TextInputEditText
-
-        init {
-            textView = itemView.findViewById(R.id.single_item_adventures_tv)
-            textInputLayout = itemView.findViewById(R.id.single_item_adventures_text_input_layout)
-            textInputEditText = itemView.findViewById(R.id.single_item_adventures_text_input_edit_text)
-        }
+        var textView: TextView = itemView.findViewById(R.id.single_item_adventures_tv)
+        var textInputLayout: TextInputLayout = itemView.findViewById(R.id.single_item_adventures_text_input_layout)
+        var textInputEditText: TextInputEditText = itemView.findViewById(R.id.single_item_adventures_text_input_edit_text)
     }
 }
